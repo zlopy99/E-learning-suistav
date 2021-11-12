@@ -1,2 +1,2 @@
 # E-learning-suistav
-Projektni zadatak, pravljenje E-learning sustava.
+Projektni zadatak, izrada E-learning sustava.
