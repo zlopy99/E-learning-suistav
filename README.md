@@ -1,2 +1,2 @@
-# E-learning-sustav
-Projektni zadatak, izrada E-learning sustava.
+# Lutalice-Info
+Projektni zadatak, izrada web aplikacije za lutalice(Lutalice-Info)
