@@ -1,0 +1,116 @@
+﻿@model PIS_projekt.ViewModels.ZivotinjeVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-controller="Zivotinje" asp-action="Pronadjene">Pronađene</a>
+    <a asp-action="Create">Za udomljavanje</a>
+    <a asp-action="Create">Izgubljene</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Broj mikročipa
+            </th>
+            <th>
+                Ime životinje
+            </th>
+            <th>
+                Pasmina
+            </th>
+            <th>
+                Vrsta životinje
+            </th>
+            <th>
+                Spol
+            </th>
+            <th>
+                Datum štenjenja
+            </th>
+            <th>
+                Slika
+            </th>
+            <th>
+                Za udomljavanje
+            </th>
+            <th>
+                Lokacija pronalaska
+            </th>
+            <th>
+                Datum pronalaska
+            </th>
+            <th>
+                Naziv skloništa
+            </th>
+            <th>
+                Adresa skloništa
+            </th>
+            <th>
+                Mjesto
+            </th>
+            <th>
+                Županija
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.zivotinje)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BrojMikrocipa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImeZivotinje)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NazivPasmine)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NazivVrste)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NazivSpola)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatumStenjenja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Slika)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JeLiZaUdomljavanje)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdresaPronalaska)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatumPronalaska)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NazivSklonista)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adresa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NazivGrada)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NazivZupanije)
+            </td>
+            <!-- <td>
+        <a asp-action="Edit" asp-route-id="@item.ZivotinjaUSklonistuId">Edit</a> |
+        <a asp-action="Details" asp-route-id="@item.ZivotinjaUSklonistuId">Details</a> |
+        <a asp-action="Delete" asp-route-id="@item.ZivotinjaUSklonistuId">Delete</a>
+    </td>-->
+        </tr>
+        }
+    </tbody>
+</table>

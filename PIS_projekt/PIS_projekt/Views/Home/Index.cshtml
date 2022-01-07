@@ -1,0 +1,72 @@
+﻿@model PIS_projekt.ViewModels.SklonisteVM
+
+@{
+    ViewData["Title"] = "Skloništa";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Naziv skloništa
+            </th>
+            <th>
+                Adresa
+            </th>
+            <th>
+                Grad
+            </th>
+            <th>
+                Županija
+            </th>
+            <th>
+                Kapacitet skloništa
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Telefon
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.skloniste)
+        {
+            <tr>
+
+                <td>
+                    <a href="https://sportske.jutarnji.hr/sn/">
+                        <span>@Html.DisplayFor(modelItem => item.NazivSklonista)</span>
+                    </a>
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adresa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NazivGrada)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NazivZupanije)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KapacitetSklonista)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefon)
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
