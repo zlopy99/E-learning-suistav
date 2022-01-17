@@ -1,4 +1,4 @@
-﻿@model PIS_projekt.ViewModels.ZivotinjeVM
+﻿@model PIS_projekt.ViewModels.ZivotinjeMiniVM
 
 @{
     ViewData["Title"] = "Index";
@@ -8,17 +8,20 @@
 
 <p>
     <a asp-controller="Zivotinje" asp-action="Pronadjene">Pronađene</a>
-    <a asp-action="Create">Za udomljavanje</a>
-    <a asp-action="Create">Izgubljene</a>
+    <a asp-controller="Zivotinje" asp-action="ZaUdomljavanje">Za udomljavanje</a>
+    <a asp-controller="Zivotinje" asp-action="Izgubljene">Izgubljene</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
+                Detalji
+            </th>
+            <th>
                 Broj mikročipa
             </th>
             <th>
-                Ime životinje
+                Ime
             </th>
             <th>
                 Pasmina
@@ -30,39 +33,33 @@
                 Spol
             </th>
             <th>
-                Datum štenjenja
-            </th>
-            <th>
-                Slika
-            </th>
-            <th>
                 Za udomljavanje
-            </th>
-            <th>
-                Lokacija pronalaska
-            </th>
-            <th>
-                Datum pronalaska
             </th>
             <th>
                 Naziv skloništa
             </th>
             <th>
-                Adresa skloništa
-            </th>
-            <th>
                 Mjesto
             </th>
-            <th>
-                Županija
-            </th>
-            <th></th>
+            <!-- <th>
+        Adresa skloništa
+    </th>
+    <th>
+        Mjesto
+    </th>
+    <th>
+        Županija
+    </th>
+    <th></th>-->
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.zivotinje)
+        @foreach (var item in Model.ZivotinjeMini)
         {
         <tr>
+            <td>
+                <a asp-action="Detalji" asp-route-id="@item.ZivotinjaUSklonistuId">Detalji</a>
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BrojMikrocipa)
             </td>
@@ -79,32 +76,15 @@
                 @Html.DisplayFor(modelItem => item.NazivSpola)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DatumStenjenja)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Slika)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.JeLiZaUdomljavanje)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AdresaPronalaska)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DatumPronalaska)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NazivSklonista)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Adresa)
+                <a asp-controller="Home" asp-action="Skloniste" asp-route-id="@item.SklonisteId">@Html.DisplayFor(modelItem => item.NazivSklonista)</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NazivGrada)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NazivZupanije)
-            </td>
+
             <!-- <td>
         <a asp-action="Edit" asp-route-id="@item.ZivotinjaUSklonistuId">Edit</a> |
         <a asp-action="Details" asp-route-id="@item.ZivotinjaUSklonistuId">Details</a> |

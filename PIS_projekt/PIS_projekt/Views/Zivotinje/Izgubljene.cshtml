@@ -1,0 +1,92 @@
+﻿@model PIS_projekt.ViewModels.IzgubljeneMiniVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-controller="Zivotinje" asp-action="Pronadjene">Pronađene</a>
+    <a asp-controller="Zivotinje" asp-action="ZaUdomljavanje">Za udomljavanje</a>
+    <a asp-controller="Zivotinje" asp-action="Izgubljene">Izgubljene</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Detalji
+            </th>
+            <th>
+                Vrsta životinje
+            </th>
+            <th>
+                Pasmina
+            </th>
+            <th>
+                Spol
+            </th>
+            <th>
+                Kontakt
+            </th>
+            <th>
+                Lokacija nestanka
+            </th>
+            <th>
+                Mjesto nestanka
+            </th>
+            <th>
+                Datum nestanka
+            </th>
+            <th>
+                Datum prijave
+            </th>
+            <!-- <th>
+                Adresa skloništa
+            </th>
+            <th>
+                Mjesto
+            </th>
+            <th>
+                Županija
+            </th>
+            <th></th>-->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.IzgubljeneMini)
+        {
+            <tr>
+                <td>
+                    <a asp-action="IzgubljeneDetalji" asp-route-id="@item.IzgubljeneZivotinjeId">Detalji</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VrstaZivotinje)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pasmina)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Spol)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kontakt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LokacijaNestanka)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Grad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatumNestanka)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatumPrijave)
+                </td>
+
+                
+            </tr>
+        }
+    </tbody>
+</table>

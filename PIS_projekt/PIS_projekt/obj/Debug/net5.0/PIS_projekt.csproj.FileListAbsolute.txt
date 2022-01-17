@@ -429,3 +429,9 @@ C:\Users\DT User\source\repos\PIS_projekt\PIS_projekt\bin\Debug\net5.0\runtimes\
 C:\Users\DT User\source\repos\PIS_projekt\PIS_projekt\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\DT User\source\repos\PIS_projekt\PIS_projekt\obj\Debug\net5.0\PIS_projekt.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\DT User\source\repos\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Zivotinje\Index.cshtml.g.cs
+C:\Users\DT User\source\repos\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Zivotinje\ZaUdomljavanje.cshtml.g.cs
+C:\Users\DT User\source\repos\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Home\ZivotinjeUSklonistu.cshtml.g.cs
+C:\Users\DT User\source\repos\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Home\ZaUdomljavanje.cshtml.g.cs
+C:\Users\DT User\source\repos\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Zivotinje\Detalji.cshtml.g.cs
+C:\Users\DT User\source\repos\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Zivotinje\Izgubljene.cshtml.g.cs
+C:\Users\DT User\source\repos\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Zivotinje\IzgubljeneDetalji.cshtml.g.cs

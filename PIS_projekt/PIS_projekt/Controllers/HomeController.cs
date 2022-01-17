@@ -43,5 +43,77 @@ namespace PIS_projekt.Controllers
             return View("Index", model);
             // return Ok(query);
         }
+
+        public IActionResult Skloniste(int id)
+        {
+            var query = ctx.ZivotinjaUSklonistus
+                .Where(z => z.SklonisteId == id)
+                .Select(z => new ZivotinjeMiniViewModel
+                {
+                    ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                    BrojMikrocipa = z.BrojMikrocipa,
+                    ImeZivotinje = z.ImeZivotinje,
+                    NazivPasmine = z.Pasmina.NazivPasmine,
+                    NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                    NazivSpola = z.Spol.NazivSpola,
+                    //DatumStenjenja = z.DatumStenjenja,
+                    //Slika = z.Slika,
+                    JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                    //AdresaPronalaska = z.AdresaPronalaska,
+                    //DatumPronalaska = z.DatumPronalaska,
+                    NazivSklonista = z.Skloniste.NazivSklonista,
+                    //Adresa = z.Skloniste.Adresa,
+                    NazivGrada = z.Skloniste.Grad.NazivGrada,
+                    // NazivZupanije = z.Skloniste.Grad.Zupanija.NazivZupanije*/
+                })
+                .ToList();
+            var poruka = ctx.Sklonistes
+                .Where(s => s.SklonisteId == id)
+                .FirstOrDefault<Skloniste>();
+            ViewBag.NazivSklonista = poruka.NazivSklonista;
+            ViewBag.ID = id;
+            var model = new ZivotinjeMiniVM
+            {
+                ZivotinjeMini = query
+            };
+            return View("ZivotinjeUSklonistu", model);
+        }
+
+        public IActionResult Udomljavanje(int id)
+        {
+            var query = ctx.ZivotinjaUSklonistus
+                .Where(z => z.UdomljavanjeId == 1)
+                .Where(z=>z.SklonisteId == id)
+                .Select(z => new ZivotinjeMiniViewModel
+                {
+                    ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                    BrojMikrocipa = z.BrojMikrocipa,
+                    ImeZivotinje = z.ImeZivotinje,
+                    NazivPasmine = z.Pasmina.NazivPasmine,
+                    NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                    NazivSpola = z.Spol.NazivSpola,
+                    //DatumStenjenja = z.DatumStenjenja,
+                    //Slika = z.Slika,
+                    JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                   // AdresaPronalaska = z.AdresaPronalaska,
+                    //DatumPronalaska = z.DatumPronalaska,
+                    NazivSklonista = z.Skloniste.NazivSklonista,
+                    //Adresa = z.Skloniste.Adresa,
+                    NazivGrada = z.Skloniste.Grad.NazivGrada,
+                    // NazivZupanije = z.Skloniste.Grad.Zupanija.NazivZupanije*/
+                })
+                .ToList();
+            var poruka = ctx.Sklonistes
+                .Where(s => s.SklonisteId == id)
+                .FirstOrDefault<Skloniste>();
+            ViewBag.NazivSklonista = poruka.NazivSklonista;
+            ViewBag.ID = id;
+            
+            var model = new ZivotinjeMiniVM
+            {
+                ZivotinjeMini = query
+            };
+            return View("ZaUdomljavanje", model);
+        }
     }
 }
