@@ -1,0 +1,101 @@
+﻿@model PIS_projekt.Models.IzgubljeneZivotinje
+
+@{
+    ViewData["Title"] = "IzgubiliSteLjubimca";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h4>Izgubili ste ljubimca? Dajte nam informacije</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="IzgubiliSteLjubimca">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!--<div class="form-group">
+        <label asp-for="IzgubljeneZivotinjeId" class="control-label"></label>
+        <input asp-for="IzgubljeneZivotinjeId" class="form-control" />
+        <span asp-validation-for="IzgubljeneZivotinjeId" class="text-danger"></span>
+    </div>-->
+            <div class="form-group">
+                <label asp-for="BrojMikrocipa" class="control-label"></label>
+                <input asp-for="BrojMikrocipa" class="form-control" />
+                <span asp-validation-for="BrojMikrocipa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ime" class="control-label"></label>
+                <input asp-for="Ime" class="form-control" />
+                <span asp-validation-for="Ime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VrstaZivotinjeId" class="control-label"></label>
+                <select asp-for="VrstaZivotinjeId" class="form-control" asp-items="ViewBag.Vrste">
+                    <option disabled selected value="">Izaberite vrstu životinje</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PasminaId" class="control-label"></label>
+                <select asp-for="PasminaId" class="form-control" asp-items="ViewBag.Pasmine">
+                    <option disabled selected value="">Izaberite pasminu</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="KastratId" class="control-label"></label>
+                <select asp-for="KastratId" class="form-control" asp-items="ViewBag.Kastrat">
+                    <option disabled selected value="">Izbor</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="SpolId" class="control-label"></label>
+                <select asp-for="SpolId" class="form-control" asp-items="ViewBag.Spolovi">
+                    <option disabled selected value="">Izbor</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Slika" class="control-label"></label>
+                <input type="file" asp-for="Slika" class="form-control" />
+                <span asp-validation-for="Slika" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GradId" class="control-label"></label>
+                <select asp-for="GradId" class="form-control" asp-items="ViewBag.Gradovi">
+                    <option disabled selected value="">Izaberite grad</option>
+                </select>
+                <span asp-validation-for="GradId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LokacijaNestanka" class="control-label"></label>
+                <input asp-for="LokacijaNestanka" class="form-control" />
+                <span asp-validation-for="LokacijaNestanka" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DatumNestanka" class="control-label"></label>
+                <input asp-for="DatumNestanka" class="form-control" />
+                <span asp-validation-for="DatumNestanka" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Kontakt" class="control-label"></label>
+                <input asp-for="Kontakt" class="form-control" />
+                <span asp-validation-for="Kontakt" class="text-danger"></span>
+            </div>
+            <!-- <div class="form-group">
+         <label asp-for="DatumPrijave" class="control-label"></label>
+         <input asp-for="DatumPrijave" class="form-control" />
+         <span asp-validation-for="DatumPrijave" class="text-danger"></span>
+     </div>-->
+
+
+            <div class="form-group">
+                <input type="submit" value="Spremi" class="btn btn-primary" asp-controller="PrijavaZivotinja" asp-action="SpremiPrijavu"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

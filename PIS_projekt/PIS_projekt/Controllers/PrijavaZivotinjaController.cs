@@ -43,12 +43,84 @@ namespace PIS_projekt.Controllers
                 string filename = Path.GetFileNameWithoutExtension(ul.Slika);
                 string extension = 
             }*/
+            if (ModelState.IsValid)
+            {
+                ul.DatumPrijave = DateTime.Now;
+                ctx.UoceneLutalices.Add(ul);
+                ctx.SaveChanges();
+                return RedirectToAction("Index","Home");
+            }
+            else
+            {
+                return View("UocenaLutalica", ul);
+            }
             
-            ul.DatumPrijave = DateTime.Now;
-            ctx.UoceneLutalices.Add(ul);
-            ctx.SaveChanges();
-            return Ok(ul.Slika);
+        }
+        public IActionResult IzgubljenLjubimac()
+        {
+            var spolovi = ctx.Spols
+                .Select(s => new
+                {
+                    s.SpolId,
+                    s.NazivSpola
+                })
+                .ToList();
+            ViewBag.Spolovi = new SelectList(spolovi, nameof(Spol.SpolId), nameof(Spol.NazivSpola));
 
+            var gradovi = ctx.Grads
+                .OrderBy(g => g.NazivGrada)
+                .Select(g => new
+                {
+                    g.GradId,
+                    g.NazivGrada
+
+                })
+                .ToList();
+            ViewBag.Gradovi = new SelectList(gradovi, nameof(Grad.GradId), nameof(Grad.NazivGrada));
+
+            var kastrat = ctx.Kastrats
+                    .Select(k => new
+                    {
+                        k.KastratId,
+                        k.JeLiKastrat
+                    })
+                    .ToList();
+            ViewBag.Kastrat = new SelectList(kastrat, nameof(Kastrat.KastratId), nameof(Kastrat.JeLiKastrat));
+
+            var pasmine = ctx.Pasminas
+                .OrderBy(p=>p.NazivPasmine)
+                .Select(p => new
+                {
+                    p.PasminaId,
+                    p.NazivPasmine
+                })
+                .ToList();
+            ViewBag.Pasmine = new SelectList(pasmine, nameof(Pasmina.PasminaId), nameof(Pasmina.NazivPasmine));
+
+            var vrste = ctx.VrstaZivotinjes
+                .OrderBy(v => v.NazivVrste)
+                .Select(v => new
+                {
+                    v.VrstaZivotinjeId,
+                    v.NazivVrste
+                })
+                .ToList();
+            ViewBag.Vrste = new SelectList(vrste, nameof(VrstaZivotinje.VrstaZivotinjeId), nameof(VrstaZivotinje.NazivVrste));
+            return View("IzgubiliSteLjubimca");
+        }
+        public IActionResult SpremiPrijavu(IzgubljeneZivotinje iz)
+        {
+            if (ModelState.IsValid)
+            {
+                iz.DatumPrijave = DateTime.Now;
+                ctx.IzgubljeneZivotinjes.Add(iz);
+                ctx.SaveChanges();
+                return RedirectToAction("Zivotinje", "Izgubljene");
+            }
+            else
+            {
+                return View("IzgubiliSteLjubimca", iz);
+            }
         }
     }
 }

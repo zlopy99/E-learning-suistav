@@ -67,7 +67,7 @@ namespace PIS_projekt.Models
                 entity.ToTable("Izgubljene_zivotinje");
 
                 entity.Property(e => e.IzgubljeneZivotinjeId)
-                    .ValueGeneratedNever()
+                    //.ValueGeneratedNever()
                     .HasColumnName("izgubljene_zivotinje_id");
 
                 entity.Property(e => e.BrojMikrocipa)
