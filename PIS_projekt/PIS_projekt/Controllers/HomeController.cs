@@ -18,7 +18,7 @@ namespace PIS_projekt.Controllers
         {
             this.ctx = ctx;
         }
-        public IActionResult Index()
+        public IActionResult Index(int pg=1)
         {
             var query = ctx.Sklonistes
                 .Select(s => new SklonisteViewModel
@@ -36,15 +36,35 @@ namespace PIS_projekt.Controllers
 
                 })
                 .ToList();
-            var model = new SklonisteVM
+            /*var model = new SklonisteVM
             {
                 skloniste = query
+            };*/
+
+            const int pageSize = 2;
+            if (pg < 1)
+            {
+                pg = 1;
+            }
+            /*int recsCount = model.skloniste.Count();
+            var pager = new Pager(recsCount, pg, pageSize);
+            int recSkip = (pg - 1) * pageSize;
+            var data = model.skloniste.Skip(recSkip).Take(pager.PageSize).ToList();*/
+            int recsCount = query.Count();
+            var pager = new Pager(recsCount, pg, pageSize);
+            int recSkip = (pg - 1) * pageSize;
+            var data = query.Skip(recSkip).Take(pager.PageSize).ToList();
+            var model = new SklonisteVM
+            {
+                skloniste = data
             };
+            this.ViewBag.Pager = pager;
+           
             return View("Index", model);
-            // return Ok(query);
+            // return Ok(model);
         }
 
-        public IActionResult Skloniste(int id)
+        public IActionResult Skloniste(int id, int pg = 1)
         {
             var query = ctx.ZivotinjaUSklonistus
                 .Where(z => z.SklonisteId == id)
@@ -67,15 +87,28 @@ namespace PIS_projekt.Controllers
                     // NazivZupanije = z.Skloniste.Grad.Zupanija.NazivZupanije*/
                 })
                 .ToList();
+
+            const int pageSize = 1;
+            if (pg < 1)
+            {
+                pg = 1;
+            }
+            int recsCount = query.Count();
+            var pager = new Pager(recsCount, pg, pageSize);
+            int recSkip = (pg - 1) * pageSize;
+            var data = query.Skip(recSkip).Take(pager.PageSize).ToList();
+
             var poruka = ctx.Sklonistes
                 .Where(s => s.SklonisteId == id)
                 .FirstOrDefault<Skloniste>();
             ViewBag.NazivSklonista = poruka.NazivSklonista;
             ViewBag.ID = id;
+
             var model = new ZivotinjeMiniVM
             {
-                ZivotinjeMini = query
+                ZivotinjeMini = data
             };
+            this.ViewBag.Pager = pager;
             return View("ZivotinjeUSklonistu", model);
         }
 

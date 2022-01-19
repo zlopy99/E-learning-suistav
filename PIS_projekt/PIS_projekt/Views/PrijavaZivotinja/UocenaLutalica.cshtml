@@ -1,0 +1,44 @@
+﻿@model PIS_projekt.Models.UoceneLutalice
+
+@{
+    ViewData["Title"] = "Prijavi lutalicu";
+}
+
+
+
+<h4>Vidjeli ste lutalicu? Recite nam više</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="Spremi">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="GradId" class="control-label"></label>
+                <select asp-for="GradId" class="form-control" asp-items="ViewBag.Gradovi">
+                    <option disabled selected value="">Izaberite grad</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Slika" class="control-label"></label>
+                <input type="file" asp-for="Slika" class="form-control" name="image" />
+                <span asp-validation-for="Slika" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Opis" class="control-label"></label>
+                <input type="text" asp-for="Opis" class="form-control" />
+                <span asp-validation-for="Opis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Spremi" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

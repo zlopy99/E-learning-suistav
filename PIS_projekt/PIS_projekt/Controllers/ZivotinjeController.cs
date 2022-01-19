@@ -15,7 +15,7 @@ namespace PIS_projekt.Controllers
         {
             this.ctx = ctx;
         }
-        public IActionResult Pronadjene()
+        public IActionResult Pronadjene(int pg = 1)
         {
             var query = ctx.ZivotinjaUSklonistus
                 .Select(z => new ZivotinjeMiniViewModel
@@ -39,13 +39,26 @@ namespace PIS_projekt.Controllers
                 })
                 .ToList();
 
+            const int pageSize = 2;
+            if (pg < 1)
+            {
+                pg = 1;
+            }
+
+            int recsCount = query.Count();
+            var pager = new Pager(recsCount, pg, pageSize);
+            int recSkip = (pg - 1) * pageSize;
+            var data = query.Skip(recSkip).Take(pager.PageSize).ToList();
             var model = new ZivotinjeMiniVM
             {
-                ZivotinjeMini = query
+                ZivotinjeMini = data
             };
+            this.ViewBag.Pager = pager;
+
+            
             return View("Index",model);
         }
-        public IActionResult ZaUdomljavanje()
+        public IActionResult ZaUdomljavanje(int pg = 1)
         {
             var query = ctx.ZivotinjaUSklonistus
                 .Where(z=>z.UdomljavanjeId == 1)
@@ -68,11 +81,22 @@ namespace PIS_projekt.Controllers
                    // NazivZupanije = z.Skloniste.Grad.Zupanija.NazivZupanije*/
                 })
                 .ToList();
+            const int pageSize = 1;
+            if (pg < 1)
+            {
+                pg = 1;
+            }
+
+            int recsCount = query.Count();
+            var pager = new Pager(recsCount, pg, pageSize);
+            int recSkip = (pg - 1) * pageSize;
+            var data = query.Skip(recSkip).Take(pager.PageSize).ToList();
             var model = new ZivotinjeMiniVM
             {
-                ZivotinjeMini = query
+                ZivotinjeMini = data
             };
-            return View("Index", model);
+            this.ViewBag.Pager = pager;
+            return View("ZaUdomljavanje", model);
         }
         public IActionResult Detalji(int id)
         {
