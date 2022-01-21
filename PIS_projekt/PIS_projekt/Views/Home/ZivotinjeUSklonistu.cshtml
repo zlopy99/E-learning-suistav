@@ -11,129 +11,140 @@
     }
 }
 
-<h1>@ViewBag.NazivSklonista</h1>
+<div class="row rounded bg-light border-bottom">
+    <div class="container">
+        <h1><i class="fas fa-warehouse"></i> @ViewBag.NazivSklonista</h1>
 
-<p>
-    <a asp-controller="Home" asp-action="Skloniste" asp-route-id="@ViewBag.ID" >Pronađene</a>
-    <a asp-controller="Home" asp-action="Udomljavanje" asp-route-id="@ViewBag.ID">Za udomljavanje</a>
-    
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Detalji
-            </th>
-            <th>
-                Broj mikročipa
-            </th>
-            <th>
-                Ime
-            </th>
-            <th>
-                Pasmina
-            </th>
-            <th>
-                Vrsta životinje
-            </th>
-            <th>
-                Spol
-            </th>
-            <th>
-                Za udomljavanje
-            </th>
-            <th>
-                Naziv skloništa
-            </th>
-            <th>
-                Mjesto
-            </th>
-            <!-- <th>
-                Adresa skloništa
-            </th>
-            <th>
-                Mjesto
-            </th>
-            <th>
-                Županija
-            </th>
-            <th></th>-->
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.ZivotinjeMini)
-        {
-            <tr>
-                <td>
-                    <a asp-controller="Zivotinje" asp-action="Detalji" asp-route-id="@item.ZivotinjaUSklonistuId">Detalji</a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BrojMikrocipa)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ImeZivotinje)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NazivPasmine)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NazivVrste)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NazivSpola)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.JeLiZaUdomljavanje)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NazivSklonista)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NazivGrada)
-                </td>
+        <h6>
+            <a asp-controller="Home" asp-action="Skloniste" asp-route-id="@ViewBag.ID">Pronađene</a>
+            <!--<a class="ml-3" asp-controller="Home" asp-action="Udomljavanje" asp-route-id="@ViewBag.ID">Za udomljavanje</a>-->
 
-                <!-- <td>
-                    <a asp-action="Edit" asp-route-id="@item.ZivotinjaUSklonistuId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ZivotinjaUSklonistuId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ZivotinjaUSklonistuId">Delete</a>
-                </td>-->
-            </tr>
-        }
-    </tbody>
-</table>
-<div class="container">
-    @if (pager.TotalPages > 0)
-    {
+        </h6>
+        <div class="table-responsive">
+            <table class="table table-hover mt-2 mb-md-0">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>
+                            Detalji
+                        </th>
+                        <th>
+                            Broj mikročipa
+                        </th>
+                        <th>
+                            Ime
+                        </th>
+                        <th>
+                            Pasmina
+                        </th>
+                        <th>
+                            Vrsta životinje
+                        </th>
+                        <th>
+                            Spol
+                        </th>
+                        <th>
+                            Za udomljavanje
+                        </th>
+                        <th>
+                            Naziv skloništa
+                        </th>
+                        <th>
+                            Mjesto
+                        </th>
+                        <!-- <th>
+                        Adresa skloništa
+                    </th>
+                    <th>
+                        Mjesto
+                    </th>
+                    <th>
+                        Županija
+                    </th>
+                    <th></th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.ZivotinjeMini)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-controller="Zivotinje" asp-action="Detalji" asp-route-id="@item.ZivotinjaUSklonistuId">Detalji</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BrojMikrocipa)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ImeZivotinje)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NazivPasmine)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NazivVrste)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NazivSpola)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.JeLiZaUdomljavanje)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NazivSklonista)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NazivGrada)
+                            </td>
+
+                            <!-- <td>
+                            <a asp-action="Edit" asp-route-id="@item.ZivotinjaUSklonistuId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.ZivotinjaUSklonistuId">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.ZivotinjaUSklonistuId">Delete</a>
+                        </td>-->
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="9" class="text-right p-2">
+                            <div>
+                                @if (pager.TotalPages > 0)
+                                {
 
 
-        <ul class="pagination justify-content-end">
-            @if (pager.CurrentPage > 1)
-            {
-                <li class="page-item">
-                    <a class="page-link" asp-controller="Home" asp-action="Skloniste" asp-route-pg="1">Prva</a>
-                </li>
-                <li>
-                    <a class="page-link" asp-controller="Home" asp-action="Skloniste" asp-route-pg="@(pager.CurrentPage-1)">Prethodna</a>
-                </li>
-            }
+                                    <ul class="pagination justify-content-end m-0">
+                                        @if (pager.CurrentPage > 1)
+                                        {
+                                            <li class="page-item">
+                                                <a class="page-link" asp-controller="Home" asp-action="Skloniste" asp-route-pg="1">Prva</a>
+                                            </li>
+                                            <li>
+                                                <a class="page-link" asp-controller="Home" asp-action="Skloniste" asp-route-pg="@(pager.CurrentPage-1)">Prethodna</a>
+                                            </li>
+                                        }
 
-            @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
-            {
-                <li class="page-item @(pge==pager.CurrentPage ? "active" : "")">
-                    <a class="page-link" asp-controller="Home" asp-action="Skloniste" asp-route-pg="@pge"> @pge </a>
-                </li>
-            }
+                                        @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+                                        {
+                                            <li class="page-item @(pge==pager.CurrentPage ? "active" : "")">
+                                                <a class="page-link" asp-controller="Home" asp-action="Skloniste" asp-route-pg="@pge"> @pge </a>
+                                            </li>
+                                        }
 
-            @if (pager.CurrentPage < pager.TotalPages)
-            {
-                <li>
-                    <a class="page-link" asp-controller="Home" asp-action="Skloniste" asp-route-pg="@(pager.CurrentPage+1)">Iduća</a>
-                </li>
-                <li>
-                    <a class="page-link" asp-controller="Home" asp-action="Skloniste" asp-route-pg="@(pager.TotalPages)">Zadnja</a>
-                </li>
-            }
-        </ul>
-    }
-
+                                        @if (pager.CurrentPage < pager.TotalPages)
+                                        {
+                                            <li>
+                                                <a class="page-link" asp-controller="Home" asp-action="Skloniste" asp-route-pg="@(pager.CurrentPage+1)">Iduća</a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link" asp-controller="Home" asp-action="Skloniste" asp-route-pg="@(pager.TotalPages)">Zadnja</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                            </div>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
 </div>

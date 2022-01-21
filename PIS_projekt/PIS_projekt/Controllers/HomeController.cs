@@ -41,7 +41,7 @@ namespace PIS_projekt.Controllers
                 skloniste = query
             };*/
 
-            const int pageSize = 2;
+            const int pageSize = 5;
             if (pg < 1)
             {
                 pg = 1;
@@ -88,7 +88,7 @@ namespace PIS_projekt.Controllers
                 })
                 .ToList();
 
-            const int pageSize = 1;
+            const int pageSize = 5;
             if (pg < 1)
             {
                 pg = 1;
@@ -136,6 +136,7 @@ namespace PIS_projekt.Controllers
                     // NazivZupanije = z.Skloniste.Grad.Zupanija.NazivZupanije*/
                 })
                 .ToList();
+
             var poruka = ctx.Sklonistes
                 .Where(s => s.SklonisteId == id)
                 .FirstOrDefault<Skloniste>();

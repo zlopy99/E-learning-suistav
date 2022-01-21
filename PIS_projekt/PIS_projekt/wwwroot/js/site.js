@@ -1,1 +1,1 @@
-﻿
+﻿//document.getElementById("one").id = "shelter_image"

@@ -6,38 +6,42 @@
     <title>@ViewData["Title"] - PIS_projekt</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/fontawesome-free-5.15.4-web/css/all.css" />
+    <link rel="stylesheet" href="~/css/Custome.css" />
 </head>
-<body>
+<body id="shelter_image">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PIS_projekt</a>
+                <!--<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PIS_projekt</a>-->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-around">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Skloništa</a>
+                            <a class="nav-link text-light btn btn-primary border-1 border-light ml-1" asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-warehouse"></i> Skloništa</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Zivotinje" asp-action="Pronadjene">Životinje</a>
+                            <a class="nav-link text-light btn btn-primary border-1 border-light ml-1" asp-area="" asp-controller="Zivotinje" asp-action="Pronadjene"><i class="fas fa-paw"></i> Životinje</a>
                         </li>
                     </ul>
+                    <a class="nav-link text-light btn btn-primary border-1 border-light ml-1" asp-area="" asp-controller="" asp-action=""><i class="fas fa-user"></i> Login</a>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+
+    <div class="container my-5">
+        <main role="main" class="pb-2">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted bg-black">
-        <div class="container">
-            &copy; 2022 - PIS_projekt - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top footer text-muted bg-light">
+        <div class="container w-100">
+            &copy; 2022 - PIS_projekt <!-- - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> -->
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
