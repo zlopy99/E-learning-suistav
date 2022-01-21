@@ -30,6 +30,20 @@ namespace PIS_projekt.Controllers
             ViewBag.Gradovi = new SelectList(query, nameof(Grad.GradId), nameof(Grad.NazivGrada));
             return View("NovoSkloniste");
         }
+        public IActionResult SpremiSkloniste(Skloniste s)
+        {
+            if (ModelState.IsValid)
+            {
+                ctx.Sklonistes.Add(s);
+                ctx.SaveChanges();
+                return RedirectToAction("Sklonista");
+
+            }
+            else
+            {
+                return View("NovoSkloniste", s);
+            }
+        }
         public IActionResult Sklonista(int pg = 1)
         {
             var query = ctx.Sklonistes

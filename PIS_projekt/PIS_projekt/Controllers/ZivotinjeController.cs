@@ -127,7 +127,7 @@ namespace PIS_projekt.Controllers
             };
             return View("Detalji", model);
         }
-        public IActionResult Izgubljene()
+        public IActionResult Izgubljene(int pg=1)
         {
             var query = ctx.IzgubljeneZivotinjes
                 .Select(iz => new IzgubljeneMiniViewModel
@@ -143,10 +143,21 @@ namespace PIS_projekt.Controllers
                     DatumPrijave = iz.DatumPrijave
                 })
                 .ToList();
+            const int pageSize = 1;
+            if (pg < 1)
+            {
+                pg = 1;
+            }
+
+            int recsCount = query.Count();
+            var pager = new Pager(recsCount, pg, pageSize);
+            int recSkip = (pg - 1) * pageSize;
+            var data = query.Skip(recSkip).Take(pager.PageSize).ToList();
             var model = new IzgubljeneMiniVM
             {
-                IzgubljeneMini = query
+                IzgubljeneMini = data
             };
+            this.ViewBag.Pager = pager;
             return View("Izgubljene", model);
         }
         public IActionResult IzgubljeneDetalji(int id)

@@ -22,6 +22,7 @@ namespace PIS_projekt.Models
         public string Email { get; set; }
         public string Telefon { get; set; }
         [Display(Name = "Mjesto")]
+        [Required(ErrorMessage ="Molimo izaberite mjesto")]
         public int GradId { get; set; }
 
         public virtual Grad Grad { get; set; }

@@ -2,6 +2,13 @@
 
 @{
     ViewData["Title"] = "Index";
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
 }
 
 <h1>Index</h1>
@@ -90,3 +97,39 @@
         }
     </tbody>
 </table>
+<div class="container">
+    @if (pager.TotalPages > 0)
+    {
+
+
+        <ul class="pagination justify-content-end">
+            @if (pager.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Zivotinje" asp-action="Izgubljene" asp-route-pg="1">Prva</a>
+                </li>
+                <li>
+                    <a class="page-link" asp-controller="Zivotinje" asp-action="Izgubljene" asp-route-pg="@(pager.CurrentPage-1)">Prethodna</a>
+                </li>
+            }
+
+            @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+            {
+                <li class="page-item @(pge==pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="Zivotinje" asp-action="Izgubljene" asp-route-pg="@pge"> @pge </a>
+                </li>
+            }
+
+            @if (pager.CurrentPage < pager.TotalPages)
+            {
+                <li>
+                    <a class="page-link" asp-controller="Zivotinje" asp-action="Izgubljene" asp-route-pg="@(pager.CurrentPage+1)">Iduća</a>
+                </li>
+                <li>
+                    <a class="page-link" asp-controller="Zivotinje" asp-action="Izgubljene" asp-route-pg="@(pager.TotalPages)">Zadnja</a>
+                </li>
+            }
+        </ul>
+    }
+
+</div>
