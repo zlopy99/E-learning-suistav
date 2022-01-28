@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PIS_projekt.Models;
 using PIS_projekt.ViewModels;
@@ -80,6 +81,60 @@ namespace PIS_projekt.Controllers
             };
             this.ViewBag.Pager = pager;
             return View("Sklonista", model);
+        }
+        public IActionResult DodajAdmina()
+        {
+            return View("DodajAdmina");
+        }
+        public IActionResult Add(Korisnik k)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                k.UlogaFk = 1;
+                ctx.Korisniks.Add(k);
+                ctx.SaveChanges();
+                HttpContext.Session.SetString("imeLogiranogKorisnika", k.Ime);
+                HttpContext.Session.SetString("prezimeLogiranogKorisnika", k.Prezime);
+                HttpContext.Session.SetInt32("idLogiranogKorisnika", k.KorisnikId);
+                return RedirectToAction("PrikazAdmina", "Korisnici");
+                
+            }
+            else
+            {
+                return View("DodajAdmina", k);
+            }
+        }
+        public IActionResult DeleteAdmin(int id)
+        {
+            var query = ctx.Korisniks
+                .Where(a => a.KorisnikId == id)
+                .Where(a => a.UlogaFk == 1)
+                .FirstOrDefault<Korisnik>();
+            ctx.Korisniks.Remove(query);
+            ctx.SaveChanges();
+            return RedirectToAction("PrikazAdmina", "Korisnici");
+        }
+        public IActionResult IzbrisiSkloniste(int id)
+        {
+            var query = ctx.Sklonistes
+                .Where(s => s.SklonisteId == id)
+                .FirstOrDefault<Skloniste>();
+            ctx.Sklonistes.Remove(query);
+            ctx.SaveChanges();
+            return RedirectToAction("Sklonista");
+
+        }
+        public IActionResult IzbrišiKorisnika(int id)
+        {
+            var query = ctx.Korisniks
+                .Where(s => s.KorisnikId == id)
+                .Where(a => a.UlogaFk == 2)
+                .FirstOrDefault<Korisnik>();
+            ctx.Korisniks.Remove(query);
+            ctx.SaveChanges();
+            return RedirectToAction("PrikazZaposlenika","Korisnici");
+
         }
     }
 }

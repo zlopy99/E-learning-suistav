@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PIS_projekt.Models;
@@ -121,6 +122,18 @@ namespace PIS_projekt.Controllers
             {
                 return View("IzgubiliSteLjubimca", iz);
             }
+        }
+        public IActionResult Prijavljene()
+        {
+            var zaposlenik = ctx.Korisniks
+                .Where(k => k.UlogaFk == 2)
+                .Where(k => k.KorisnikId == HttpContext.Session.GetInt32("idLogiranogKorisnika"))
+                .FirstOrDefault<Korisnik>();
+            var query = ctx.UoceneLutalices
+                 .Where(u => u.GradId == zaposlenik.Skloniste.GradId)
+                 .ToList();
+            return Ok("Ok");
+
         }
     }
 }

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Http;
 namespace PIS_projekt
 {
     public class Startup
@@ -30,6 +30,7 @@ namespace PIS_projekt
                 options.UseSqlServer(connectionString);
             });
             services.AddControllersWithViews();
+            services.AddSession();
             services.AddRazorPages();
         }
 
@@ -48,12 +49,12 @@ namespace PIS_projekt
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

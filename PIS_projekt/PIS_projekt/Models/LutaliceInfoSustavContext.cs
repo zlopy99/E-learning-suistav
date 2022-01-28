@@ -20,10 +20,12 @@ namespace PIS_projekt.Models
         public virtual DbSet<Grad> Grads { get; set; }
         public virtual DbSet<IzgubljeneZivotinje> IzgubljeneZivotinjes { get; set; }
         public virtual DbSet<Kastrat> Kastrats { get; set; }
+        public virtual DbSet<Korisnik> Korisniks { get; set; }
         public virtual DbSet<Pasmina> Pasminas { get; set; }
         public virtual DbSet<Skloniste> Sklonistes { get; set; }
         public virtual DbSet<Spol> Spols { get; set; }
         public virtual DbSet<Udomljavanje> Udomljavanjes { get; set; }
+        public virtual DbSet<Uloga> Ulogas { get; set; }
         public virtual DbSet<UoceneLutalice> UoceneLutalices { get; set; }
         public virtual DbSet<VrstaZivotinje> VrstaZivotinjes { get; set; }
         public virtual DbSet<ZivotinjaUSklonistu> ZivotinjaUSklonistus { get; set; }
@@ -139,6 +141,46 @@ namespace PIS_projekt.Models
                     .HasMaxLength(5)
                     .HasColumnName("je_li_kastrat");
             });
+            modelBuilder.Entity<Korisnik>(entity =>
+            {
+                entity.ToTable("Korisnik");
+
+                entity.Property(e => e.KorisnikId).HasColumnName("korisnik_id");
+
+                entity.Property(e => e.Ime)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("Ime");
+
+                entity.Property(e => e.Prezime)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("Prezime");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnName("Email");
+
+                entity.Property(e => e.Lozinka)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnName("Lozinka");
+
+                entity.Property(e => e.UlogaFk).IsRequired().HasColumnName("uloga_fk");
+
+                entity.Property(e => e.SklonisteFk).HasColumnName("skloniste_fk");
+
+                entity.HasOne(d => d.Uloga)
+                    .WithMany(p => p.Korisniks)
+                    .HasForeignKey(d => d.UlogaFk)
+                    .HasConstraintName("FK_Korisnik_Uloga");
+
+                entity.HasOne(d => d.Skloniste)
+                    .WithMany(p => p.Korisniks)
+                    .HasForeignKey(d => d.SklonisteFk)
+                    .HasConstraintName("FK_Korisnik_Skloniste");
+            });
 
             modelBuilder.Entity<Pasmina>(entity =>
             {
@@ -213,6 +255,17 @@ namespace PIS_projekt.Models
                     .IsRequired()
                     .HasMaxLength(5)
                     .HasColumnName("je_li_za_udomljavanje");
+            });
+            modelBuilder.Entity<Uloga>(entity =>
+            {
+                entity.ToTable("Uloga");
+
+                entity.Property(e => e.UlogaId).HasColumnName("uloga_id");
+
+                entity.Property(e => e.NazivUloge)
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .HasColumnName("Naziv_uloge");
             });
 
             modelBuilder.Entity<UoceneLutalice>(entity =>

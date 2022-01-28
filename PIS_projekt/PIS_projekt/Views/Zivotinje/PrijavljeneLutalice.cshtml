@@ -1,0 +1,100 @@
+﻿@model IEnumerable<PIS_projekt.Models.UoceneLutalice>
+
+@{
+    ViewData["Title"] = "PrijavljeneLutalice";
+    Layout = "~/Views/Shared/_LayoutZaposlenik.cshtml";
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+}
+
+<h1>Uočene lutalice</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Opis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatumPrijave)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slika)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Grad)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Opis)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatumPrijave)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slika)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Grad.NazivGrada)
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.UoceneLutaliceId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="7" class="text-right p-2">
+                <div>
+                    @if (pager.TotalPages > 0)
+                    {
+
+
+                        <ul class="pagination justify-content-end m-0">
+                            @if (pager.CurrentPage > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link" asp-controller="Zivotinje" asp-action="UoceneLutalice" asp-route-pg="1">Prva</a>
+                                </li>
+                                <li>
+                                    <a class="page-link" asp-controller="Zivotinje" asp-action="UoceneLutalice" asp-route-pg="@(pager.CurrentPage-1)">Prethodna</a>
+                                </li>
+                            }
+
+                            @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+                            {
+                                <li class="page-item @(pge==pager.CurrentPage ? "active" : "")">
+                                    <a class="page-link" asp-controller="Zivotinje" asp-action="UoceneLutalice" asp-route-pg="@pge"> @pge </a>
+                                </li>
+                            }
+
+                            @if (pager.CurrentPage < pager.TotalPages)
+                            {
+                                <li>
+                                    <a class="page-link" asp-controller="Zivotinje" asp-action="UoceneLutalice" asp-route-pg="@(pager.CurrentPage+1)">Iduća</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" asp-controller="Zivotinje" asp-action="UoceneLutalice" asp-route-pg="@(pager.TotalPages)">Zadnja</a>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </th>
+        </tr>
+    </tfoot>
+</table>

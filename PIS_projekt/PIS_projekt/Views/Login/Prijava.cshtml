@@ -1,0 +1,39 @@
+﻿@model PIS_projekt.Models.Korisnik
+
+@{
+    ViewData["Title"] = "Prijava";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Prijava</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post"asp-controller="Login" asp-action="Prijava">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lozinka" class="control-label"></label>
+                <input asp-for="Lozinka" class="form-control" type="password"/>
+                <span asp-validation-for="Lozinka" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Prijavi se" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Home" asp-action="Index">Povratak</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

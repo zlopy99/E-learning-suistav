@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Sklonista";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     Pager pager = new Pager();
     int pageNo = 0;
     if (ViewBag.Pager != null)
@@ -15,8 +15,9 @@
 <h1>Sklonista</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-controller="Admin" asp-action="CreateSkloniste">Dodaj novo skloniste</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -47,35 +48,35 @@
     <tbody>
         @foreach (var item in Model.skloniste)
         {
-        <tr>
-            <td>
-                  @Html.DisplayFor(modelItem => item.NazivSklonista)
-            </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NazivSklonista)
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Adresa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NazivGrada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NazivZupanije)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.KapacitetSklonista)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefon)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.skloniste_id">Uredi</a> 
-                <!--<a asp-action="Details" asp-route-id="@item.skloniste_id">Details</a> |-->
-                <a asp-action="Delete" asp-route-id="@item.skloniste_id">Izbriši</a>
-            </td>
-        </tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adresa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NazivGrada)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NazivZupanije)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KapacitetSklonista)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefon)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.skloniste_id">Uredi</a>
+                    <!--<a asp-action="Details" asp-route-id="@item.skloniste_id">Details</a> |-->
+                    <a asp-controller="Admin" asp-action="IzbrisiSkloniste" asp-route-id="@item.skloniste_id">Izbriši</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
