@@ -13,7 +13,7 @@
     }
 }
 
-<h1>Korisnici</h1>
+<h1>Zaposlenici</h1>
 
 <p>
     <a asp-controller="Korisnici" asp-action="DodajZaposlenika">Dodaj novog zaposlenika</a>
@@ -70,7 +70,7 @@
                             
 
                             <td>
-                                <a asp-action="Edit" asp-route-id="@item.KorisnikId">Edit</a> |
+                                <a asp-controller="Admin" asp-action="UrediZaposlenika" asp-route-id="@item.KorisnikId">Uredi</a> |
                                 <a asp-controller="Admin" asp-action="IzbrišiKorisnika" asp-route-id="@item.KorisnikId">Izbriši</a>
                             </td>
                         </tr>

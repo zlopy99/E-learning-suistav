@@ -136,5 +136,127 @@ namespace PIS_projekt.Controllers
             return RedirectToAction("PrikazZaposlenika","Korisnici");
 
         }
+        public IActionResult Edit(int id)
+        {
+            var query = ctx.Sklonistes
+                .Where(s => s.SklonisteId == id)
+                .FirstOrDefault<Skloniste>();
+
+            var gradovi = ctx.Grads
+                      .OrderBy(g => g.NazivGrada)
+                      .Select(g => new
+                      {
+                          g.GradId,
+                          g.NazivGrada
+                      })
+                      .ToList();
+            ViewBag.Gradovi = new SelectList(gradovi, nameof(Grad.GradId), nameof(Grad.NazivGrada));
+            return View("SklonisteEdit", query);
+        }
+        public IActionResult SpremiPromjene(Skloniste s)
+        {
+            if (ModelState.IsValid)
+            {
+                var query = ctx.Sklonistes
+                    .Where(sk => sk.SklonisteId == s.SklonisteId)
+                    .FirstOrDefault<Skloniste>();
+
+                Skloniste sklonisteEdit = ctx.Sklonistes.Find(s.SklonisteId);
+                sklonisteEdit.NazivSklonista = s.NazivSklonista;
+                ctx.SaveChanges();
+                sklonisteEdit.Adresa = s.Adresa;
+                ctx.SaveChanges();
+                sklonisteEdit.KapacitetSklonista = s.KapacitetSklonista;
+                ctx.SaveChanges();
+                sklonisteEdit.Email = s.Email;
+                ctx.SaveChanges();
+                sklonisteEdit.Telefon = s.Telefon;
+                ctx.SaveChanges();
+                sklonisteEdit.GradId = s.GradId;
+                ctx.SaveChanges();
+
+                return RedirectToAction("Sklonista", "Admin");
+
+            }
+            else
+            {
+                return View("SklonisteEdit", s);
+            }
+        }
+        public IActionResult UrediAdmina(int id)
+        {
+            var query = ctx.Korisniks
+                .Where(k => k.UlogaFk == 1)
+                .Where(k => k.KorisnikId == id)
+                .FirstOrDefault<Korisnik>();
+
+            return View("AdminsEdit",query);
+        }
+        public IActionResult Uredi(Korisnik k)
+        {
+            k.UlogaFk = 1;
+            if (ModelState.IsValid)
+            {
+                var query = ctx.Korisniks
+                    .Where(kor => kor.KorisnikId == k.KorisnikId)
+                    .FirstOrDefault<Korisnik>();
+
+                Korisnik korisnikEdit = ctx.Korisniks.Find(k.KorisnikId);
+                korisnikEdit.Ime = k.Ime;
+                ctx.SaveChanges();
+                korisnikEdit.Prezime = k.Prezime;
+                ctx.SaveChanges();
+                korisnikEdit.Email = k.Email;
+                ctx.SaveChanges();
+                korisnikEdit.Lozinka = k.Lozinka;
+                ctx.SaveChanges();
+
+                return RedirectToAction("PrikazAdmina", "Korisnici");
+            }
+            else
+            {
+                return View("AdminsEdit", k);
+            }
+        }
+        public IActionResult UrediZaposlenika(int id)
+        {
+            var query = ctx.Korisniks
+                .Where(k => k.KorisnikId == id)
+                .Where(k => k.UlogaFk == 2)
+                .FirstOrDefault<Korisnik>();
+            var sklonista = ctx.Sklonistes
+                      .OrderBy(s => s.NazivSklonista)
+                      .Select(s => new
+                      {
+                          s.SklonisteId,
+                          s.NazivSklonista
+                      })
+                      .ToList();
+            ViewBag.Sklonista = new SelectList(sklonista, nameof(Skloniste.SklonisteId), nameof(Skloniste.NazivSklonista));
+            return View("ZaposlenikEdit",query);
+        }
+        public IActionResult SpremiPromjeneZaposlenik(Korisnik k)
+        {
+            k.UlogaFk = 2;
+            if (ModelState.IsValid)
+            {
+                Korisnik korisnikEdit = ctx.Korisniks.Find(k.KorisnikId);
+                korisnikEdit.Ime = k.Ime;
+                ctx.SaveChanges();
+                korisnikEdit.Prezime = k.Prezime;
+                ctx.SaveChanges();
+                korisnikEdit.Email = k.Email;
+                ctx.SaveChanges();
+                korisnikEdit.Lozinka = k.Lozinka;
+                ctx.SaveChanges();
+                korisnikEdit.SklonisteFk = k.SklonisteFk;
+                ctx.SaveChanges();
+                return RedirectToAction("PrikazZaposlenika", "Korisnici");
+            }
+            else
+            {
+                return View("ZaposlenikEdit", k);
+            }
+        }
     }
 }

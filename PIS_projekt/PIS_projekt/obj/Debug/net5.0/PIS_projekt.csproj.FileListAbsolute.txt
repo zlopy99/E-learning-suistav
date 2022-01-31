@@ -505,3 +505,6 @@ C:\Users\DT User\source\repos\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Vie
 C:\Users\DT User\source\repos\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Zivotinje\ZivotinjeUSklonistu.cshtml.g.cs
 C:\Users\DT User\source\repos\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Korisnici\DodavanjeZivotinje.cshtml.g.cs
 C:\Users\DT User\source\repos\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Zivotinje\PrijavljeneLutalice.cshtml.g.cs
+C:\Users\DT User\source\repos\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Admin\SklonisteEdit.cshtml.g.cs
+C:\Users\DT User\source\repos\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Admin\AdminsEdit.cshtml.g.cs
+C:\Users\DT User\source\repos\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Admin\ZaposlenikEdit.cshtml.g.cs
