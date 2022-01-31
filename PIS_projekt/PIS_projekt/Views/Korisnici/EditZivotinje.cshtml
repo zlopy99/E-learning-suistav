@@ -1,0 +1,90 @@
+﻿@model PIS_projekt.Models.ZivotinjaUSklonistu
+
+@{
+    ViewData["Title"] = "EditZivotinje";
+    Layout = "~/Views/Shared/_LayoutZaposlenik.cshtml";
+}
+
+<h1>EditZivotinje</h1>
+
+<h4>ZivotinjaUSklonistu</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="UrediZivotinju">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ZivotinjaUSklonistuId" />
+            <div class="form-group">
+                <label asp-for="BrojMikrocipa" class="control-label"></label>
+                <input asp-for="BrojMikrocipa" class="form-control" />
+                <span asp-validation-for="BrojMikrocipa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImeZivotinje" class="control-label"></label>
+                <input asp-for="ImeZivotinje" class="form-control" />
+                <span asp-validation-for="ImeZivotinje" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PasminaId" class="control-label"></label>
+                <select asp-for="PasminaId" class="form-control" asp-items="ViewBag.Pasmine">
+                    <option disabled selected value="">Izaberite pasminu životinje</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="SpolId" class="control-label"></label>
+                <select asp-for="SpolId" class="form-control" asp-items="ViewBag.Spolovi">
+                    <option disabled selected value="">Izaberite spol životinje</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="KastratId" class="control-label"></label>
+                <select asp-for="KastratId" class="form-control" asp-items="ViewBag.Kastrat">
+                    <option disabled selected value="">Izaberite spol životinje</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="UdomljavanjeId" class="control-label"></label>
+                <select asp-for="UdomljavanjeId" class="form-control" asp-items="ViewBag.Udomljavanje">
+                    <option disabled selected value="">Je li životinja za udomljavanje</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DatumStenjenja" class="control-label"></label>
+                <input asp-for="DatumStenjenja" class="form-control" />
+                <span asp-validation-for="DatumStenjenja" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Slika" class="control-label"></label>
+                <input asp-for="Slika" class="form-control" />
+                <span asp-validation-for="Slika" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DatumPronalaska" class="control-label"></label>
+                <input asp-for="DatumPronalaska" class="form-control" />
+                <span asp-validation-for="DatumPronalaska" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdresaPronalaska" class="control-label"></label>
+                <input asp-for="AdresaPronalaska" class="form-control" />
+                <span asp-validation-for="AdresaPronalaska" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Opis" class="control-label"></label>
+                <input asp-for="Opis" class="form-control" />
+                <span asp-validation-for="Opis" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Spremi" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Zivotinje" asp-action="ZivotinjeUSklonistu">Povratak</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
