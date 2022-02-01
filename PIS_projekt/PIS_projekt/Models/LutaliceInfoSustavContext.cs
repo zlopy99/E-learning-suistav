@@ -319,7 +319,7 @@ namespace PIS_projekt.Models
                     .HasColumnName("Adresa_pronalaska");
 
                 entity.Property(e => e.BrojMikrocipa)
-                    .HasMaxLength(30)
+                    .HasMaxLength(50)
                     .HasColumnName("Broj_mikrocipa");
 
                 entity.Property(e => e.DatumStenjenja)

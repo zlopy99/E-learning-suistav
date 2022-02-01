@@ -1,6 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
@@ -28,9 +34,13 @@ namespace PIS_projekt.Models
         public int SklonisteId { get; set; }
         [Display(Name = "Je li životinja za udomljavanje?")]
         public int? UdomljavanjeId { get; set; }
+        [MaxLength]
         public string Slika { get; set; }
         [Display(Name = "Datum pronalaska životinje")]
         public DateTime? DatumPronalaska { get; set; }
+        [Display(Name = "Unesite sliku")]
+        [NotMapped]
+        public IFormFile Photo { get; set; }
 
         public virtual Kastrat Kastrat { get; set; }
         public virtual Pasmina Pasmina { get; set; }

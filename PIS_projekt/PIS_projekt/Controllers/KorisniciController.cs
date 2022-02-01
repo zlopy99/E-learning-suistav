@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PIS_projekt.Models;
@@ -7,16 +8,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace PIS_projekt.Controllers
 {
     public class KorisniciController : Controller
     {
         private readonly LutaliceInfoSustavContext ctx;
-        public KorisniciController(LutaliceInfoSustavContext ctx)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public KorisniciController(LutaliceInfoSustavContext ctx, IWebHostEnvironment webHostEnvironment)
         {
             this.ctx = ctx;
-
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult PrikazAdmina()
         {
@@ -138,14 +141,31 @@ namespace PIS_projekt.Controllers
             ViewBag.Kastrat = new SelectList(kastrat, nameof(Kastrat.KastratId), nameof(Kastrat.JeLiKastrat));
             return View("DodavanjeZivotinje");
         }
-        public IActionResult DodajZivotinju(ZivotinjaUSklonistu zus)
+        /*public IActionResult DodajZivotinju(ZivotinjaUSklonistu zus)*/
+        /*public async Task<IActionResult> DodajZivotinjuAsync(ZivotinjaUSklonistu zus)*/
+        public async Task<IActionResult> DodajZivotinjuAsync(ZivotinjaUSklonistu zus)
         {
             var zaposlenik = ctx.Korisniks
                 .Where(k => k.KorisnikId == HttpContext.Session.GetInt32("idLogiranogKorisnika"))
                 .FirstOrDefault<Korisnik>();
             zus.SklonisteId = (int)zaposlenik.SklonisteFk;
+
+            /*  Photo upload  */
+            //  Guid.NewGuid().ToString() --> Random generira neki niz brojeva i slova,
+            //  uglavnom ovo se može stavit kod slike da budu sve različite
             if (ModelState.IsValid)
             {
+                if(zus.Photo != null)
+                {
+                    string folder = "images/";
+                    folder += zus.BrojMikrocipa.ToString() + "_" + zus.Photo.FileName;
+                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+
+                    await zus.Photo.CopyToAsync(new FileStream(serverFolder, FileMode.Create)); ;
+
+                    var spliting = folder.Split('/');
+                    zus.Slika = spliting[1];
+                }
                 ctx.ZivotinjaUSklonistus.Add(zus);
                 ctx.SaveChanges();
                 return RedirectToAction("ZivotinjeUSklonistu", "Zivotinje");

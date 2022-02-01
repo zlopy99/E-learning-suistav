@@ -4,98 +4,181 @@
     ViewData["Title"] = "Detalji";
 }
 
-<h1>Detalji</h1>
+<div class="row rounded bg-light border-bottom">
+    <div class="container p-md-2">
+        <h1 class="test"><i class="fas fa-info-circle"></i> Informacije</h1>
+        <div class="row rounded m-md-2 bg-light d-flex justify-content-start p-3">
+            @foreach (var item in Model.zivotinje)
+            {
+                <div class="col-sm-3 shadow-lg">
+                    <dl style="color: black">
+                        <dt>
+                            Broj mikročipa
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.BrojMikrocipa)
+                        </dd>
+                        <dt class="">
+                            Ime životinje
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.ImeZivotinje)
+                        </dd>
+                        <dt>
+                            Naziv pasmine
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.NazivPasmine)
+                        </dd>
+                        <dt>
+                            Vrsta životinje
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.NazivVrste)
+                        </dd>
+                        <dt>
+                            Spol
+                        </dt>
+                        <dd class="">
+                            @Html.DisplayFor(model => item.NazivSpola)
+                        </dd>
+                    </dl>
+                </div>
+                <div class="col-sm-3 shadow-lg mx-md-4">
+                    <dl style="color: black">
+                        <dt>
+                            Datum štenjenja
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.DatumStenjenja)
+                        </dd>
+                        <dt>
+                            Adresa pronalaska
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.AdresaPronalaska)
+                        </dd>
+                        <dt>
+                            Datum pronalaska
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.DatumPronalaska)
+                        </dd>
+                        <dt>
+                            Za udomljavanje
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.JeLiZaUdomljavanje)
+                        </dd>
+                        <dt>
+                            Naziv sklonista
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.NazivSklonista)
+                        </dd>
+                        <dt>
+                            Mjesto
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.NazivGrada)
+                        </dd>
+                    </dl>
+                </div>
+                <div class="col-sm-5">
+                    <dd>
+                        <img src="/images/@Html.DisplayFor(Model => item.Slika)" alt="Nema slike" 
+                             class="img-thumbnail rounded-circle shadow-lg ml-3"
+                             style="height: 400px; width: 550px"/>
+                    </dd>
+                </div>
+            }
+                </div>
+            </div>
+</div>
 
-<div>
-    <h4>Detalji</h4>
-    <hr />
-    <dl class="row">
-        @foreach (var item in Model.zivotinje)
-        {
-            <dt class="col-sm-2">
-                Broj mikročipa
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.BrojMikrocipa)
-            </dd>
-            <dt class="col-sm-2">
-                Ime životinje
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.ImeZivotinje)
-            </dd>
-            <dt class="col-sm-2">
-                Naziv pasmine
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.NazivPasmine)
-            </dd>
-            <dt class="col-sm-2">
-                Vrsta životinje
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.NazivVrste)
-            </dd>
-            <dt class="col-sm-2">
-                Spol
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.NazivSpola)
-            </dd>
-            <dt class="col-sm-2">
-                Datum štenjenja
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.DatumStenjenja)
-            </dd>
-            <dt class="col-sm-2">
+    <!--<h1>Detalji</h1>
+
+    <div class="container bg-light">-->
+    @*<h4>Detalji</h4>*@
+    <!--<hr />
+        <dl class="row">
+            @foreach (var item in Model.zivotinje)
+            {
+                <div class="col-3 border">
+                <dt class="">
+                    Broj mikročipa
+                </dt>
+                <dd class="">
+                    @Html.DisplayFor(model => item.BrojMikrocipa)
+                </dd>
+                <dt class="">
+                    Ime životinje
+                </dt>
+                <dd class="">
+                    @Html.DisplayFor(model => item.ImeZivotinje)
+                </dd>
+                <dt class="">
+                    Naziv pasmine
+                </dt>
+                <dd class="">
+                    @Html.DisplayFor(model => item.NazivPasmine)
+                </dd>
+                <dt class="">
+                    Vrsta životinje
+                </dt>
+                <dd class="">
+                    @Html.DisplayFor(model => item.NazivVrste)
+                </dd>
+                <dt class="">
+                    Spol
+                </dt>
+                <dd class="">
+                    @Html.DisplayFor(model => item.NazivSpola)
+                </dd>
+                <dt class="">
+                    Datum štenjenja
+                </dt>
+                <dd class="">
+                    @Html.DisplayFor(model => item.DatumStenjenja)
+                </dd>
+        </div>
+        <div class="col-3 border">
+            <dt class="">
                 Adresa pronalaska
             </dt>
-            <dd class="col-sm-10">
+            <dd class="">
                 @Html.DisplayFor(model => item.AdresaPronalaska)
             </dd>
-            <dt class="col-sm-2">
+            <dt class="">
                 Datum pronalaska
             </dt>
-            <dd class="col-sm-10">
+            <dd class="">
                 @Html.DisplayFor(model => item.DatumPronalaska)
             </dd>
-            <dt class="col-sm-2">
+            <dt class="">
                 Za udomljavanje
             </dt>
-            <dd class="col-sm-10">
+            <dd class="">
                 @Html.DisplayFor(model => item.JeLiZaUdomljavanje)
             </dd>
-            <dt class="col-sm-2">
-                Slika
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.Slika)
-            </dd>
-            <dt class="col-sm-2">
-                Datum pronalaska
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.DatumPronalaska)
-            </dd>
-            <dt class="col-sm-2">
+            <dt class="">
                 Naziv sklonista
             </dt>
-            <dd class="col-sm-10">
+            <dd class="">
                 @Html.DisplayFor(model => item.NazivSklonista)
             </dd>
-            <dt class="col-sm-2">
+            <dt class="">
                 Mjesto
             </dt>
-            <dd class="col-sm-10">
+            <dd class="">
                 @Html.DisplayFor(model => item.NazivGrada)
             </dd>
+        </div>
+    }
 
-        }
+            </dl>
+            <div>
 
-    </dl>
-</div>
-<div>
-    
-    <a asp-action="Index">Back to List</a>
-</div>
+                <a asp-action="Index">Back to List</a>
+            </div>
+            </div>-->

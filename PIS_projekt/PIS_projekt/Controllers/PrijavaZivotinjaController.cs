@@ -116,6 +116,7 @@ namespace PIS_projekt.Controllers
                 iz.DatumPrijave = DateTime.Now;
                 ctx.IzgubljeneZivotinjes.Add(iz);
                 ctx.SaveChanges();
+                Console.WriteLine("ok");
                 return RedirectToAction("Zivotinje", "Izgubljene");
             }
             else
