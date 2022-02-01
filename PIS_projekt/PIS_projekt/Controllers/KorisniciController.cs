@@ -189,5 +189,90 @@ namespace PIS_projekt.Controllers
             ctx.SaveChanges();
             return RedirectToAction("ZivotinjeUSklonistu", "Zivotinje");
         }
+        public IActionResult Uredi(int id)
+        {
+            var query = ctx.ZivotinjaUSklonistus
+                .Where(z => z.ZivotinjaUSklonistuId == id)
+                .FirstOrDefault<ZivotinjaUSklonistu>();
+
+            var pasmina = ctx.Pasminas
+                      .OrderBy(s => s.NazivPasmine)
+                      .Select(s => new
+                      {
+                          s.PasminaId,
+                          s.NazivPasmine
+                      })
+                      .ToList();
+            ViewBag.Pasmine = new SelectList(pasmina, nameof(Pasmina.PasminaId), nameof(Pasmina.NazivPasmine));
+            var spolovi = ctx.Spols
+                .Select(s => new
+                {
+                    s.SpolId,
+                    s.NazivSpola
+                })
+                .ToList();
+            ViewBag.Spolovi = new SelectList(spolovi, nameof(Spol.SpolId), nameof(Spol.NazivSpola));
+
+            var udomljavanje = ctx.Udomljavanjes
+                .OrderBy(g => g.JeLiZaUdomljavanje)
+                .Select(g => new
+                {
+                    g.UdomljavanjeId,
+                    g.JeLiZaUdomljavanje
+
+                })
+                .ToList();
+            ViewBag.Udomljavanje = new SelectList(udomljavanje, nameof(Udomljavanje.UdomljavanjeId), nameof(Udomljavanje.JeLiZaUdomljavanje));
+
+            var kastrat = ctx.Kastrats
+                    .Select(k => new
+                    {
+                        k.KastratId,
+                        k.JeLiKastrat
+                    })
+                    .ToList();
+            ViewBag.Kastrat = new SelectList(kastrat, nameof(Kastrat.KastratId), nameof(Kastrat.JeLiKastrat));
+
+            return View("EditZivotinje",query);
+        }
+        public IActionResult UrediZivotinju(ZivotinjaUSklonistu zuv)
+        {
+            var zaposlenik = ctx.Korisniks
+                .Where(k => k.KorisnikId == HttpContext.Session.GetInt32("idLogiranogKorisnika"))
+                .Where(k=>k.UlogaFk==2)
+                .FirstOrDefault<Korisnik>();
+            zuv.SklonisteId = (int)zaposlenik.SklonisteFk;
+            if (ModelState.IsValid)
+            {
+                ZivotinjaUSklonistu zuvEdit = ctx.ZivotinjaUSklonistus.Find(zuv.ZivotinjaUSklonistuId);
+                zuvEdit.BrojMikrocipa = zuv.BrojMikrocipa;
+                ctx.SaveChanges();
+                zuvEdit.ImeZivotinje = zuv.ImeZivotinje;
+                ctx.SaveChanges();
+                zuvEdit.PasminaId = zuv.PasminaId;
+                ctx.SaveChanges();
+                zuvEdit.SpolId = zuv.SpolId;
+                ctx.SaveChanges();
+                zuvEdit.KastratId = zuv.KastratId;
+                ctx.SaveChanges();
+                zuvEdit.UdomljavanjeId = zuv.UdomljavanjeId;
+                ctx.SaveChanges();
+                zuvEdit.DatumStenjenja = zuv.DatumStenjenja;
+                ctx.SaveChanges();
+                zuvEdit.Slika = zuv.Slika;
+                ctx.SaveChanges();
+                zuvEdit.DatumPronalaska = zuv.DatumPronalaska;
+                ctx.SaveChanges();
+                zuvEdit.AdresaPronalaska = zuv.AdresaPronalaska;
+                ctx.SaveChanges();
+                zuvEdit.Opis = zuv.Opis;
+                ctx.SaveChanges();
+                return RedirectToAction("ZivotinjeUSklonistu", "Zivotinje");
+            }
+            else
+            {
+                return View("EditZivotinje", zuv);
+            }
+        }
     }
 }

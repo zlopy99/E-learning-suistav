@@ -50,8 +50,7 @@
                 @Html.DisplayFor(modelItem => item.Uloga.NazivUloge)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.KorisnikId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.KorisnikId">Details</a> |
+                <a asp-controller="Admin" asp-action="UrediAdmina" asp-route-id="@item.KorisnikId">Uredi</a> |
                 <a asp-controller="Admin" asp-action="DeleteAdmin" asp-route-id="@item.KorisnikId">Izbriši</a>
             </td>
         </tr>

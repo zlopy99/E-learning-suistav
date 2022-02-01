@@ -1,0 +1,136 @@
+﻿@model PIS_projekt.ViewModels.IzgubljeneMiniVM
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutZaposlenik.cshtml";
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.CurrentPage;
+    }
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-controller="Zivotinje" asp-action="ZivotinjeUSklonistu">Pronađene</a>
+    <a asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste">Za udomljavanje</a>
+    <a asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste">Izgubljene</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Detalji
+            </th>
+            <th>
+                Vrsta životinje
+            </th>
+            <th>
+                Pasmina
+            </th>
+            <th>
+                Spol
+            </th>
+            <th>
+                Kontakt
+            </th>
+            <th>
+                Lokacija nestanka
+            </th>
+            <th>
+                Mjesto nestanka
+            </th>
+            <th>
+                Datum nestanka
+            </th>
+            <th>
+                Datum prijave
+            </th>
+            <!-- <th>
+                Adresa skloništa
+            </th>
+            <th>
+                Mjesto
+            </th>
+            <th>
+                Županija
+            </th>
+            <th></th>-->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.IzgubljeneMini)
+        {
+            <tr>
+                <td>
+                    <a asp-action="IzgubljeneDetaljiSkloniste" asp-route-id="@item.IzgubljeneZivotinjeId">Detalji</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VrstaZivotinje)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pasmina)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Spol)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kontakt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LokacijaNestanka)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Grad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatumNestanka)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatumPrijave)
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="container">
+    @if (pager.TotalPages > 0)
+    {
+
+
+        <ul class="pagination justify-content-end">
+            @if (pager.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Zivotinje" asp-action="Izgubljene" asp-route-pg="1">Prva</a>
+                </li>
+                <li>
+                    <a class="page-link" asp-controller="Zivotinje" asp-action="Izgubljene" asp-route-pg="@(pager.CurrentPage-1)">Prethodna</a>
+                </li>
+            }
+
+            @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+            {
+                <li class="page-item @(pge==pager.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-controller="Zivotinje" asp-action="Izgubljene" asp-route-pg="@pge"> @pge </a>
+                </li>
+            }
+
+            @if (pager.CurrentPage < pager.TotalPages)
+            {
+                <li>
+                    <a class="page-link" asp-controller="Zivotinje" asp-action="Izgubljene" asp-route-pg="@(pager.CurrentPage+1)">Iduća</a>
+                </li>
+                <li>
+                    <a class="page-link" asp-controller="Zivotinje" asp-action="Izgubljene" asp-route-pg="@(pager.TotalPages)">Zadnja</a>
+                </li>
+            }
+        </ul>
+    }
+
+</div>
