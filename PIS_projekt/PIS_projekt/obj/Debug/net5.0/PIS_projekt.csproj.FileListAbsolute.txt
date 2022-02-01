@@ -1012,3 +1012,10 @@ C:\Users\Tino-Vinko\Documents\GitHub\Lutalice-Info\PIS_projekt\PIS_projekt\obj\D
 C:\Users\Tino-Vinko\Documents\GitHub\Lutalice-Info\PIS_projekt\PIS_projekt\obj\Debug\net5.0\ref\PIS_projekt.dll
 C:\Users\Tino-Vinko\Documents\GitHub\Lutalice-Info\PIS_projekt\PIS_projekt\obj\Debug\net5.0\PIS_projekt.pdb
 C:\Users\Tino-Vinko\Documents\GitHub\Lutalice-Info\PIS_projekt\PIS_projekt\obj\Debug\net5.0\PIS_projekt.genruntimeconfig.cache
+C:\Users\Tino-Vinko\Documents\GitHub\Lutalice-Info\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Admin\AdminsEdit.cshtml.g.cs
+C:\Users\Tino-Vinko\Documents\GitHub\Lutalice-Info\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Admin\SklonisteEdit.cshtml.g.cs
+C:\Users\Tino-Vinko\Documents\GitHub\Lutalice-Info\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Admin\ZaposlenikEdit.cshtml.g.cs
+C:\Users\Tino-Vinko\Documents\GitHub\Lutalice-Info\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Korisnici\EditZivotinje.cshtml.g.cs
+C:\Users\Tino-Vinko\Documents\GitHub\Lutalice-Info\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Zivotinje\izgubljeneDetaljiSkloniste.cshtml.g.cs
+C:\Users\Tino-Vinko\Documents\GitHub\Lutalice-Info\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Zivotinje\IzgubljeneSkloniste.cshtml.g.cs
+C:\Users\Tino-Vinko\Documents\GitHub\Lutalice-Info\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Zivotinje\ZaUdomljavanjeSkloniste.cshtml.g.cs

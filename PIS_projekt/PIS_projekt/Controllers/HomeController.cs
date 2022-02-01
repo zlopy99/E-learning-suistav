@@ -46,10 +46,6 @@ namespace PIS_projekt.Controllers
             {
                 pg = 1;
             }
-            /*int recsCount = model.skloniste.Count();
-            var pager = new Pager(recsCount, pg, pageSize);
-            int recSkip = (pg - 1) * pageSize;
-            var data = model.skloniste.Skip(recSkip).Take(pager.PageSize).ToList();*/
             int recsCount = query.Count();
             var pager = new Pager(recsCount, pg, pageSize);
             int recSkip = (pg - 1) * pageSize;

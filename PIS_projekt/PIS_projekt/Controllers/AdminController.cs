@@ -65,12 +65,11 @@ namespace PIS_projekt.Controllers
                 .ToList();
            
 
-            const int pageSize = 2;
+            const int pageSize = 5;
             if (pg < 1)
             {
                 pg = 1;
             }
-            
             int recsCount = query.Count();
             var pager = new Pager(recsCount, pg, pageSize);
             int recSkip = (pg - 1) * pageSize;

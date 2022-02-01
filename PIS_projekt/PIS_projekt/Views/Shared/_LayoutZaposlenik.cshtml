@@ -10,26 +10,27 @@
     <link rel="stylesheet" href="~/fontawesome-free-5.15.4-web/css/all.css" />
     <link rel="stylesheet" href="~/css/Custome.css" />
 </head>
-<body id="shelter_image">
+<body id="shelter_image" style="display: flex; flex-direction: column;">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm bg-light border-bottom box-shadow mb-3">
             <div class="container">
                 <!--<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PIS_projekt</a>-->
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-around">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light btn btn-primary border-1 border-light ml-1" asp-area="" asp-controller="Zivotinje" asp-action="UoceneLutalice"><i class="fas fa-warehouse"></i> Uočene lutalice</a>
+                            <a class="nav-link btn btn-outline-primary ml-2" asp-area="" asp-controller="Zivotinje" asp-action="ZivotinjeUSklonistu"><i class="fas fa-paw"></i> Životinje u skloništu</a>
                         </li>
-                        
-
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-primary ml-2" asp-area="" asp-controller="Zivotinje" asp-action="UoceneLutalice"><i class="fas fa-paw"></i> Uočene lutalice</a>
+                        </li>
                     </ul>
 
-                    <a asp-controller="Login" asp-action="Profil" asp-route-id="@Context.Session.GetInt32("idLogiranogKorisnika")">@Context.Session.GetString("imeLogiranogKorisnika") @Context.Session.GetString("prezimeLogiranogKorisnika")</a>
-                    <a class="nav-link text-light btn btn-primary border-1 border-light ml-1" asp-area="" asp-controller="Login" asp-action="Odjava"><i class="fas fa-user"></i> Odjava</a>
+                    <a class="nav-link btn btn-outline-success ml-2" asp-controller="Login" asp-action="Profil" asp-route-id="@Context.Session.GetInt32("idLogiranogKorisnika")">@Context.Session.GetString("imeLogiranogKorisnika") @Context.Session.GetString("prezimeLogiranogKorisnika")</a>
+                    <a class="nav-link btn btn-outline-primary ml-2" asp-area="" asp-controller="Login" asp-action="Odjava"><i class="fas fa-user"></i> Odjava</a>
                 </div>
             </div>
         </nav>
@@ -41,7 +42,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted bg-light">
+    <footer class="border-top footer text-muted bg-light" style="margin-top: auto; position: relative">
         <div class="container w-100">
             &copy; 2022 - PIS_projekt <!-- - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> -->
         </div>

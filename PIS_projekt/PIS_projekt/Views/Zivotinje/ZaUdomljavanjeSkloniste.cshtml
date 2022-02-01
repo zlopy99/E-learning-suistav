@@ -1,4 +1,4 @@
-﻿@model PIS_projekt.ViewModels.IzgubljeneMiniVM
+﻿@model PIS_projekt.ViewModels.ZivotinjeMiniVM
 
 @{
     ViewData["Title"] = "Index";
@@ -16,7 +16,7 @@
     <div class="container">
 
         <div class="d-inline-flex align-items-center">
-            <h1><i class="fas fa-paw"></i> Životinje-Izgubljene</h1>
+            <h1><i class="fas fa-paw"></i> Životinje-Za udomljavanje</h1>
             <a class="btn btn-outline-primary ml-4" asp-controller="Korisnici" asp-action="DodavanjeZivotinje">Dodaj novu životinju <i class="fas fa-plus-circle"></i></a>
         </div>
 
@@ -34,28 +34,28 @@
                             Informacije
                         </th>
                         <th>
-                            Vrsta životinje
+                            Broj mikročipa
+                        </th>
+                        <th>
+                            Ime
                         </th>
                         <th>
                             Pasmina
                         </th>
                         <th>
+                            Vrsta životinje
+                        </th>
+                        <th>
                             Spol
                         </th>
                         <th>
-                            Kontakt
+                            Za udomljavanje
                         </th>
                         <th>
-                            Lokacija nestanka
+                            Mjesto
                         </th>
                         <th>
-                            Mjesto nestanka
-                        </th>
-                        <th>
-                            Datum nestanka
-                        </th>
-                        <th>
-                            Datum prijave
+                            Opcije
                         </th>
                         <!-- <th>
                         Adresa skloništa
@@ -70,37 +70,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.IzgubljeneMini)
+                    @foreach (var item in Model.ZivotinjeMini)
                     {
                         <tr>
                             <td>
-                                <a asp-action="IzgubljeneDetaljiSkloniste" asp-route-id="@item.IzgubljeneZivotinjeId">Informacije</a>
+                                <a asp-controller="Zivotinje" asp-action="Detalji" asp-route-id="@item.ZivotinjaUSklonistuId">Informacije</a>
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.VrstaZivotinje)
+                                @Html.DisplayFor(modelItem => item.BrojMikrocipa)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Pasmina)
+                                @Html.DisplayFor(modelItem => item.ImeZivotinje)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Spol)
+                                @Html.DisplayFor(modelItem => item.NazivPasmine)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Kontakt)
+                                @Html.DisplayFor(modelItem => item.NazivVrste)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.LokacijaNestanka)
+                                @Html.DisplayFor(modelItem => item.NazivSpola)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Grad)
+                                @Html.DisplayFor(modelItem => item.JeLiZaUdomljavanje)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.DatumNestanka)
+                                @Html.DisplayFor(modelItem => item.NazivGrada)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.DatumPrijave)
+                                <a asp-controller="Korisnici" asp-action="Uredi" asp-route-id="@item.ZivotinjaUSklonistuId">Uredi</a> |
+                                <a asp-controller="Korisnici" asp-action="IzbrisiZivotinju" asp-route-id="@item.ZivotinjaUSklonistuId">Izbriši</a>
                             </td>
                         </tr>
+
                     }
                 </tbody>
                 <tfoot>
@@ -114,27 +116,27 @@
                                     @if (pager.CurrentPage > 1)
                                     {
                                         <li class="page-item">
-                                            <a class="page-link" asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-pg="1">Prva</a>
+                                            <a class="page-link" asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-pg="1">Prva</a>
                                         </li>
                                         <li>
-                                            <a class="page-link" asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-pg="@(pager.CurrentPage-1)">Prethodna</a>
+                                            <a class="page-link" asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-pg="@(pager.CurrentPage-1)">Prethodna</a>
                                         </li>
                                     }
 
                                     @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
                                     {
                                         <li class="page-item @(pge==pager.CurrentPage ? "active" : "")">
-                                            <a class="page-link" asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-pg="@pge"> @pge </a>
+                                            <a class="page-link" asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-pg="@pge"> @pge </a>
                                         </li>
                                     }
 
                                     @if (pager.CurrentPage < pager.TotalPages)
                                     {
                                         <li>
-                                            <a class="page-link" asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-pg="@(pager.CurrentPage+1)">Iduća</a>
+                                            <a class="page-link" asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-pg="@(pager.CurrentPage+1)">Iduća</a>
                                         </li>
                                         <li>
-                                            <a class="page-link" asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-pg="@(pager.TotalPages)">Zadnja</a>
+                                            <a class="page-link" asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-pg="@(pager.TotalPages)">Zadnja</a>
                                         </li>
                                     }
                                 </ul>
@@ -143,10 +145,6 @@
                     </tr>
                 </tfoot>
             </table>
-            <div class="container">
-
-
-            </div>
         </div>
     </div>
 </div>

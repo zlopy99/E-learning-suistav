@@ -12,107 +12,120 @@
     }
 }
 
-<h1>Sklonista</h1>
 
-<p>
-    <a asp-controller="Admin" asp-action="CreateSkloniste">Dodaj novo skloniste</a>
-</p>
+<div class="row rounded bg-light border-bottom">
+    <div class="container">
+        <div class="d-inline-flex align-items-center">
+            <h1 class="test"><i class="fas fa-warehouse"></i> Skloništa</h1>
+            <a class="btn btn-outline-primary ml-4" asp-controller="Admin" asp-action="CreateSkloniste">Dodaj novo skloniste <i class="fas fa-plus-circle"></i></a>
+        </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Naziv skloništa
-            </th>
-            <th>
-                Adresa
-            </th>
-            <th>
-                Grad
-            </th>
-            <th>
-                Županija
-            </th>
-            <th>
-                Kapacitet skloništa
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                Telefon
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.skloniste)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NazivSklonista)
-                </td>
+        <div class="table-responsive">
+            <table class="table table-hover mt-2 mb-md-0">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>
+                            Naziv skloništa
+                        </th>
+                        <th>
+                            Adresa
+                        </th>
+                        <th>
+                            Grad
+                        </th>
+                        <th>
+                            Županija
+                        </th>
+                        <th>
+                            Kapacitet skloništa
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Telefon
+                        </th>
+                        <th>
+                            Opcije
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.skloniste)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NazivSklonista)
+                            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Adresa)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NazivGrada)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NazivZupanije)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.KapacitetSklonista)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telefon)
-                </td>
-                <td>
-                    <a asp-controller="Admin" asp-action="Edit" asp-route-id="@item.skloniste_id">Uredi</a>
-                    <!--<a asp-action="Details" asp-route-id="@item.skloniste_id">Details</a> |-->
-                    <a asp-controller="Admin" asp-action="IzbrisiSkloniste" asp-route-id="@item.skloniste_id">Izbriši</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<div class="container">
-    @if (pager.TotalPages > 0)
-    {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Adresa)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NazivGrada)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NazivZupanije)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.KapacitetSklonista)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Telefon)
+                            </td>
+                            <td>
+                                <a asp-controller="Admin" asp-action="Edit" asp-route-id="@item.skloniste_id">Uredi</a>
+                                <!--<a asp-action="Details" asp-route-id="@item.skloniste_id">Details</a> |-->
+                                <a asp-controller="Admin" asp-action="IzbrisiSkloniste" asp-route-id="@item.skloniste_id">Izbriši</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="8" class="text-right p-2">
+                            <div>
+                                @if (pager.TotalPages > 0)
+                                {
 
 
-        <ul class="pagination justify-content-end">
-            @if (pager.CurrentPage > 1)
-            {
-                <li class="page-item">
-                    <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-pg="1">Prva</a>
-                </li>
-                <li>
-                    <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-pg="@(pager.CurrentPage-1)">Prethodna</a>
-                </li>
-            }
+                                    <ul class="pagination justify-content-end">
+                                        @if (pager.CurrentPage > 1)
+                                        {
+                                            <li class="page-item">
+                                                <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-pg="1">Prva</a>
+                                            </li>
+                                            <li>
+                                                <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-pg="@(pager.CurrentPage-1)">Prethodna</a>
+                                            </li>
+                                        }
 
-            @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
-            {
-                <li class="page-item @(pge==pager.CurrentPage ? "active" : "")">
-                    <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-pg="@pge"> @pge </a>
-                </li>
-            }
+                                        @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+                                        {
+                                            <li class="page-item @(pge==pager.CurrentPage ? "active" : "")">
+                                                <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-pg="@pge"> @pge </a>
+                                            </li>
+                                        }
 
-            @if (pager.CurrentPage < pager.TotalPages)
-            {
-                <li>
-                    <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-pg="@(pager.CurrentPage+1)">Iduća</a>
-                </li>
-                <li>
-                    <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-pg="@(pager.TotalPages)">Zadnja</a>
-                </li>
-            }
-        </ul>
-    }
-
+                                        @if (pager.CurrentPage < pager.TotalPages)
+                                        {
+                                            <li>
+                                                <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-pg="@(pager.CurrentPage+1)">Iduća</a>
+                                            </li>
+                                            <li>
+                                                <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-pg="@(pager.TotalPages)">Zadnja</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                            </div>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
 </div>

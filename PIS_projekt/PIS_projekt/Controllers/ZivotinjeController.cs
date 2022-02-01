@@ -82,7 +82,7 @@ namespace PIS_projekt.Controllers
                    // NazivZupanije = z.Skloniste.Grad.Zupanija.NazivZupanije*/
                 })
                 .ToList();
-            const int pageSize = 2;
+            const int pageSize = 5;
             if (pg < 1)
             {
                 pg = 1;
@@ -144,7 +144,7 @@ namespace PIS_projekt.Controllers
                     DatumPrijave = iz.DatumPrijave
                 })
                 .ToList();
-            const int pageSize = 1;
+            const int pageSize = 5;
             if (pg < 1)
             {
                 pg = 1;
@@ -267,7 +267,7 @@ namespace PIS_projekt.Controllers
                 .Where(ul => ul.GradId == grad.GradId)
                 .ToList();
             
-            const int pageSize = 2;
+            const int pageSize = 5;
             if (pg < 1)
             {
                 pg = 1;
@@ -280,6 +280,7 @@ namespace PIS_projekt.Controllers
             this.ViewBag.Pager = pager;
             return View("PrijavljeneLutalice", data);
         }
+        //  ZaUdomljavanjeSkloniste
         public IActionResult ZaUdomljavanjeSkloniste(int pg=1)
         {
             var logiraniKorisnik = ctx.Korisniks
@@ -315,7 +316,7 @@ namespace PIS_projekt.Controllers
                 .ToList();
 
 
-                const int pageSize = 2;
+                const int pageSize = 5;
                 if (pg < 1)
                 {
                     pg = 1;
@@ -330,7 +331,7 @@ namespace PIS_projekt.Controllers
                     ZivotinjeMini = data
                 };
                 this.ViewBag.Pager = pager;
-                return View("ZivotinjeUSklonistu", model);
+                return View("ZaUdomljavanjeSkloniste", model);
             }
             else
             {
@@ -361,7 +362,7 @@ namespace PIS_projekt.Controllers
                     DatumPrijave = iz.DatumPrijave
                 })
                 .ToList();
-            const int pageSize = 1;
+            const int pageSize = 5;
             if (pg < 1)
             {
                 pg = 1;
