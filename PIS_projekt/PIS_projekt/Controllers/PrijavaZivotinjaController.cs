@@ -136,5 +136,14 @@ namespace PIS_projekt.Controllers
             return Ok("Ok");
 
         }
+        public IActionResult IzbrisiUocenuLutalicu(int id)
+        {
+            var query = ctx.UoceneLutalices
+                .Where(ul => ul.UoceneLutaliceId == id)
+                .FirstOrDefault<UoceneLutalice>();
+            ctx.UoceneLutalices.Remove(query);
+            ctx.SaveChanges();
+            return RedirectToAction("UoceneLutalice", "Zivotinje");
+        }
     }
 }

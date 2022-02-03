@@ -1,32 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Tino-Vinko\\Documents\\GitHub\\Lutalice-Info\\PIS_projekt\\PIS_projekt\\PIS_projekt.csproj": {}
+    "C:\\Users\\DT User\\source\\repos\\PIS_projekt\\PIS_projekt\\PIS_projekt.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Tino-Vinko\\Documents\\GitHub\\Lutalice-Info\\PIS_projekt\\PIS_projekt\\PIS_projekt.csproj": {
+    "C:\\Users\\DT User\\source\\repos\\PIS_projekt\\PIS_projekt\\PIS_projekt.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tino-Vinko\\Documents\\GitHub\\Lutalice-Info\\PIS_projekt\\PIS_projekt\\PIS_projekt.csproj",
+        "projectUniqueName": "C:\\Users\\DT User\\source\\repos\\PIS_projekt\\PIS_projekt\\PIS_projekt.csproj",
         "projectName": "PIS_projekt",
-        "projectPath": "C:\\Users\\Tino-Vinko\\Documents\\GitHub\\Lutalice-Info\\PIS_projekt\\PIS_projekt\\PIS_projekt.csproj",
-        "packagesPath": "C:\\Users\\Tino-Vinko\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tino-Vinko\\Documents\\GitHub\\Lutalice-Info\\PIS_projekt\\PIS_projekt\\obj\\",
+        "projectPath": "C:\\Users\\DT User\\source\\repos\\PIS_projekt\\PIS_projekt\\PIS_projekt.csproj",
+        "packagesPath": "C:\\Users\\DT User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DT User\\source\\repos\\PIS_projekt\\PIS_projekt\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\Tino-Vinko\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\DT User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://www.nuget.org/api/v2": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
@@ -95,6 +95,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[5.0.11, 5.0.11]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -103,7 +109,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-rc.2.21505.57\\RuntimeIdentifierGraph.json"
         }
       }
     }

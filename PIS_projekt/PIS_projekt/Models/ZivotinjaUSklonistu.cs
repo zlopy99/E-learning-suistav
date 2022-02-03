@@ -25,6 +25,7 @@ namespace PIS_projekt.Models
         public string AdresaPronalaska { get; set; }
         public string Opis { get; set; }
         [Required(ErrorMessage = "Molimo izaberite pasminu")]
+        [Display(Name = "Pasmina")]
         public int? PasminaId { get; set; }
         [Required(ErrorMessage = "Molimo izaberite spol")]
         [Display(Name = "Spol životinje")]

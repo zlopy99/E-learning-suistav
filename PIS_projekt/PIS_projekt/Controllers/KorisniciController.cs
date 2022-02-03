@@ -149,7 +149,7 @@ namespace PIS_projekt.Controllers
                 .Where(k => k.KorisnikId == HttpContext.Session.GetInt32("idLogiranogKorisnika"))
                 .FirstOrDefault<Korisnik>();
             zus.SklonisteId = (int)zaposlenik.SklonisteFk;
-
+            
             /*  Photo upload  */
             //  Guid.NewGuid().ToString() --> Random generira neki niz brojeva i slova,
             //  uglavnom ovo se može stavit kod slike da budu sve različite
@@ -274,5 +274,16 @@ namespace PIS_projekt.Controllers
                 return View("EditZivotinje", zuv);
             }
         }
+        public IActionResult IzbrisiUocenuLutalicu(int id)
+        {
+            var query = ctx.UoceneLutalices
+                .Where(ul => ul.UoceneLutaliceId == id)
+                .FirstOrDefault<UoceneLutalice>();
+            ctx.UoceneLutalices.Remove(query);
+            ctx.SaveChanges();
+            return RedirectToAction("UoceneLutalice", "Zivotinje");
+        }
+
+
     }
 }

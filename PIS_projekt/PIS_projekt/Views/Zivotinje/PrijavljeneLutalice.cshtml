@@ -61,7 +61,7 @@
                                 @Html.DisplayFor(modelItem => item.Grad.NazivGrada)
                             </td>
                             <td>
-                                <a asp-action="Delete" asp-route-id="@item.UoceneLutaliceId">Delete</a>
+                                <a asp-controller="Korisnici" asp-action="IzbrisiUocenuLutalicu" asp-route-id="@item.UoceneLutaliceId">Izbriši</a>
                             </td>
                         </tr>
                     }

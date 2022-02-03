@@ -65,6 +65,64 @@ namespace PIS_projekt.Controllers
             HttpContext.Session.Remove("idLogiranogKorisnika");
             return RedirectToAction("Index");
         }
+        public IActionResult ProfilZaposlenik(int id)
+        {
+            var query = ctx.Korisniks
+                .Where(k => k.KorisnikId == id)
+                .Where(k=>k.UlogaFk == 2)
+                .FirstOrDefault<Korisnik>();
+            return View("Profil",query);
+        }
+        public IActionResult ProfilAdmin(int id)
+        {
+            var query = ctx.Korisniks
+                .Where(k => k.KorisnikId == id)
+                .Where(k => k.UlogaFk == 1)
+                .FirstOrDefault<Korisnik>();
+            return View("ProfilAdmin", query);
+        }
+        public IActionResult UrediProfilZaposlenik(Korisnik k)
+        {
+            k.UlogaFk = 2;
+            if (ModelState.IsValid)
+            {
+                Korisnik zaposlenik = ctx.Korisniks.Find(k.KorisnikId);
+                zaposlenik.Ime = k.Ime;
+                ctx.SaveChanges();
+                zaposlenik.Prezime = k.Prezime;
+                ctx.SaveChanges();
+                zaposlenik.Email = k.Email;
+                ctx.SaveChanges();
+                zaposlenik.Lozinka = k.Lozinka;
+                ctx.SaveChanges();
+                return RedirectToAction("ZivotinjeUSklonistu", "Zivotinje");
+            }
+            else
+            {
+                return View("Profil", k);
+            }
+        }
+        public IActionResult UrediProfilAdmin(Korisnik k)
+        {
+            k.UlogaFk = 1;
+            if (ModelState.IsValid)
+            {
+                Korisnik zaposlenik = ctx.Korisniks.Find(k.KorisnikId);
+                zaposlenik.Ime = k.Ime;
+                ctx.SaveChanges();
+                zaposlenik.Prezime = k.Prezime;
+                ctx.SaveChanges();
+                zaposlenik.Email = k.Email;
+                ctx.SaveChanges();
+                zaposlenik.Lozinka = k.Lozinka;
+                ctx.SaveChanges();
+                return RedirectToAction("Sklonista", "Admin");
+            }
+            else
+            {
+                return View("ProfilAdmin", k);
+            }
+        }
     }
     
 

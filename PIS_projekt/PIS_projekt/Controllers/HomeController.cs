@@ -18,7 +18,7 @@ namespace PIS_projekt.Controllers
         {
             this.ctx = ctx;
         }
-        public IActionResult Index(int pg=1)
+        public IActionResult Index(string sortOrder,int pg=1)
         {
             var query = ctx.Sklonistes
                 .Select(s => new SklonisteViewModel
@@ -36,11 +36,50 @@ namespace PIS_projekt.Controllers
 
                 })
                 .ToList();
-            /*var model = new SklonisteVM
+            
+            ViewData["NazivOrder"] = string.IsNullOrEmpty(sortOrder) ? "Naziv_desc" : "";
+            switch (sortOrder)
             {
-                skloniste = query
-            };*/
+                case "Naziv_desc":
+                    query = ctx.Sklonistes
+                        .Select(s => new SklonisteViewModel
+                        {
+                            skloniste_id = s.SklonisteId,
+                            /*GradId = s.GradId,
+                            ZupanijaId = s.Grad.ZupanijaId,*/
+                            NazivSklonista = s.NazivSklonista,
+                            Adresa = s.Adresa,
+                            NazivGrada = s.Grad.NazivGrada,
+                            NazivZupanije = s.Grad.Zupanija.NazivZupanije,
+                            KapacitetSklonista = s.KapacitetSklonista,
+                            Telefon = s.Telefon,
+                            Email = s.Email
 
+                        })
+                        .OrderByDescending(s => s.NazivSklonista)
+                        .ToList();
+                    break;
+                default:
+                    query = ctx.Sklonistes
+                        .Select(s => new SklonisteViewModel
+                        {
+                            skloniste_id = s.SklonisteId,
+                            /*GradId = s.GradId,
+                            ZupanijaId = s.Grad.ZupanijaId,*/
+                            NazivSklonista = s.NazivSklonista,
+                            Adresa = s.Adresa,
+                            NazivGrada = s.Grad.NazivGrada,
+                            NazivZupanije = s.Grad.Zupanija.NazivZupanije,
+                            KapacitetSklonista = s.KapacitetSklonista,
+                            Telefon = s.Telefon,
+                            Email = s.Email
+
+                        })
+                        .OrderBy(s => s.NazivSklonista)
+                        .ToList();
+                    break;
+            }
+           
             const int pageSize = 5;
             if (pg < 1)
             {
@@ -55,7 +94,17 @@ namespace PIS_projekt.Controllers
                 skloniste = data
             };
             this.ViewBag.Pager = pager;
-           
+            
+          /*  ViewData["NazivOrder"] = string.IsNullOrEmpty(sortOrder) ? "Naziv_desc" : "";
+            switch (sortOrder)
+            {
+                case "Naziv_desc":
+                    model.skloniste = model.skloniste.OrderByDescending(q => q.NazivSklonista);
+                    break;
+                default:
+                    model.skloniste = model.skloniste.OrderBy(q => q.NazivSklonista);
+                    break;
+            }*/
             return View("Index", model);
             // return Ok(model);
         }
@@ -121,11 +170,7 @@ namespace PIS_projekt.Controllers
                     NazivPasmine = z.Pasmina.NazivPasmine,
                     NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
                     NazivSpola = z.Spol.NazivSpola,
-                    //DatumStenjenja = z.DatumStenjenja,
-                    //Slika = z.Slika,
                     JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                   // AdresaPronalaska = z.AdresaPronalaska,
-                    //DatumPronalaska = z.DatumPronalaska,
                     NazivSklonista = z.Skloniste.NazivSklonista,
                     //Adresa = z.Skloniste.Adresa,
                     NazivGrada = z.Skloniste.Grad.NazivGrada,
