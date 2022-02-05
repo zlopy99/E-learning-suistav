@@ -361,6 +361,7 @@ namespace PIS_projekt.Controllers
             {
                 case "Mjesto":
                     query = ctx.ZivotinjaUSklonistus
+                            .Where(z => z.UdomljavanjeId == 1)
                             .Select(z => new ZivotinjeMiniViewModel
                             {
                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
@@ -380,6 +381,7 @@ namespace PIS_projekt.Controllers
                     break;
                 case "Mjesto_desc":
                     query = ctx.ZivotinjaUSklonistus
+                             .Where(z => z.UdomljavanjeId == 1)
                             .Select(z => new ZivotinjeMiniViewModel
                             {
                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
@@ -399,6 +401,7 @@ namespace PIS_projekt.Controllers
                     break;
                 case "NazivSklonista_desc":
                     query = ctx.ZivotinjaUSklonistus
+                             .Where(z => z.UdomljavanjeId == 1)
                             .Select(z => new ZivotinjeMiniViewModel
                             {
                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
@@ -418,6 +421,7 @@ namespace PIS_projekt.Controllers
                     break;
                 case "NazivSklonista":
                     query = ctx.ZivotinjaUSklonistus
+                            .Where(z => z.UdomljavanjeId == 1)
                             .Select(z => new ZivotinjeMiniViewModel
                             {
                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
@@ -437,6 +441,7 @@ namespace PIS_projekt.Controllers
                     break;
                 case "ZaUdomljavanje":
                     query = ctx.ZivotinjaUSklonistus
+                            .Where(z => z.UdomljavanjeId == 1)
                             .Select(z => new ZivotinjeMiniViewModel
                             {
                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
@@ -456,6 +461,7 @@ namespace PIS_projekt.Controllers
                     break;
                 case "ZaUdomljavanje_desc":
                     query = ctx.ZivotinjaUSklonistus
+                             .Where(z => z.UdomljavanjeId == 1)
                             .Select(z => new ZivotinjeMiniViewModel
                             {
                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
@@ -475,6 +481,7 @@ namespace PIS_projekt.Controllers
                     break;
                 case "Spol_desc":
                     query = ctx.ZivotinjaUSklonistus
+                             .Where(z => z.UdomljavanjeId == 1)
                             .Select(z => new ZivotinjeMiniViewModel
                             {
                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
@@ -494,6 +501,7 @@ namespace PIS_projekt.Controllers
                     break;
                 case "Spol":
                     query = ctx.ZivotinjaUSklonistus
+                            .Where(z => z.UdomljavanjeId == 1)
                             .Select(z => new ZivotinjeMiniViewModel
                             {
                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
@@ -513,6 +521,7 @@ namespace PIS_projekt.Controllers
                     break;
                 case "VrstaZivotinje_desc":
                     query = ctx.ZivotinjaUSklonistus
+                            .Where(z => z.UdomljavanjeId == 1)
                             .Select(z => new ZivotinjeMiniViewModel
                             {
                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
@@ -532,6 +541,7 @@ namespace PIS_projekt.Controllers
                     break;
                 case "VrstaZivotinje":
                     query = ctx.ZivotinjaUSklonistus
+                            .Where(z => z.UdomljavanjeId == 1)
                             .Select(z => new ZivotinjeMiniViewModel
                             {
                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
@@ -551,6 +561,7 @@ namespace PIS_projekt.Controllers
                     break;
                 case "Ime":
                     query = ctx.ZivotinjaUSklonistus
+                            .Where(z => z.UdomljavanjeId == 1)
                             .Select(z => new ZivotinjeMiniViewModel
                             {
                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
@@ -570,6 +581,7 @@ namespace PIS_projekt.Controllers
                     break;
                 case "Ime_desc":
                     query = ctx.ZivotinjaUSklonistus
+                             .Where(z => z.UdomljavanjeId == 1)
                             .Select(z => new ZivotinjeMiniViewModel
                             {
                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
@@ -589,6 +601,7 @@ namespace PIS_projekt.Controllers
                     break;
                 case "Pasmina_desc":
                     query = ctx.ZivotinjaUSklonistus
+                            .Where(z => z.UdomljavanjeId == 1)
                             .Select(z => new ZivotinjeMiniViewModel
                             {
                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
@@ -608,6 +621,7 @@ namespace PIS_projekt.Controllers
                     break;
                 default:
                     query = ctx.ZivotinjaUSklonistus
+                             .Where(z => z.UdomljavanjeId == 1)
                             .Select(z => new ZivotinjeMiniViewModel
                             {
                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
