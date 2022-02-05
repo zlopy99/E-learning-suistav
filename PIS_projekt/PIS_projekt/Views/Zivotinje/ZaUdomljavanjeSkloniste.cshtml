@@ -19,7 +19,7 @@
     <div class="container">
 
         <div class="d-inline-flex align-items-center">
-            <h1><i class="fas fa-paw"></i> Životinje-Za udomljavanje</h1>
+            <h2><i class="fas fa-paw"></i> Životinje-Za udomljavanje</h2>
             <a class="btn btn-outline-primary ml-4" asp-controller="Korisnici" asp-action="DodavanjeZivotinje">Dodaj novu životinju <i class="fas fa-plus-circle"></i></a>
         </div>
 
@@ -40,36 +40,27 @@
                             Broj mikročipa
                         </th>
                         <th>
-                            Ime
+                            <a asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-sortOrder="@ViewData["ImeOrder"]" asp-route-pg="@pager.CurrentPage">Ime</a>
                         </th>
                         <th>
-                            Pasmina
+                            <a asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-sortOrder="@ViewData["PasminaOrder"]" asp-route-pg="@pager.CurrentPage">Pasmina</a>
                         </th>
                         <th>
-                            Vrsta životinje
+                            <a asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-sortOrder="@ViewData["VrstaOrder"]" asp-route-pg="@pager.CurrentPage">Vrsta životinje</a>
                         </th>
                         <th>
-                            Spol
+                            <a asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-sortOrder="@ViewData["SpolOrder"]" asp-route-pg="@pager.CurrentPage">Spol</a>
                         </th>
                         <th>
-                            Za udomljavanje
+                            <a asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-sortOrder="@ViewData["UdomljavanjeOrder"]" asp-route-pg="@pager.CurrentPage">Za udomljavanje</a>
                         </th>
                         <th>
-                            Mjesto
+                            <a asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-sortOrder="@ViewData["GradOrder"]" asp-route-pg="@pager.CurrentPage">Mjesto</a>
                         </th>
                         <th>
                             Opcije
                         </th>
-                        <!-- <th>
-                        Adresa skloništa
-                    </th>
-                    <th>
-                        Mjesto
-                    </th>
-                    <th>
-                        Županija
-                    </th>
-                    <th></th>-->
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -119,27 +110,27 @@
                                     @if (pager.CurrentPage > 1)
                                     {
                                         <li class="page-item">
-                                            <a class="page-link" asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-pg="1">Prva</a>
+                                            <a class="page-link" asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="1">Prva</a>
                                         </li>
                                         <li>
-                                            <a class="page-link" asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-pg="@(pager.CurrentPage-1)">Prethodna</a>
+                                            <a class="page-link" asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="@(pager.CurrentPage-1)">Prethodna</a>
                                         </li>
                                     }
 
                                     @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
                                     {
                                         <li class="page-item @(pge==pager.CurrentPage ? "active" : "")">
-                                            <a class="page-link" asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-pg="@pge"> @pge </a>
+                                            <a class="page-link" asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="@pge"> @pge </a>
                                         </li>
                                     }
 
                                     @if (pager.CurrentPage < pager.TotalPages)
                                     {
                                         <li>
-                                            <a class="page-link" asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-pg="@(pager.CurrentPage+1)">Iduća</a>
+                                            <a class="page-link" asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="@(pager.CurrentPage+1)">Iduća</a>
                                         </li>
                                         <li>
-                                            <a class="page-link" asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-pg="@(pager.TotalPages)">Zadnja</a>
+                                            <a class="page-link" asp-controller="Zivotinje" asp-action="ZaUdomljavanjeSkloniste" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="@(pager.TotalPages)">Zadnja</a>
                                         </li>
                                     }
                                 </ul>

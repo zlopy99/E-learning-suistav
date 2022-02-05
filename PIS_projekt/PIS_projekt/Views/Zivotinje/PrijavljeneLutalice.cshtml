@@ -30,7 +30,7 @@
                             @Html.DisplayNameFor(model => model.Opis)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.DatumPrijave)
+                            <a asp-controller="Zivotinje" asp-action="UoceneLutalice" asp-route-sortOrder="@ViewData["DatumPrijaveOrder"]" asp-route-pg="@pager.CurrentPage"> @Html.DisplayNameFor(model => model.DatumPrijave)</a>
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.Slika)
@@ -78,27 +78,27 @@
                                         @if (pager.CurrentPage > 1)
                                         {
                                             <li class="page-item">
-                                                <a class="page-link" asp-controller="Zivotinje" asp-action="UoceneLutalice" asp-route-pg="1">Prva</a>
+                                                <a class="page-link" asp-controller="Zivotinje" asp-action="UoceneLutalice" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="1">Prva</a>
                                             </li>
                                             <li>
-                                                <a class="page-link" asp-controller="Zivotinje" asp-action="UoceneLutalice" asp-route-pg="@(pager.CurrentPage-1)">Prethodna</a>
+                                                <a class="page-link" asp-controller="Zivotinje" asp-action="UoceneLutalice" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="@(pager.CurrentPage-1)">Prethodna</a>
                                             </li>
                                         }
 
                                         @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
                                         {
                                             <li class="page-item @(pge==pager.CurrentPage ? "active" : "")">
-                                                <a class="page-link" asp-controller="Zivotinje" asp-action="UoceneLutalice" asp-route-pg="@pge"> @pge </a>
+                                                <a class="page-link" asp-controller="Zivotinje" asp-action="UoceneLutalice" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="@pge"> @pge </a>
                                             </li>
                                         }
 
                                         @if (pager.CurrentPage < pager.TotalPages)
                                         {
                                             <li>
-                                                <a class="page-link" asp-controller="Zivotinje" asp-action="UoceneLutalice" asp-route-pg="@(pager.CurrentPage+1)">Iduća</a>
+                                                <a class="page-link" asp-controller="Zivotinje" asp-action="UoceneLutalice" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="@(pager.CurrentPage+1)">Iduća</a>
                                             </li>
                                             <li class="page-item">
-                                                <a class="page-link" asp-controller="Zivotinje" asp-action="UoceneLutalice" asp-route-pg="@(pager.TotalPages)">Zadnja</a>
+                                                <a class="page-link" asp-controller="Zivotinje" asp-action="UoceneLutalice" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="@(pager.TotalPages)">Zadnja</a>
                                             </li>
                                         }
                                     </ul>

@@ -37,39 +37,30 @@
                             Informacije
                         </th>
                         <th>
-                            Vrsta životinje
+                            <a asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-sortOrder="@ViewData["VrstaZivotinjeOrder"]" asp-route-pg="@pager.CurrentPage">Vrsta životinje</a>
+</th>
+                        <th>
+                            <a asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-sortOrder="@ViewData["PasminaOrder"]" asp-route-pg="@pager.CurrentPage">Pasmina</a>
                         </th>
                         <th>
-                            Pasmina
-                        </th>
-                        <th>
-                            Spol
+                            <a asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-sortOrder="@ViewData["SpolOrder"]" asp-route-pg="@pager.CurrentPage">Spol</a>
                         </th>
                         <th>
                             Kontakt
                         </th>
                         <th>
-                            Lokacija nestanka
+                            <a asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-sortOrder="@ViewData["LokacijaNestankaOrder"]" asp-route-pg="@pager.CurrentPage">Lokacija nestanka</a>
                         </th>
                         <th>
-                            Mjesto nestanka
+                            <a asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-sortOrder="@ViewData["GradOrder"]" asp-route-pg="@pager.CurrentPage">Mjesto nestanka</a>
                         </th>
                         <th>
-                            Datum nestanka
+                            <a asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-sortOrder="@ViewData["DatumNestankaOrder"]" asp-route-pg="@pager.CurrentPage">Datum nestanka</a>
                         </th>
                         <th>
-                            Datum prijave
+                            <a asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-sortOrder="@ViewData["DatumPrijaveOrder"]" asp-route-pg="@pager.CurrentPage">Datum prijave</a>
                         </th>
-                        <!-- <th>
-                        Adresa skloništa
-                    </th>
-                    <th>
-                        Mjesto
-                    </th>
-                    <th>
-                        Županija
-                    </th>
-                    <th></th>-->
+         
                     </tr>
                 </thead>
                 <tbody>
@@ -117,27 +108,27 @@
                                     @if (pager.CurrentPage > 1)
                                     {
                                         <li class="page-item">
-                                            <a class="page-link" asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-pg="1">Prva</a>
+                                            <a class="page-link" asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="1">Prva</a>
                                         </li>
                                         <li>
-                                            <a class="page-link" asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-pg="@(pager.CurrentPage-1)">Prethodna</a>
+                                            <a class="page-link" asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="@(pager.CurrentPage-1)">Prethodna</a>
                                         </li>
                                     }
 
                                     @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
                                     {
                                         <li class="page-item @(pge==pager.CurrentPage ? "active" : "")">
-                                            <a class="page-link" asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-pg="@pge"> @pge </a>
+                                            <a class="page-link" asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="@pge"> @pge </a>
                                         </li>
                                     }
 
                                     @if (pager.CurrentPage < pager.TotalPages)
                                     {
                                         <li>
-                                            <a class="page-link" asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-pg="@(pager.CurrentPage+1)">Iduća</a>
+                                            <a class="page-link" asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="@(pager.CurrentPage+1)">Iduća</a>
                                         </li>
                                         <li>
-                                            <a class="page-link" asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-pg="@(pager.TotalPages)">Zadnja</a>
+                                            <a class="page-link" asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="@(pager.TotalPages)">Zadnja</a>
                                         </li>
                                     }
                                 </ul>
