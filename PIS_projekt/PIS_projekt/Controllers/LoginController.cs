@@ -24,9 +24,9 @@ namespace PIS_projekt.Controllers
             /*if (ModelState.IsValid)
             {*/
             var query = ctx.Korisniks
-                .Where(q => q.Email == k.Email)
-                .Where(q => q.Lozinka == k.Lozinka)
-                .FirstOrDefault<Korisnik>();
+            .Where(q => q.Email == k.Email)
+            .Where(q => q.Lozinka == k.Lozinka)
+            .FirstOrDefault<Korisnik>();
 
 
             if (query != null)
@@ -36,12 +36,12 @@ namespace PIS_projekt.Controllers
                 HttpContext.Session.SetInt32("idLogiranogKorisnika", query.KorisnikId);
                 if (query.UlogaFk == 1)
                 {
-                    
+
                     return RedirectToAction("Sklonista", "Admin");
                 }
-                else if(query.UlogaFk == 2)
+                else if (query.UlogaFk == 2)
                 {
-                    
+
                     return RedirectToAction("ZivotinjeUSklonistu", "Zivotinje");
                 }
                 else

@@ -351,8 +351,11 @@ namespace PIS_projekt.Controllers
             {
                 if(zus.Photo != null)
                 {
+                    var guid = Guid.NewGuid().ToString();
+                    var new_guid = guid.Substring(0, 5);
+
                     string folder = "images/";
-                    folder += zus.BrojMikrocipa.ToString() + "_" + zus.Photo.FileName;
+                    folder += new_guid + "_" + zus.Photo.FileName;
                     string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
 
                     await zus.Photo.CopyToAsync(new FileStream(serverFolder, FileMode.Create)); ;

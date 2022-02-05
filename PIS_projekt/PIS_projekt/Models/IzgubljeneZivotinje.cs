@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -30,6 +32,9 @@ namespace PIS_projekt.Models
         public int? VrstaZivotinjeId { get; set; }
         [Display(Name = "Je li vaš ljubimac kastriran")]
         public int? KastratId { get; set; }
+        [Display(Name = "Unesite sliku")]
+        [NotMapped]
+        public IFormFile Photo { get; set; }
 
         public virtual Grad Grad { get; set; }
         public virtual Kastrat Kastrat { get; set; }

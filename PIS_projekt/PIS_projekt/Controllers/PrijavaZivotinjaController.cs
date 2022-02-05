@@ -14,12 +14,12 @@ namespace PIS_projekt.Controllers
     public class PrijavaZivotinjaController : Controller
     {
         private readonly LutaliceInfoSustavContext ctx;
-        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public PrijavaZivotinjaController(LutaliceInfoSustavContext ctx, IHostingEnvironment environment)
+        public PrijavaZivotinjaController(LutaliceInfoSustavContext ctx, IWebHostEnvironment webHostEnvironment)
         {
             this.ctx = ctx;
-            hostingEnvironment = environment;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -36,7 +36,7 @@ namespace PIS_projekt.Controllers
             ViewBag.Gradovi = new SelectList(query, nameof(Grad.GradId), nameof(Grad.NazivGrada));
             return View("UocenaLutalica");
         }
-        public IActionResult Spremi(UoceneLutalice ul)
+        public async Task<IActionResult> SpremiAsync(UoceneLutalice ul)
         {
             /*if (ModelState.IsValid)
             {
@@ -46,6 +46,21 @@ namespace PIS_projekt.Controllers
             }*/
             if (ModelState.IsValid)
             {
+                if (ul.Photo != null)
+                {
+                    var guid = Guid.NewGuid().ToString();
+                    var new_guid = guid.Substring(0, 5); 
+
+                    string folder = "images/";
+                    folder += new_guid + "_" + ul.Photo.FileName;
+                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+
+                    await ul.Photo.CopyToAsync(new FileStream(serverFolder, FileMode.Create)); ;
+
+                    var spliting = folder.Split('/');
+                    ul.Slika = spliting[1];
+                }
+
                 ul.DatumPrijave = DateTime.Now;
                 ctx.UoceneLutalices.Add(ul);
                 ctx.SaveChanges();
@@ -109,15 +124,30 @@ namespace PIS_projekt.Controllers
             ViewBag.Vrste = new SelectList(vrste, nameof(VrstaZivotinje.VrstaZivotinjeId), nameof(VrstaZivotinje.NazivVrste));
             return View("IzgubiliSteLjubimca");
         }
-        public IActionResult SpremiPrijavu(IzgubljeneZivotinje iz)
+        public async Task<IActionResult> SpremiPrijavuAsync(IzgubljeneZivotinje iz)
         {
             if (ModelState.IsValid)
             {
+                if (iz.Photo != null)
+                {
+                    var guid = Guid.NewGuid().ToString();
+                    var new_guid = guid.Substring(0, 5);
+
+                    string folder = "images/";
+                    folder += new_guid + "_" + iz.Photo.FileName;
+                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+
+                    await iz.Photo.CopyToAsync(new FileStream(serverFolder, FileMode.Create)); ;
+
+                    var spliting = folder.Split('/');
+                    iz.Slika = spliting[1];
+                }
+
                 iz.DatumPrijave = DateTime.Now;
                 ctx.IzgubljeneZivotinjes.Add(iz);
                 ctx.SaveChanges();
                 Console.WriteLine("ok");
-                return RedirectToAction("Zivotinje", "Izgubljene");
+                return RedirectToAction("Izgubljene", "Zivotinje");
             }
             else
             {

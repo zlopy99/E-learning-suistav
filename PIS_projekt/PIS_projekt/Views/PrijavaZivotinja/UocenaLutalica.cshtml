@@ -14,7 +14,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post" asp-action="Spremi">
+        <form asp-controller="PrijavaZivotinja" asp-action="Spremi" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="GradId" class="control-label"></label>
@@ -24,9 +24,9 @@
                 <span asp-validation-for="GradId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Slika" class="control-label"></label>
-                <input type="file" asp-for="Slika" class="form-control" name="image" />
-                <span asp-validation-for="Slika" class="text-danger"></span>
+                <label asp-for="Photo" class="control-label"></label>
+                <input type="file" asp-for="Photo" class="form-control" accept="image/*" />
+                <span asp-validation-for="Photo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Opis" class="control-label"></label>
@@ -34,15 +34,15 @@
                 <span asp-validation-for="Opis" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Spremi" class="btn btn-primary" asp-controller="PrijavaZivotinja" asp-action="Spremi"/>
+                <input type="submit" value="Spremi" class="btn btn-primary"/>
             </div>
         </form>
     </div>
 </div>
 
-<div>
+@*<div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -30,7 +30,7 @@
                     </ul>
 
                     <a class="nav-link btn btn-outline-success ml-2" asp-controller="Login" asp-action="ProfilZaposlenik" asp-route-id="@Context.Session.GetInt32("idLogiranogKorisnika")">@Context.Session.GetString("imeLogiranogKorisnika") @Context.Session.GetString("prezimeLogiranogKorisnika")</a>
-                    <a class="nav-link btn btn-outline-primary ml-2" asp-area="" asp-controller="Login" asp-action="Odjava"><i class="fas fa-user"></i> Odjava</a>
+                    <a class="nav-link btn btn-outline-primary ml-2" asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-user"></i> Odjava</a>
                 </div>
             </div>
         </nav>

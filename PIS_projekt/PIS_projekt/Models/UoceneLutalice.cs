@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -16,6 +18,9 @@ namespace PIS_projekt.Models
         [Required(ErrorMessage = "Molimo dajte nam neke informacije kako bismo pronašli lutalicu")]
         public string Opis { get; set; }
         public DateTime? DatumPrijave { get; set; }
+        [Display(Name = "Unesite sliku")]
+        [NotMapped]
+        public IFormFile Photo { get; set; }
 
         public virtual Grad Grad { get; set; }
     }

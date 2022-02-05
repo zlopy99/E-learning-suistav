@@ -6,95 +6,107 @@
 }
 
 
-
-<div>
-    <h4>Detalji</h4>
-    <!-- Page transition-->
-        <div class="loader-wrapper">
-            <span class="loader"><span class="loader-inner"></span></span>
-        </div>
-    <hr />
-    <dl class="row">
-        @foreach (var item in Model.izgubljene)
-        {
-            <dt class="col-sm-2">
-                Broj mikročipa
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.BrojMikrocipa)
-            </dd>
-            <dt class="col-sm-2">
-                Ime životinje
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.Ime)
-            </dd>
-            <dt class="col-sm-2">
-                Naziv pasmine
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.Pasmina)
-            </dd>
-            <dt class="col-sm-2">
-                Vrsta životinje
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.VrstaZivotinje)
-            </dd>
-            <dt class="col-sm-2">
-                Spol
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.Spol)
-            </dd>
-            <dt class="col-sm-2">
-                Kastrat
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.Kastrat)
-            </dd>
-            <dt class="col-sm-2">
-                Slika
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.Slika)
-            </dd>
-            <dt class="col-sm-2">
-                Lokacija nestanka
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.LokacijaNestanka)
-            </dd>
-            <dt class="col-sm-2">
-                Mjesto
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.Grad)
-            </dd>
-            <dt class="col-sm-2">
-                Datum nestanka
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.DatumNestanka)
-            </dd>
-            <dt class="col-sm-2">
-                Datum prijave
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.DatumPrijave)
-            </dd>
-            <dt class="col-sm-2">
-                Kontakt
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => item.Kontakt)
-            </dd>
-
-        }
-
-    </dl>
+<div class="loader-wrapper">
+    <span class="loader"><span class="loader-inner"></span></span>
 </div>
-<div>
-
-    <a asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste">Povratak</a>
+<div class="row rounded bg-danger border-bottom">
+    <div class="container p-md-2">
+        <div class="d-inline-flex align-items-center">
+            <h1 class="test"><i class="fas fa-info-circle"></i> Informacije:</h1>
+            <h1 class="ml-5">NESTAO!!</h1>
+        </div>
+        <div class="row rounded m-md-2 bg-light d-flex justify-content-start p-3">
+            @foreach (var item in Model.izgubljene)
+            {
+                <div class="col-sm-3 shadow-lg">
+                    <dl style="color: black">
+                        <dt>
+                            Broj mikročipa
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.BrojMikrocipa)
+                        </dd>
+                        <dt>
+                            Ime životinje
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.Ime)
+                        </dd>
+                        <dt>
+                            Naziv pasmine
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.Pasmina)
+                        </dd>
+                        <dt>
+                            Vrsta životinje
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.VrstaZivotinje)
+                        </dd>
+                        <dt>
+                            Spol
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.Spol)
+                        </dd>
+                        <dt>
+                            Kastrat
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.Kastrat)
+                        </dd>
+                    </dl>
+                </div>
+                <div class="col-sm-3 shadow-lg mx-md-4">
+                    <dl style="color: black">
+                        <dt>
+                            Slika
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.Slika)
+                        </dd>
+                        <dt>
+                            Lokacija nestanka
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.LokacijaNestanka)
+                        </dd>
+                        <dt>
+                            Mjesto
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.Grad)
+                        </dd>
+                        <dt>
+                            Datum nestanka
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.DatumNestanka)
+                        </dd>
+                        <dt>
+                            Datum prijave
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.DatumPrijave)
+                        </dd>
+                        <dt>
+                            Kontakt
+                        </dt>
+                        <dd class="pb-md-3">
+                            @Html.DisplayFor(model => item.Kontakt)
+                        </dd>
+                    </dl>
+                </div>
+                <div class="col-sm-5">
+                    <img src="/images/@Html.DisplayFor(Model => item.Slika)" alt="Nema slike"
+                         class="img-thumbnail rounded-circle shadow-lg ml-3"
+                         style="height: 400px; width: 550px" />
+                </div>
+            }
+        </div>
+        @*<div>
+            <a asp-controller="Zivotinje" asp-action="IzgubljeneSkloniste">Povratak</a>
+        </div>*@
+    </div>
 </div>

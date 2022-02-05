@@ -55,7 +55,10 @@
                                 @Html.DisplayFor(modelItem => item.DatumPrijave)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Slika)
+                                @if (item.Slika != null)
+                                {
+                                    <a href="#">Slika</a>
+                                }
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Grad.NazivGrada)

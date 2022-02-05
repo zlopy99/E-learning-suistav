@@ -28,17 +28,33 @@
                         </li>
                     </ul>
                     <div class="d-sm-inline-flex m-0 p-0">
-                        <a class="nav-link btn btn-outline-info ml-2" asp-area="" asp-controller="PrijavaZivotinja" asp-action="IzgubljenLjubimac">Izgubili ste ljubimca?</a>
+                        @*<a class="nav-link btn btn-outline-info ml-2" asp-area="" asp-controller="PrijavaZivotinja" asp-action="IzgubljenLjubimac">Izgubili ste ljubimca?</a>*@
+                        <a class="nav-link btn btn-outline-info ml-2" onclick="ShowPopup('@Url.Action("IzgubljenLjubimac", "PrijavaZivotinja",Context.Request.Scheme)', 'Izgubili ste ljubimca? Dajte nam informacije')">Izgubili ste ljubimca?</a>
                         <a class="nav-link btn btn-outline-info ml-2" asp-area="" asp-controller="PrijavaZivotinja" asp-action="Index">Uočili ste lutalicu?</a>
                     </div>
                     <a class="nav-link btn btn-outline-primary ml-2" asp-area="" asp-controller="Login" asp-action="Index"><i class="fas fa-user"></i> Login</a>
+                    @*<a class="nav-link btn btn-outline-primary ml-2" onclick="ShowPopup('@Url.Action("Index", "Login",Context.Request.Scheme)', 'Login')"><i class="fas fa-user"></i> Login</a>*@
                 </div>
             </div>
         </nav>
     </header>
 
+    <div class="modal fade" tabindex="-1" id="form-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>*@
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container my-5">
-        <main role="main" class="pb-2" >
+        <main role="main" class="pb-2">
             @RenderBody()
         </main>
     </div>

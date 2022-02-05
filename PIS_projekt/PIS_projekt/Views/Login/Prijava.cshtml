@@ -5,37 +5,35 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Prijava</h1>
+@*<h1>Prijava</h1>*@
 <!-- Page transition-->
 <div class="loader-wrapper">
-	<span class="loader"><span class="loader-inner"></span></span>
-</div>
-
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post"asp-controller="Login" asp-action="Prijava">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Lozinka" class="control-label"></label>
-                <input asp-for="Lozinka" class="form-control" type="password"/>
-                <span asp-validation-for="Lozinka" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Prijavi se" class="btn btn-primary" />
-            </div>
-        </form>
+        <span class="loader"><span class="loader-inner"></span></span>
     </div>
+<!--Original-->
+<div class="container border rounded justify-content-center bg-light border-dark p-2" style="width:40%;margin:auto;height:350px">
+    <h1 class="d-flex align-items-start justify-content-center bg-white w-100 shadow p-2">Login</h1>
+    <form method="post" asp-controller="Login" asp-action="Prijava" class="pt-2">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Lozinka" class="control-label"></label>
+            <input asp-for="Lozinka" class="form-control" type="password" />
+            <span asp-validation-for="Lozinka" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Prijavi se" class="btn btn-primary btn-block" />
+        </div>
+    </form>
 </div>
-
-<div>
-    <a asp-controller="Home" asp-action="Index">Povratak</a>
-</div>
+<!--Original-->
+@*<div>
+        <a asp-controller="Home" asp-action="Index">Povratak</a>
+    </div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
