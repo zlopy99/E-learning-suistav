@@ -45,8 +45,6 @@ namespace PIS_projekt.Controllers
                         .Select(s => new SklonisteViewModel
                         {
                             skloniste_id = s.SklonisteId,
-                            /*GradId = s.GradId,
-                            ZupanijaId = s.Grad.ZupanijaId,*/
                             NazivSklonista = s.NazivSklonista,
                             Adresa = s.Adresa,
                             NazivGrada = s.Grad.NazivGrada,
@@ -65,8 +63,6 @@ namespace PIS_projekt.Controllers
                         .Select(s => new SklonisteViewModel
                         {
                             skloniste_id = s.SklonisteId,
-                            /*GradId = s.GradId,
-                            ZupanijaId = s.Grad.ZupanijaId,*/
                             NazivSklonista = s.NazivSklonista,
                             Adresa = s.Adresa,
                             NazivGrada = s.Grad.NazivGrada,
@@ -85,8 +81,6 @@ namespace PIS_projekt.Controllers
                         .Select(s => new SklonisteViewModel
                         {
                             skloniste_id = s.SklonisteId,
-                            /*GradId = s.GradId,
-                            ZupanijaId = s.Grad.ZupanijaId,*/
                             NazivSklonista = s.NazivSklonista,
                             Adresa = s.Adresa,
                             NazivGrada = s.Grad.NazivGrada,
@@ -105,8 +99,6 @@ namespace PIS_projekt.Controllers
                         .Select(s => new SklonisteViewModel
                         {
                             skloniste_id = s.SklonisteId,
-                            /*GradId = s.GradId,
-                            ZupanijaId = s.Grad.ZupanijaId,*/
                             NazivSklonista = s.NazivSklonista,
                             Adresa = s.Adresa,
                             NazivGrada = s.Grad.NazivGrada,
@@ -125,8 +117,6 @@ namespace PIS_projekt.Controllers
                         .Select(s => new SklonisteViewModel
                         {
                             skloniste_id = s.SklonisteId,
-                            /*GradId = s.GradId,
-                            ZupanijaId = s.Grad.ZupanijaId,*/
                             NazivSklonista = s.NazivSklonista,
                             Adresa = s.Adresa,
                             NazivGrada = s.Grad.NazivGrada,

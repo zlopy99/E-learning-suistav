@@ -29,16 +29,16 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>
-                            Naziv skloništa
+                            <a asp-controller="Admin" asp-action="Sklonista" asp-route-sortOrder="@ViewData["NazivOrder"]" asp-route-pg="@pager.CurrentPage">Naziv skloništa</a>
                         </th>
                         <th>
                             Adresa
                         </th>
                         <th>
-                            Grad
+                            <a asp-controller="Admin" asp-action="Sklonista" asp-route-sortOrder="@ViewData["GradOrder"]" asp-route-pg="@pager.CurrentPage">Grad</a>
                         </th>
                         <th>
-                            Županija
+                            <a asp-controller="Admin" asp-action="Sklonista" asp-route-sortOrder="@ViewData["ZupanijaOrder"]" asp-route-pg="@pager.CurrentPage">Županija</a>
                         </th>
                         <th>
                             Kapacitet skloništa
@@ -100,27 +100,27 @@
                                         @if (pager.CurrentPage > 1)
                                         {
                                             <li class="page-item">
-                                                <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-pg="1">Prva</a>
+                                                <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="1">Prva</a>
                                             </li>
                                             <li>
-                                                <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-pg="@(pager.CurrentPage-1)">Prethodna</a>
+                                                <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="@(pager.CurrentPage-1)">Prethodna</a>
                                             </li>
                                         }
 
                                         @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
                                         {
                                             <li class="page-item @(pge==pager.CurrentPage ? "active" : "")">
-                                                <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-pg="@pge"> @pge </a>
+                                                <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="@pge"> @pge </a>
                                             </li>
                                         }
 
                                         @if (pager.CurrentPage < pager.TotalPages)
                                         {
                                             <li>
-                                                <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-pg="@(pager.CurrentPage+1)">Iduća</a>
+                                                <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="@(pager.CurrentPage+1)">Iduća</a>
                                             </li>
                                             <li>
-                                                <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-pg="@(pager.TotalPages)">Zadnja</a>
+                                                <a class="page-link" asp-controller="Admin" asp-action="Sklonista" asp-route-sortOrder="@ViewBag.CurrentSort" asp-route-pg="@(pager.TotalPages)">Zadnja</a>
                                             </li>
                                         }
                                     </ul>

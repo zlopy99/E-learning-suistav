@@ -21,17 +21,47 @@ namespace PIS_projekt.Controllers
             this.ctx = ctx;
             _webHostEnvironment = webHostEnvironment;
         }
-        public IActionResult PrikazAdmina()
+        public IActionResult PrikazAdmina(string sortOrder)
         {
             var query = ctx.Korisniks
                    .Where(k => k.UlogaFk == 1)
                    .OrderBy(k => k.Prezime)
                    .ToList();
-            
+
+            ViewData["PrezimeOrder"] = string.IsNullOrEmpty(sortOrder) ? "Prezime_desc" : "";
+            ViewData["ImeOrder"] = sortOrder == "Ime" ? "Ime_desc" : "Ime";
+
+            switch (sortOrder)
+            {
+                case "Ime":
+                    query = ctx.Korisniks
+                       .Where(k => k.UlogaFk == 1)
+                       .OrderBy(k => k.Ime)
+                       .ToList();
+                    break;
+                case "Ime_desc":
+                    query = ctx.Korisniks
+                       .Where(k => k.UlogaFk == 1)
+                       .OrderByDescending(k => k.Ime)
+                       .ToList();
+                    break;
+                case "Prezime_desc":
+                    query = ctx.Korisniks
+                       .Where(k => k.UlogaFk == 1)
+                       .OrderByDescending(k => k.Prezime)
+                       .ToList();
+                    break;
+                default:
+                    query = ctx.Korisniks
+                       .Where(k => k.UlogaFk == 1)
+                       .OrderBy(k => k.Prezime)
+                       .ToList();
+                    break;
+            }
             return View("Admini",query);
             
         }
-        public IActionResult PrikazZaposlenika(int pg=1)
+        public IActionResult PrikazZaposlenika(string sortOrder,int pg=1)
         {
             var query = ctx.Korisniks
                 .Where(k => k.UlogaFk == 2)
@@ -49,7 +79,171 @@ namespace PIS_projekt.Controllers
                 })
                 .OrderBy(k=>k.Prezime)
                 .ToList();
-            
+
+            ViewData["NazivSklonistaOrder"] = string.IsNullOrEmpty(sortOrder) ? "NazivSklonista_desc" : "";
+            ViewData["GradOrder"] = sortOrder == "Grad" ? "Grad_desc" : "Grad";
+            ViewData["ImeOrder"] = sortOrder == "Ime" ? "Ime_desc" : "Ime";
+            ViewData["PrezimeOrder"] = sortOrder == "Prezime" ? "Prezime_desc" : "Prezime";
+
+            switch (sortOrder)
+            {
+                case "Prezime":
+                    query = ctx.Korisniks
+                        .Where(k => k.UlogaFk == 2)
+                        .Select(k => new ZaposleniciViewModel
+                        {
+                            KorisnikId = k.KorisnikId,
+                            SklonisteId = (int)k.SklonisteFk,
+                            Ime = k.Ime,
+                            Prezime = k.Prezime,
+                            Email = k.Email,
+                            Lozinka = k.Lozinka,
+                            NazivSklonista = k.Skloniste.NazivSklonista,
+                            Grad = k.Skloniste.Grad.NazivGrada
+
+                        })
+                        .OrderBy(k => k.Prezime)
+                        .ToList();
+                    ViewBag.CurrentSort = "Prezime";
+                    break;
+                case "Prezime_desc":
+                    query = ctx.Korisniks
+                        .Where(k => k.UlogaFk == 2)
+                        .Select(k => new ZaposleniciViewModel
+                        {
+                            KorisnikId = k.KorisnikId,
+                            SklonisteId = (int)k.SklonisteFk,
+                            Ime = k.Ime,
+                            Prezime = k.Prezime,
+                            Email = k.Email,
+                            Lozinka = k.Lozinka,
+                            NazivSklonista = k.Skloniste.NazivSklonista,
+                            Grad = k.Skloniste.Grad.NazivGrada
+
+                        })
+                        .OrderByDescending(k => k.Prezime)
+                        .ToList();
+                    ViewBag.CurrentSort = "Prezime_desc";
+                    break;
+
+                case "Ime":
+                    query = ctx.Korisniks
+                        .Where(k => k.UlogaFk == 2)
+                        .Select(k => new ZaposleniciViewModel
+                        {
+                            KorisnikId = k.KorisnikId,
+                            SklonisteId = (int)k.SklonisteFk,
+                            Ime = k.Ime,
+                            Prezime = k.Prezime,
+                            Email = k.Email,
+                            Lozinka = k.Lozinka,
+                            NazivSklonista = k.Skloniste.NazivSklonista,
+                            Grad = k.Skloniste.Grad.NazivGrada
+
+                        })
+                        .OrderBy(k => k.Ime)
+                        .ToList();
+                    ViewBag.CurrentSort = "Ime";
+                    break;
+                case "Ime_desc":
+                    query = ctx.Korisniks
+                        .Where(k => k.UlogaFk == 2)
+                        .Select(k => new ZaposleniciViewModel
+                        {
+                            KorisnikId = k.KorisnikId,
+                            SklonisteId = (int)k.SklonisteFk,
+                            Ime = k.Ime,
+                            Prezime = k.Prezime,
+                            Email = k.Email,
+                            Lozinka = k.Lozinka,
+                            NazivSklonista = k.Skloniste.NazivSklonista,
+                            Grad = k.Skloniste.Grad.NazivGrada
+
+                        })
+                        .OrderByDescending(k => k.Ime)
+                        .ToList();
+                    ViewBag.CurrentSort = "Ime_desc";
+                    break;
+
+                case "Grad":
+                    query = ctx.Korisniks
+                        .Where(k => k.UlogaFk == 2)
+                        .Select(k => new ZaposleniciViewModel
+                        {
+                            KorisnikId = k.KorisnikId,
+                            SklonisteId = (int)k.SklonisteFk,
+                            Ime = k.Ime,
+                            Prezime = k.Prezime,
+                            Email = k.Email,
+                            Lozinka = k.Lozinka,
+                            NazivSklonista = k.Skloniste.NazivSklonista,
+                            Grad = k.Skloniste.Grad.NazivGrada
+
+                        })
+                        .OrderBy(k => k.Grad)
+                        .ToList();
+                    ViewBag.CurrentSort = "Grad";
+                    break;
+                case "Grad_desc":
+                    query = ctx.Korisniks
+                        .Where(k => k.UlogaFk == 2)
+                        .Select(k => new ZaposleniciViewModel
+                        {
+                            KorisnikId = k.KorisnikId,
+                            SklonisteId = (int)k.SklonisteFk,
+                            Ime = k.Ime,
+                            Prezime = k.Prezime,
+                            Email = k.Email,
+                            Lozinka = k.Lozinka,
+                            NazivSklonista = k.Skloniste.NazivSklonista,
+                            Grad = k.Skloniste.Grad.NazivGrada
+
+                        })
+                        .OrderByDescending(k => k.Grad)
+                        .ToList();
+                    ViewBag.CurrentSort = "Grad_desc";
+                    break;
+
+                case "NazivSklonista_desc":
+                    query = ctx.Korisniks
+                        .Where(k => k.UlogaFk == 2)
+                        .Select(k => new ZaposleniciViewModel
+                        {
+                            KorisnikId = k.KorisnikId,
+                            SklonisteId = (int)k.SklonisteFk,
+                            Ime = k.Ime,
+                            Prezime = k.Prezime,
+                            Email = k.Email,
+                            Lozinka = k.Lozinka,
+                            NazivSklonista = k.Skloniste.NazivSklonista,
+                            Grad = k.Skloniste.Grad.NazivGrada
+
+                        })
+                        .OrderByDescending(k => k.NazivSklonista)
+                        .ToList();
+                    ViewBag.CurrentSort = "NazivSklonista_desc";
+                    break;
+                default:
+                    query = ctx.Korisniks
+                        .Where(k => k.UlogaFk == 2)
+                        .Select(k => new ZaposleniciViewModel
+                        {
+                            KorisnikId = k.KorisnikId,
+                            SklonisteId = (int)k.SklonisteFk,
+                            Ime = k.Ime,
+                            Prezime = k.Prezime,
+                            Email = k.Email,
+                            Lozinka = k.Lozinka,
+                            NazivSklonista = k.Skloniste.NazivSklonista,
+                            Grad = k.Skloniste.Grad.NazivGrada
+
+                        })
+                        .OrderBy(k => k.NazivSklonista)
+                        .ToList();
+                    ViewBag.CurrentSort = "";
+                    break;
+            }
+
             const int pageSize = 5;
             if (pg < 1)
             {

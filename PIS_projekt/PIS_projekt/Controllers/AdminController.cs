@@ -45,14 +45,12 @@ namespace PIS_projekt.Controllers
                 return View("NovoSkloniste", s);
             }
         }
-        public IActionResult Sklonista(int pg = 1)
+        public IActionResult Sklonista(string sortOrder,int pg = 1)
         {
             var query = ctx.Sklonistes
                 .Select(s => new SklonisteViewModel
                 {
                     skloniste_id = s.SklonisteId,
-                    /*GradId = s.GradId,
-                    ZupanijaId = s.Grad.ZupanijaId,*/
                     NazivSklonista = s.NazivSklonista,
                     Adresa = s.Adresa,
                     NazivGrada = s.Grad.NazivGrada,
@@ -63,7 +61,121 @@ namespace PIS_projekt.Controllers
 
                 })
                 .ToList();
-           
+
+            ViewData["NazivOrder"] = string.IsNullOrEmpty(sortOrder) ? "Naziv_desc" : "";
+            ViewData["GradOrder"] = sortOrder == "Grad" ? "Grad_desc" : "Grad";
+            ViewData["ZupanijaOrder"] = sortOrder == "Zupanija" ? "Zupanija_desc" : "Zupanija";
+            switch (sortOrder)
+            {
+                case "Zupanija_desc":
+                    query = ctx.Sklonistes
+                        .Select(s => new SklonisteViewModel
+                        {
+                            skloniste_id = s.SklonisteId,
+                            NazivSklonista = s.NazivSklonista,
+                            Adresa = s.Adresa,
+                            NazivGrada = s.Grad.NazivGrada,
+                            NazivZupanije = s.Grad.Zupanija.NazivZupanije,
+                            KapacitetSklonista = s.KapacitetSklonista,
+                            Telefon = s.Telefon,
+                            Email = s.Email
+
+                        })
+                        .OrderByDescending(s => s.NazivZupanije)
+                        .ToList();
+                    ViewBag.CurrentSort = "Zupanija_desc";
+                    break;
+                case "Zupanija":
+                    query = ctx.Sklonistes
+                        .Select(s => new SklonisteViewModel
+                        {
+                            skloniste_id = s.SklonisteId,
+                            NazivSklonista = s.NazivSklonista,
+                            Adresa = s.Adresa,
+                            NazivGrada = s.Grad.NazivGrada,
+                            NazivZupanije = s.Grad.Zupanija.NazivZupanije,
+                            KapacitetSklonista = s.KapacitetSklonista,
+                            Telefon = s.Telefon,
+                            Email = s.Email
+
+                        })
+                        .OrderBy(s => s.NazivZupanije)
+                        .ToList();
+                    ViewBag.CurrentSort = "Zupanija";
+                    break;
+                case "Grad":
+                    query = ctx.Sklonistes
+                        .Select(s => new SklonisteViewModel
+                        {
+                            skloniste_id = s.SklonisteId,
+                            NazivSklonista = s.NazivSklonista,
+                            Adresa = s.Adresa,
+                            NazivGrada = s.Grad.NazivGrada,
+                            NazivZupanije = s.Grad.Zupanija.NazivZupanije,
+                            KapacitetSklonista = s.KapacitetSklonista,
+                            Telefon = s.Telefon,
+                            Email = s.Email
+
+                        })
+                        .OrderBy(s => s.NazivGrada)
+                        .ToList();
+                    ViewBag.CurrentSort = "Grad";
+                    break;
+                case "Grad_desc":
+                    query = ctx.Sklonistes
+                        .Select(s => new SklonisteViewModel
+                        {
+                            skloniste_id = s.SklonisteId,
+                            NazivSklonista = s.NazivSklonista,
+                            Adresa = s.Adresa,
+                            NazivGrada = s.Grad.NazivGrada,
+                            NazivZupanije = s.Grad.Zupanija.NazivZupanije,
+                            KapacitetSklonista = s.KapacitetSklonista,
+                            Telefon = s.Telefon,
+                            Email = s.Email
+
+                        })
+                        .OrderByDescending(s => s.NazivGrada)
+                        .ToList();
+                    ViewBag.CurrentSort = "Grad_desc";
+                    break;
+                case "Naziv_desc":
+                    query = ctx.Sklonistes
+                        .Select(s => new SklonisteViewModel
+                        {
+                            skloniste_id = s.SklonisteId,
+                            NazivSklonista = s.NazivSklonista,
+                            Adresa = s.Adresa,
+                            NazivGrada = s.Grad.NazivGrada,
+                            NazivZupanije = s.Grad.Zupanija.NazivZupanije,
+                            KapacitetSklonista = s.KapacitetSklonista,
+                            Telefon = s.Telefon,
+                            Email = s.Email
+
+                        })
+                        .OrderByDescending(s => s.NazivSklonista)
+                        .ToList();
+                    ViewBag.CurrentSort = "Naziv_desc";
+                    break;
+                default:
+                    query = ctx.Sklonistes
+                        .Select(s => new SklonisteViewModel
+                        {
+                            skloniste_id = s.SklonisteId,
+                            NazivSklonista = s.NazivSklonista,
+                            Adresa = s.Adresa,
+                            NazivGrada = s.Grad.NazivGrada,
+                            NazivZupanije = s.Grad.Zupanija.NazivZupanije,
+                            KapacitetSklonista = s.KapacitetSklonista,
+                            Telefon = s.Telefon,
+                            Email = s.Email
+
+                        })
+                        .OrderBy(s => s.NazivSklonista)
+                        .ToList();
+                    ViewBag.CurrentSort = "";
+                    break;
+            }
 
             const int pageSize = 5;
             if (pg < 1)
