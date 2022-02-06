@@ -19,7 +19,8 @@
     <div class="container">
         <div class="d-inline-flex align-items-center">
             <h1><i class="fas fa-paw"></i> Životinje-Pronađene</h1>
-            <a class="btn btn-outline-primary ml-4" asp-controller="Korisnici" asp-action="DodavanjeZivotinje">Dodaj novu životinju <i class="fas fa-plus-circle"></i></a>
+            @*<a class="btn btn-outline-primary ml-4" asp-controller="Korisnici" asp-action="DodavanjeZivotinje">Dodaj novu životinju <i class="fas fa-plus-circle"></i></a>*@
+            <a class="btn btn-outline-primary ml-4" onclick="ShowPopup('@Url.Action("DodavanjeZivotinje", "Korisnici",Context.Request.Scheme)', 'Dodajte novu životinju')"><i class="fas fa-plus-circle"></i> Dodaj novu životinju</a>
         </div>
 
             <h5>
@@ -102,8 +103,13 @@
                                 </td>
 
                                 <td>
-                                    <a asp-controller="Korisnici" asp-action="Uredi" asp-route-id="@item.ZivotinjaUSklonistuId">Uredi</a> |
-                                    <a asp-controller="Korisnici" asp-action="IzbrisiZivotinju" asp-route-id="@item.ZivotinjaUSklonistuId">Izbriši</a>
+                                    @*<a asp-controller="Korisnici" asp-action="Uredi" asp-route-id="@item.ZivotinjaUSklonistuId">Uredi</a>*@
+                                    <a class="btn btn-outline-primary" onclick="ShowPopup('@Url.Action("Uredi", "Korisnici", new { id = item.ZivotinjaUSklonistuId} ,Context.Request.Scheme)', 'Uredi životinju')">Uredi</a>
+                                    <form method="post" asp-controller="Korisnici" asp-action="IzbrisiZivotinju" asp-route-id="@item.ZivotinjaUSklonistuId" onsubmit="return JQueryAjaxDelete(this)" class="d-inline">
+                                        <button type="submit" class="btn btn-outline-danger">
+                                            Izbriši
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         }

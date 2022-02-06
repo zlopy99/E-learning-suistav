@@ -64,11 +64,28 @@ namespace PIS_projekt.Controllers
                 ul.DatumPrijave = DateTime.Now;
                 ctx.UoceneLutalices.Add(ul);
                 ctx.SaveChanges();
-                return RedirectToAction("Index","Home");
+
+                //return RedirectToAction("Index","Home");
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "UocenaLutalica") });
             }
             else
             {
-                return View("UocenaLutalica", ul);
+                if (ul.GradId == 0)
+                {
+                    ViewBag.Error = "Molimo izaberite mjesto u kojem ste vidjeli lutalicu";
+                }
+                var query = ctx.Grads
+                .OrderBy(g => g.NazivGrada)
+                .Select(g => new
+                {
+                    g.GradId,
+                    g.NazivGrada
+                })
+                .ToList();
+
+                ViewBag.Gradovi = new SelectList(query, nameof(Grad.GradId), nameof(Grad.NazivGrada));
+                //return View("UocenaLutalica", ul);
+                return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "UocenaLutalica", ul) });
             }
             
         }
@@ -147,11 +164,62 @@ namespace PIS_projekt.Controllers
                 ctx.IzgubljeneZivotinjes.Add(iz);
                 ctx.SaveChanges();
                 Console.WriteLine("ok");
-                return RedirectToAction("Izgubljene", "Zivotinje");
+
+                //return RedirectToAction("Izgubljene", "Zivotinje");
+                return Json(new { isValid=true, html=Helper.RenderRazorViewToString(this, "IzgubiliSteLjubimca") });
             }
             else
             {
-                return View("IzgubiliSteLjubimca", iz);
+                var spolovi = ctx.Spols
+               .Select(s => new
+               {
+                   s.SpolId,
+                   s.NazivSpola
+               })
+               .ToList();
+                ViewBag.Spolovi = new SelectList(spolovi, nameof(Spol.SpolId), nameof(Spol.NazivSpola));
+
+                var gradovi = ctx.Grads
+                    .OrderBy(g => g.NazivGrada)
+                    .Select(g => new
+                    {
+                        g.GradId,
+                        g.NazivGrada
+
+                    })
+                    .ToList();
+                ViewBag.Gradovi = new SelectList(gradovi, nameof(Grad.GradId), nameof(Grad.NazivGrada));
+
+                var kastrat = ctx.Kastrats
+                        .Select(k => new
+                        {
+                            k.KastratId,
+                            k.JeLiKastrat
+                        })
+                        .ToList();
+                ViewBag.Kastrat = new SelectList(kastrat, nameof(Kastrat.KastratId), nameof(Kastrat.JeLiKastrat));
+
+                var pasmine = ctx.Pasminas
+                    .OrderBy(p => p.NazivPasmine)
+                    .Select(p => new
+                    {
+                        p.PasminaId,
+                        p.NazivPasmine
+                    })
+                    .ToList();
+                ViewBag.Pasmine = new SelectList(pasmine, nameof(Pasmina.PasminaId), nameof(Pasmina.NazivPasmine));
+
+                var vrste = ctx.VrstaZivotinjes
+                    .OrderBy(v => v.NazivVrste)
+                    .Select(v => new
+                    {
+                        v.VrstaZivotinjeId,
+                        v.NazivVrste
+                    })
+                    .ToList();
+                ViewBag.Vrste = new SelectList(vrste, nameof(VrstaZivotinje.VrstaZivotinjeId), nameof(VrstaZivotinje.NazivVrste));
+                //return View("IzgubiliSteLjubimca", iz);
+                return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "IzgubiliSteLjubimca", iz) });
             }
         }
         public IActionResult Prijavljene()

@@ -280,16 +280,31 @@ namespace PIS_projekt.Controllers
         }
         public IActionResult Add(Korisnik k)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && k.SklonisteFk != null)
             {
                 k.UlogaFk = 2;
                 ctx.Korisniks.Add(k);
                 ctx.SaveChanges();
-                return RedirectToAction("PrikazZaposlenika","Korisnici");
+                //return RedirectToAction("PrikazZaposlenika","Korisnici");
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "DodajKorisnika") });
             }
             else
             {
-                return View("DodajKorisnika",k);
+                if (k.SklonisteFk == null)
+                {
+                    ViewBag.Error = "Molimo izaberite sklonište";
+                }
+                var query = ctx.Sklonistes
+                      .OrderBy(s => s.NazivSklonista)
+                      .Select(s => new
+                      {
+                          s.SklonisteId,
+                          s.NazivSklonista
+                      })
+                      .ToList();
+                ViewBag.Sklonista = new SelectList(query, nameof(Skloniste.SklonisteId), nameof(Skloniste.NazivSklonista));
+                //return View("DodajKorisnika",k);
+                return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "DodajKorisnika", k) });
             }
             
 
@@ -365,11 +380,55 @@ namespace PIS_projekt.Controllers
                 }
                 ctx.ZivotinjaUSklonistus.Add(zus);
                 ctx.SaveChanges();
-                return RedirectToAction("ZivotinjeUSklonistu", "Zivotinje");
+                //return RedirectToAction("ZivotinjeUSklonistu", "Zivotinje");
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "DodavanjeZivotinje") });
             }
             else
             {
-                return View("DodavanjeZivotinje", zus);
+                if(zus.SpolId == 0)
+                {
+                    ViewBag.Error = "Molimo unesite spol";
+                }
+
+                var pasmina = ctx.Pasminas
+                     .OrderBy(s => s.NazivPasmine)
+                     .Select(s => new
+                     {
+                         s.PasminaId,
+                         s.NazivPasmine
+                     })
+                     .ToList();
+                ViewBag.Pasmine = new SelectList(pasmina, nameof(Pasmina.PasminaId), nameof(Pasmina.NazivPasmine));
+                var spolovi = ctx.Spols
+                    .Select(s => new
+                    {
+                        s.SpolId,
+                        s.NazivSpola
+                    })
+                    .ToList();
+                ViewBag.Spolovi = new SelectList(spolovi, nameof(Spol.SpolId), nameof(Spol.NazivSpola));
+
+                var udomljavanje = ctx.Udomljavanjes
+                    .OrderBy(g => g.JeLiZaUdomljavanje)
+                    .Select(g => new
+                    {
+                        g.UdomljavanjeId,
+                        g.JeLiZaUdomljavanje
+
+                    })
+                    .ToList();
+                ViewBag.Udomljavanje = new SelectList(udomljavanje, nameof(Udomljavanje.UdomljavanjeId), nameof(Udomljavanje.JeLiZaUdomljavanje));
+
+                var kastrat = ctx.Kastrats
+                        .Select(k => new
+                        {
+                            k.KastratId,
+                            k.JeLiKastrat
+                        })
+                        .ToList();
+                ViewBag.Kastrat = new SelectList(kastrat, nameof(Kastrat.KastratId), nameof(Kastrat.JeLiKastrat));
+                //return View("DodavanjeZivotinje", zus);
+                return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "DodavanjeZivotinje", zus) });
             }
         }
         public IActionResult IzbrisiZivotinju(int id)
@@ -464,11 +523,50 @@ namespace PIS_projekt.Controllers
                 ctx.SaveChanges();
                 zuvEdit.Opis = zuv.Opis;
                 ctx.SaveChanges();
-                return RedirectToAction("ZivotinjeUSklonistu", "Zivotinje");
+                //return RedirectToAction("ZivotinjeUSklonistu", "Zivotinje");
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "EditZivotinje") });
             }
             else
             {
-                return View("EditZivotinje", zuv);
+                var pasmina = ctx.Pasminas
+                      .OrderBy(s => s.NazivPasmine)
+                      .Select(s => new
+                      {
+                          s.PasminaId,
+                          s.NazivPasmine
+                      })
+                      .ToList();
+                ViewBag.Pasmine = new SelectList(pasmina, nameof(Pasmina.PasminaId), nameof(Pasmina.NazivPasmine));
+                var spolovi = ctx.Spols
+                    .Select(s => new
+                    {
+                        s.SpolId,
+                        s.NazivSpola
+                    })
+                    .ToList();
+                ViewBag.Spolovi = new SelectList(spolovi, nameof(Spol.SpolId), nameof(Spol.NazivSpola));
+
+                var udomljavanje = ctx.Udomljavanjes
+                    .OrderBy(g => g.JeLiZaUdomljavanje)
+                    .Select(g => new
+                    {
+                        g.UdomljavanjeId,
+                        g.JeLiZaUdomljavanje
+
+                    })
+                    .ToList();
+                ViewBag.Udomljavanje = new SelectList(udomljavanje, nameof(Udomljavanje.UdomljavanjeId), nameof(Udomljavanje.JeLiZaUdomljavanje));
+
+                var kastrat = ctx.Kastrats
+                        .Select(k => new
+                        {
+                            k.KastratId,
+                            k.JeLiKastrat
+                        })
+                        .ToList();
+                ViewBag.Kastrat = new SelectList(kastrat, nameof(Kastrat.KastratId), nameof(Kastrat.JeLiKastrat));
+                //return View("EditZivotinje", zuv);
+                return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "EditZivotinje", zuv) });
             }
         }
         public IActionResult IzbrisiUocenuLutalicu(int id)

@@ -37,12 +37,27 @@ namespace PIS_projekt.Controllers
             {
                 ctx.Sklonistes.Add(s);
                 ctx.SaveChanges();
-                return RedirectToAction("Sklonista");
+                //return RedirectToAction("Sklonista");
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "NovoSkloniste") });
 
             }
             else
             {
-                return View("NovoSkloniste", s);
+                if (s.GradId == 0)
+                {
+                    ViewBag.Error = "Molimo izaberite sklonište";
+                }
+                var query = ctx.Grads
+                      .OrderBy(g => g.NazivGrada)
+                      .Select(g => new
+                      {
+                          g.GradId,
+                          g.NazivGrada
+                      })
+                      .ToList();
+                ViewBag.Gradovi = new SelectList(query, nameof(Grad.GradId), nameof(Grad.NazivGrada));
+                //return View("NovoSkloniste", s);
+                return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "NovoSkloniste", s) });
             }
         }
         public IActionResult Sklonista(string sortOrder,int pg = 1)
@@ -208,12 +223,14 @@ namespace PIS_projekt.Controllers
                 HttpContext.Session.SetString("imeLogiranogKorisnika", k.Ime);
                 HttpContext.Session.SetString("prezimeLogiranogKorisnika", k.Prezime);
                 HttpContext.Session.SetInt32("idLogiranogKorisnika", k.KorisnikId);
-                return RedirectToAction("PrikazAdmina", "Korisnici");
-                
+                //return RedirectToAction("PrikazAdmina", "Korisnici");
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "DodajAdmina") });
+
             }
             else
             {
-                return View("DodajAdmina", k);
+                //return View("DodajAdmina", k);
+                return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "DodajAdmina", k) });
             }
         }
         public IActionResult DeleteAdmin(int id)
@@ -234,6 +251,21 @@ namespace PIS_projekt.Controllers
             ctx.Sklonistes.Remove(query);
             ctx.SaveChanges();
             return RedirectToAction("Sklonista");
+            //var query1 = ctx.Sklonistes
+            //    .Select(s => new SklonisteViewModel
+            //    {
+            //        skloniste_id = s.SklonisteId,
+            //        NazivSklonista = s.NazivSklonista,
+            //        Adresa = s.Adresa,
+            //        NazivGrada = s.Grad.NazivGrada,
+            //        NazivZupanije = s.Grad.Zupanija.NazivZupanije,
+            //        KapacitetSklonista = s.KapacitetSklonista,
+            //        Telefon = s.Telefon,
+            //        Email = s.Email
+
+            //    })
+            //    .ToList();
+            //return Json(new { html = Helper.RenderRazorViewToString(this, "Sklonista", query1) });
 
         }
         public IActionResult IzbrišiKorisnika(int id)
@@ -286,12 +318,24 @@ namespace PIS_projekt.Controllers
                 sklonisteEdit.GradId = s.GradId;
                 ctx.SaveChanges();
 
-                return RedirectToAction("Sklonista", "Admin");
+                //return RedirectToAction("Sklonista", "Admin");
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "SklonisteEdit") });
 
             }
             else
             {
-                return View("SklonisteEdit", s);
+                var gradovi = ctx.Grads
+                      .OrderBy(g => g.NazivGrada)
+                      .Select(g => new
+                      {
+                          g.GradId,
+                          g.NazivGrada
+                      })
+                      .ToList();
+                ViewBag.Gradovi = new SelectList(gradovi, nameof(Grad.GradId), nameof(Grad.NazivGrada));
+
+                //return View("SklonisteEdit", s);
+                return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "SklonisteEdit", s) });
             }
         }
         public IActionResult UrediAdmina(int id)
@@ -322,11 +366,13 @@ namespace PIS_projekt.Controllers
                 korisnikEdit.Lozinka = k.Lozinka;
                 ctx.SaveChanges();
 
-                return RedirectToAction("PrikazAdmina", "Korisnici");
+                //return RedirectToAction("PrikazAdmina", "Korisnici");
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "AdminsEdit") });
             }
             else
             {
-                return View("AdminsEdit", k);
+                //return View("AdminsEdit", k);
+                return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AdminsEdit", k) });
             }
         }
         public IActionResult UrediZaposlenika(int id)
@@ -362,11 +408,13 @@ namespace PIS_projekt.Controllers
                 ctx.SaveChanges();
                 korisnikEdit.SklonisteFk = k.SklonisteFk;
                 ctx.SaveChanges();
-                return RedirectToAction("PrikazZaposlenika", "Korisnici");
+                //return RedirectToAction("PrikazZaposlenika", "Korisnici");
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "ZaposlenikEdit") });
             }
             else
             {
-                return View("ZaposlenikEdit", k);
+                //return View("ZaposlenikEdit", k);
+                return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "ZaposlenikEdit", k) });
             }
         }
     }

@@ -16,12 +16,17 @@ namespace PIS_projekt.Models
 
         public int SklonisteId { get; set; }
         [Display(Name = "Naziv skloništa")]
+        [Required(ErrorMessage = "Molimo izaberite mjesto")]
         public string NazivSklonista { get; set; }
+        [Required(ErrorMessage = "Molimo izaberite mjesto")]
         public string Adresa { get; set; }
         [Display(Name = "Kapacitet skloništa")]
+        [Required(ErrorMessage = "Molimo izaberite mjesto")]
         public string KapacitetSklonista { get; set; }
         [EmailAddress(ErrorMessage = "Molimo unesite validnu email adresu")]
+        [Required(ErrorMessage = "Molimo izaberite mjesto")]
         public string Email { get; set; }
+        [Required(ErrorMessage = "Molimo izaberite mjesto")]
         public string Telefon { get; set; }
         [Display(Name = "Mjesto")]
         [Required(ErrorMessage ="Molimo izaberite mjesto")]

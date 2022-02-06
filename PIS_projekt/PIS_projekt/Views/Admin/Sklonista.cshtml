@@ -11,7 +11,6 @@
         pageNo = pager.CurrentPage;
     }
 }
-
 <!-- Page transition-->
 <div class="loader-wrapper">
 	<span class="loader"><span class="loader-inner"></span></span>
@@ -21,7 +20,8 @@
     <div class="container">
         <div class="d-inline-flex align-items-center">
             <h1 class="test"><i class="fas fa-warehouse"></i> Skloništa</h1>
-            <a class="btn btn-outline-primary ml-4" asp-controller="Admin" asp-action="CreateSkloniste">Dodaj novo skloniste <i class="fas fa-plus-circle"></i></a>
+            @*<a class="btn btn-outline-primary ml-4" asp-controller="Admin" asp-action="CreateSkloniste">Dodaj novo skloniste <i class="fas fa-plus-circle"></i></a>*@
+            <a class="btn btn-outline-primary ml-4" onclick="ShowPopup('@Url.Action("CreateSkloniste", "Admin",Context.Request.Scheme)', 'Dodajte novo sklonište')"><i class="fas fa-plus-circle"></i> Dodaj novo sklonište</a>
         </div>
 
         <div class="table-responsive">
@@ -77,13 +77,19 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.Email)
                             </td>
-                            <td>
+                            <td class="col-1">
                                 @Html.DisplayFor(modelItem => item.Telefon)
                             </td>
-                            <td>
-                                <a asp-controller="Admin" asp-action="Edit" asp-route-id="@item.skloniste_id">Uredi</a>
+                            <td class="col-2">
+                                @*<a asp-controller="Admin" asp-action="Edit" asp-route-id="@item.skloniste_id">Uredi</a>*@
+                                <a class="btn btn-outline-primary" onclick="ShowPopup('@Url.Action("Edit", "Admin", new { id = item.skloniste_id} ,Context.Request.Scheme)', 'Uredi sklonište')">Uredi</a>
                                 <!--<a asp-action="Details" asp-route-id="@item.skloniste_id">Details</a> |-->
-                                <a asp-controller="Admin" asp-action="IzbrisiSkloniste" asp-route-id="@item.skloniste_id">Izbriši</a>
+                                @*<a class="btn btn-outline-danger" asp-controller="Admin" asp-action="IzbrisiSkloniste" asp-route-id="@item.skloniste_id">Izbriši</a>*@
+                                <form method="post" asp-controller="Admin" asp-action="IzbrisiSkloniste" asp-route-id="@item.skloniste_id" onsubmit="return JQueryAjaxDelete(this)" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        Izbriši
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     }

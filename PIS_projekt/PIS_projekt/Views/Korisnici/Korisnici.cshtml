@@ -20,7 +20,8 @@
     <div class="container">
         <div class="d-inline-flex align-items-center">
             <h2 class="test"><i class="fas fa-users"></i> Zaposlenici</h2>
-            <a class="btn btn-outline-primary ml-4" asp-controller="Korisnici" asp-action="DodajZaposlenika">Dodaj novog zaposlenika <i class="fas fa-plus-circle"></i></a>
+            @*<a class="btn btn-outline-primary ml-4" asp-controller="Korisnici" asp-action="DodajZaposlenika">Dodaj novog zaposlenika <i class="fas fa-plus-circle"></i></a>*@
+            <a class="btn btn-outline-primary ml-4" onclick="ShowPopup('@Url.Action("DodajZaposlenika", "Korisnici",Context.Request.Scheme)', 'Dodajte novo sklonište')"><i class="fas fa-plus-circle"></i> Dodaj novog zaposlenika </a>
         </div>
         <div class="table-responsive">
             <table class="table table-hover mt-2 mb-md-0">
@@ -74,8 +75,14 @@
 
 
                             <td>
-                                <a asp-controller="Admin" asp-action="UrediZaposlenika" asp-route-id="@item.KorisnikId">Uredi</a> |
-                                <a asp-controller="Admin" asp-action="IzbrišiKorisnika" asp-route-id="@item.KorisnikId">Izbriši</a>
+                                @*<a asp-controller="Admin" asp-action="UrediZaposlenika" asp-route-id="@item.KorisnikId">Uredi</a>*@
+                                <a class="btn btn-outline-primary" onclick="ShowPopup('@Url.Action("UrediZaposlenika", "Admin", new { id = item.KorisnikId} ,Context.Request.Scheme)', 'Uredi zaposlenika')">Uredi</a>
+                                @*<a asp-controller="Admin" asp-action="IzbrišiKorisnika" asp-route-id="@item.KorisnikId">Izbriši</a>*@
+                                <form method="post" asp-controller="Admin" asp-action="IzbrišiKorisnika" asp-route-id="@item.KorisnikId" onsubmit="return JQueryAjaxDelete(this)" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        Izbriši
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     }

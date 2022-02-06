@@ -1253,7 +1253,7 @@ namespace PIS_projekt.Controllers
                         break;
                 }
 
-                const int pageSize = 2;
+                const int pageSize = 5;
                 if (pg < 1)
                 {
                     pg = 1;

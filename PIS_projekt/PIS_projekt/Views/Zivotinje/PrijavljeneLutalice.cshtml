@@ -64,7 +64,12 @@
                                 @Html.DisplayFor(modelItem => item.Grad.NazivGrada)
                             </td>
                             <td>
-                                <a asp-controller="Korisnici" asp-action="IzbrisiUocenuLutalicu" asp-route-id="@item.UoceneLutaliceId">Izbriši</a>
+                                @*<a asp-controller="Korisnici" asp-action="IzbrisiUocenuLutalicu" asp-route-id="@item.UoceneLutaliceId">Izbriši</a>*@
+                                <form method="post" asp-controller="Korisnici" asp-action="IzbrisiUocenuLutalicu" asp-route-id="@item.UoceneLutaliceId" onsubmit="return JQueryAjaxDelete(this)" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        Izbriši
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     }

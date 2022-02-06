@@ -2,20 +2,16 @@
 
 @{
     ViewData["Title"] = "DodavanjeZivotinje";
-    Layout = "~/Views/Shared/_LayoutZaposlenik.cshtml";
+    //Layout = "~/Views/Shared/_LayoutZaposlenik.cshtml";
+    Layout = null;
 }
 
-<h2>DodavanjeZivotinje</h2>
-<!-- Page transition-->
-<div class="loader-wrapper">
-	<span class="loader"><span class="loader-inner"></span></span>
-</div>
-
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-controller="Korisnici" asp-action="DodajZivotinju" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+@*<div class="row">*@
+    @*<div class="col-md-12">*@
+<form asp-controller="Korisnici" asp-action="DodajZivotinju" enctype="multipart/form-data" onsubmit="return JQueryAjaxPost(this)">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-6">
             <div class="form-group">
                 <label asp-for="BrojMikrocipa" class="control-label"></label>
                 <input asp-for="BrojMikrocipa" class="form-control" />
@@ -39,6 +35,7 @@
                     <option disabled selected value="">Izaberite spol životinje</option>
                 </select>
                 <span asp-validation-for="SpolId" class="text-danger"></span>
+                <span class="text-danger">@ViewBag.Error</span>
             </div>
             <div class="form-group">
                 <label asp-for="KastratId" class="control-label"></label>
@@ -47,7 +44,6 @@
                 </select>
                 <span asp-validation-for="KastratId" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label asp-for="UdomljavanjeId" class="control-label"></label>
                 <select asp-for="UdomljavanjeId" class="form-control" asp-items="ViewBag.Udomljavanje">
@@ -55,20 +51,22 @@
                 </select>
                 <span asp-validation-for="UdomljavanjeId" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col-6">
             <div class="form-group">
                 <label asp-for="DatumStenjenja" class="control-label"></label>
                 <input asp-for="DatumStenjenja" class="form-control" />
                 <span asp-validation-for="DatumStenjenja" class="text-danger"></span>
             </div>
             @*<div class="form-group" hidden>
-                <label asp-for="Slika" class="control-label"></label>
-                <input asp-for="Slika" class="form-control" type="file" accept="image/*"/>
-                <span asp-validation-for="Slika" class="text-danger"></span>
-            </div>*@
+                    <label asp-for="Slika" class="control-label"></label>
+                    <input asp-for="Slika" class="form-control" type="file" accept="image/*"/>
+                    <span asp-validation-for="Slika" class="text-danger"></span>
+                </div>*@
             <!--    Test for picture -->
             <div class="form-group">
                 <label asp-for="Photo" class="control-label"></label>
-                <input asp-for="Photo" class="form-control" type="file" accept="image/*"/>
+                <input asp-for="Photo" class="form-control" type="file" accept="image/*" />
                 <span asp-validation-for="Photo" class="text-danger"></span>
             </div>
 
@@ -88,16 +86,14 @@
                 <input asp-for="Opis" class="form-control" />
                 <span asp-validation-for="Opis" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Spremi" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+        <div class="form-group col-12">
+            <input type="submit" value="Spremi" class="btn btn-primary btn-block" />
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+</form>
+    @*</div>*@
+@*</div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

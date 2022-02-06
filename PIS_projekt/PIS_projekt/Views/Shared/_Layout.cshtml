@@ -30,7 +30,8 @@
                     <div class="d-sm-inline-flex m-0 p-0">
                         @*<a class="nav-link btn btn-outline-info ml-2" asp-area="" asp-controller="PrijavaZivotinja" asp-action="IzgubljenLjubimac">Izgubili ste ljubimca?</a>*@
                         <a class="nav-link btn btn-outline-info ml-2" onclick="ShowPopup('@Url.Action("IzgubljenLjubimac", "PrijavaZivotinja",Context.Request.Scheme)', 'Izgubili ste ljubimca? Dajte nam informacije')">Izgubili ste ljubimca?</a>
-                        <a class="nav-link btn btn-outline-info ml-2" asp-area="" asp-controller="PrijavaZivotinja" asp-action="Index">Uočili ste lutalicu?</a>
+                        @*<a class="nav-link btn btn-outline-info ml-2" asp-area="" asp-controller="PrijavaZivotinja" asp-action="Index">Uočili ste lutalicu?</a>*@
+                        <a class="nav-link btn btn-outline-info ml-2" onclick="ShowPopup('@Url.Action("Index", "PrijavaZivotinja",Context.Request.Scheme)', 'Uočili ste lutalicu? Dajte nam informacije')">Uočili ste lutalicu?</a>
                     </div>
                     <a class="nav-link btn btn-outline-primary ml-2" asp-area="" asp-controller="Login" asp-action="Index"><i class="fas fa-user"></i> Login</a>
                     @*<a class="nav-link btn btn-outline-primary ml-2" onclick="ShowPopup('@Url.Action("Index", "Login",Context.Request.Scheme)', 'Login')"><i class="fas fa-user"></i> Login</a>*@
