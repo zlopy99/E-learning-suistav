@@ -491,7 +491,7 @@ namespace PIS_projekt.Controllers
 
             return View("EditZivotinje",query);
         }
-        public IActionResult UrediZivotinju(ZivotinjaUSklonistu zuv)
+        public async Task<IActionResult> UrediZivotinjuAsync(ZivotinjaUSklonistu zuv)
         {
             var zaposlenik = ctx.Korisniks
                 .Where(k => k.KorisnikId == HttpContext.Session.GetInt32("idLogiranogKorisnika"))
@@ -500,6 +500,21 @@ namespace PIS_projekt.Controllers
             zuv.SklonisteId = (int)zaposlenik.SklonisteFk;
             if (ModelState.IsValid)
             {
+                if (zuv.Photo != null)
+                {
+                    var guid = Guid.NewGuid().ToString();
+                    var new_guid = guid.Substring(0, 5);
+
+                    string folder = "images/";
+                    folder += new_guid + "_" + zuv.Photo.FileName;
+                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, folder);
+
+                    await zuv.Photo.CopyToAsync(new FileStream(serverFolder, FileMode.Create)); ;
+
+                    var spliting = folder.Split('/');
+                    zuv.Slika = spliting[1];
+                }
+
                 ZivotinjaUSklonistu zuvEdit = ctx.ZivotinjaUSklonistus.Find(zuv.ZivotinjaUSklonistuId);
                 zuvEdit.BrojMikrocipa = zuv.BrojMikrocipa;
                 ctx.SaveChanges();

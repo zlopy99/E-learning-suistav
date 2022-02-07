@@ -57,7 +57,8 @@
                             <td>
                                 @if (item.Slika != null)
                                 {
-                                    <a href="#">Slika</a>
+                                    @*<a href="#">Slika</a>*@
+                                    <a class="nav-link btn btn-outline-info ml-2" onclick="ShowPopup('@Url.Action("SlikaPrijava", "Zivotinje", new { id = item.UoceneLutaliceId},Context.Request.Scheme)', 'Slika')">Slika</a>
                                 }
                             </td>
                             <td>

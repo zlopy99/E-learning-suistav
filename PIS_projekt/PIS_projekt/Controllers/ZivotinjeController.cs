@@ -1991,5 +1991,17 @@ namespace PIS_projekt.Controllers
             };
             return View("izgubljeneDetaljiSkloniste", model);
         }
+
+        public IActionResult SlikaPrijava(int id)
+        {
+            var querySlike = ctx.UoceneLutalices
+                .Where(ul => ul.UoceneLutaliceId == id)
+                .Select(ul => ul.Slika)
+                .FirstOrDefault();
+
+            ViewBag.Slika = querySlike;
+
+            return View("SlikePrijava");
+        }
     }
 }

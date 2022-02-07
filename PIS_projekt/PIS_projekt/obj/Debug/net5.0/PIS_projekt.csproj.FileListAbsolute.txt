@@ -1030,3 +1030,4 @@ C:\Users\Tino-Vinko\Documents\GitHub\Lutalice-Info\PIS_projekt\PIS_projekt\obj\D
 C:\Users\Tino-Vinko\Documents\GitHub\Lutalice-Info\PIS_projekt\PIS_projekt\obj\Debug\net5.0\ref\PIS_projekt.dll
 C:\Users\Tino-Vinko\Documents\GitHub\Lutalice-Info\PIS_projekt\PIS_projekt\obj\Debug\net5.0\PIS_projekt.pdb
 C:\Users\Tino-Vinko\Documents\GitHub\Lutalice-Info\PIS_projekt\PIS_projekt\obj\Debug\net5.0\PIS_projekt.genruntimeconfig.cache
+C:\Users\Tino-Vinko\Documents\GitHub\Lutalice-Info\PIS_projekt\PIS_projekt\obj\Debug\net5.0\Razor\Views\Zivotinje\SlikePrijava.cshtml.g.cs

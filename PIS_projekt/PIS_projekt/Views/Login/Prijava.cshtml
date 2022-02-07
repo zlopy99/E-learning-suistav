@@ -11,25 +11,56 @@
         <span class="loader"><span class="loader-inner"></span></span>
     </div>
 <!--Original-->
-<div class="container border rounded justify-content-center bg-light border-dark p-2" style="width:40%;margin:auto;height:350px">
-    <h1 class="d-flex align-items-start justify-content-center bg-white w-100 shadow p-2">Login</h1>
-    <form method="post" asp-controller="Login" asp-action="Prijava" class="pt-2">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="Email" class="control-label"></label>
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
+<div class="d-flex justify-content-center">
+    <div class="row bg-white p-3 w-75 d-flex justify-content-center">
+        <h1 class="border-bottom col-12 shadow-sm bg-dark p-2 text-light"><i class="fas fa-sign-in-alt"></i> Login</h1>
+        <form method="post" asp-controller="Login" asp-action="Prijava" class="pt-2">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row d-flex justify-content-center border-bottom">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="Lozinka" class="control-label"></label>
+                        <input asp-for="Lozinka" class="form-control" type="password" />
+                        <span asp-validation-for="Lozinka" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group col-12">
+                    <input type="submit" value="Prijavi se" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-12">
+                <img src="/images/DogPic4.jpg" alt="Nema slike"
+                     class="img-fluid ml-3"
+                     style="height: 400px; width: 550px" />
+            </div>
         </div>
-        <div class="form-group">
-            <label asp-for="Lozinka" class="control-label"></label>
-            <input asp-for="Lozinka" class="form-control" type="password" />
-            <span asp-validation-for="Lozinka" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Prijavi se" class="btn btn-primary btn-block" />
-        </div>
-    </form>
+    </div>
 </div>
+@*<form method="post" asp-controller="Login" asp-action="Prijava" class="pt-2">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Lozinka" class="control-label"></label>
+        <input asp-for="Lozinka" class="form-control" type="password" />
+        <span asp-validation-for="Lozinka" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Prijavi se" class="btn btn-primary btn-block" />
+    </div>
+</form>*@
 <!--Original-->
 @*<div>
         <a asp-controller="Home" asp-action="Index">Povratak</a>

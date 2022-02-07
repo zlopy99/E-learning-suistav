@@ -5,43 +5,73 @@
     Layout = "~/Views/Shared/_LayoutZaposlenik.cshtml";
 }
 
-<h2>Profil</h2>
-
-
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="d-flex justify-content-center">
+    <div class="row bg-light p-3 w-75 d-flex justify-content-center">
+        <h1 class="border-bottom col-12 shadow-sm bg-dark text-light p-2"><i class="fas fa-user"></i> Profil</h1>
         <form method="post" asp-action="UrediProfilZaposlenik">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="KorisnikId" />
-            <div class="form-group">
-                <label asp-for="Ime" class="control-label"></label>
-                <input asp-for="Ime" class="form-control" />
-                <span asp-validation-for="Ime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Prezime" class="control-label"></label>
-                <input asp-for="Prezime" class="form-control" />
-                <span asp-validation-for="Prezime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Lozinka" class="control-label"></label>
-                <input asp-for="Lozinka" class="form-control" />
-                <span asp-validation-for="Lozinka" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Spremi" class="btn btn-primary" />
+            <div class="row d-flex justify-content-center">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="Ime" class="control-label"></label>
+                        <input asp-for="Ime" class="form-control" />
+                        <span asp-validation-for="Ime" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="Prezime" class="control-label"></label>
+                        <input asp-for="Prezime" class="form-control" />
+                        <span asp-validation-for="Prezime" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="Lozinka" class="control-label"></label>
+                        <input asp-for="Lozinka" class="form-control" />
+                        <span asp-validation-for="Lozinka" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group col-12">
+                    <input type="submit" value="Spremi" class="btn btn-primary btn-block" />
+                </div>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-controller="Zivotinje" asp-action="ZivotinjeUSklonistu">Povratak</a>
-</div>
-
+@*<form method="post" asp-action="UrediProfilZaposlenik">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="KorisnikId" />
+        <div class="form-group">
+            <label asp-for="Ime" class="control-label"></label>
+            <input asp-for="Ime" class="form-control" />
+            <span asp-validation-for="Ime" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Prezime" class="control-label"></label>
+            <input asp-for="Prezime" class="form-control" />
+            <span asp-validation-for="Prezime" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Lozinka" class="control-label"></label>
+            <input asp-for="Lozinka" class="form-control" />
+            <span asp-validation-for="Lozinka" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Spremi" class="btn btn-primary" />
+        </div>
+    </form>*@
