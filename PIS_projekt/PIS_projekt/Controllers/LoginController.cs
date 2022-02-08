@@ -34,6 +34,7 @@ namespace PIS_projekt.Controllers
                 HttpContext.Session.SetString("imeLogiranogKorisnika", query.Ime);
                 HttpContext.Session.SetString("prezimeLogiranogKorisnika", query.Prezime);
                 HttpContext.Session.SetInt32("idLogiranogKorisnika", query.KorisnikId);
+                HttpContext.Session.SetInt32("idUloge", query.UlogaFk);
                 if (query.UlogaFk == 1)
                 {
 
@@ -63,6 +64,7 @@ namespace PIS_projekt.Controllers
             HttpContext.Session.Remove("imeLogiranogKorisnika");
             HttpContext.Session.Remove("prezimeLogiranogKorisnika");
             HttpContext.Session.Remove("idLogiranogKorisnika");
+            HttpContext.Session.Remove("idUloge");
             return RedirectToAction("Index");
         }
         public IActionResult ProfilZaposlenik(int id)

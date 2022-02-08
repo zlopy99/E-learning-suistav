@@ -1014,604 +1014,314 @@ namespace PIS_projekt.Controllers
         }
         public IActionResult ZivotinjeUSklonistu(string sortOrder,int pg=1)
         {
-            var logiraniKorisnik = ctx.Korisniks
+            if (HttpContext.Session.GetInt32("idUloge") == 2)
+            {
+                var logiraniKorisnik = ctx.Korisniks
                 .Where(k => k.KorisnikId == HttpContext.Session.GetInt32("idLogiranogKorisnika"))
                 .FirstOrDefault<Korisnik>();
-            var skloniste = ctx.Sklonistes
-                .Where(s => s.SklonisteId == logiraniKorisnik.SklonisteFk)
-                .FirstOrDefault<Skloniste>();
-            ViewBag.ID = skloniste.SklonisteId;
-            if (skloniste != null)
-            {
-                var query = ctx.ZivotinjaUSklonistus
-                .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                .Select(z => new ZivotinjeMiniViewModel
+                var skloniste = ctx.Sklonistes
+                    .Where(s => s.SklonisteId == logiraniKorisnik.SklonisteFk)
+                    .FirstOrDefault<Skloniste>();
+                ViewBag.ID = skloniste.SklonisteId;
+                if (skloniste != null)
                 {
-                    ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                    BrojMikrocipa = z.BrojMikrocipa,
-                    ImeZivotinje = z.ImeZivotinje,
-                    NazivPasmine = z.Pasmina.NazivPasmine,
-                    NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                    NazivSpola = z.Spol.NazivSpola,
-                    JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                    NazivSklonista = z.Skloniste.NazivSklonista,
-                    NazivGrada = z.Skloniste.Grad.NazivGrada,
-                   
-                })
-                .ToList();
+                    var query = ctx.ZivotinjaUSklonistus
+                    .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                    .Select(z => new ZivotinjeMiniViewModel
+                    {
+                        ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                        BrojMikrocipa = z.BrojMikrocipa,
+                        ImeZivotinje = z.ImeZivotinje,
+                        NazivPasmine = z.Pasmina.NazivPasmine,
+                        NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                        NazivSpola = z.Spol.NazivSpola,
+                        JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                        NazivSklonista = z.Skloniste.NazivSklonista,
+                        NazivGrada = z.Skloniste.Grad.NazivGrada,
 
-                ViewData["VrstaOrder"] = string.IsNullOrEmpty(sortOrder) ? "Vrsta_desc" : "";
-                ViewData["ImeOrder"] = sortOrder == "Ime" ? "Ime_desc" : "Ime";
-                ViewData["PasminaOrder"] = sortOrder == "Pasmina" ? "Pasmina_desc" : "Pasmina";
-                ViewData["SpolOrder"] = sortOrder == "Spol" ? "Spol_desc" : "Spol";
-                ViewData["UdomljavanjeOrder"] = sortOrder == "Udomljavanje" ? "Udomljavanje_desc" : "Udomljavanje";
+                    })
+                    .ToList();
 
-                switch (sortOrder)
-                {
-                    case "Udomljavanje":
-                        query = ctx.ZivotinjaUSklonistus
-                             .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                             .Select(z => new ZivotinjeMiniViewModel
-                             {
-                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                 BrojMikrocipa = z.BrojMikrocipa,
-                                 ImeZivotinje = z.ImeZivotinje,
-                                 NazivPasmine = z.Pasmina.NazivPasmine,
-                                 NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                 NazivSpola = z.Spol.NazivSpola,
-                                 JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                 NazivSklonista = z.Skloniste.NazivSklonista,
-                                 NazivGrada = z.Skloniste.Grad.NazivGrada,
+                    ViewData["VrstaOrder"] = string.IsNullOrEmpty(sortOrder) ? "Vrsta_desc" : "";
+                    ViewData["ImeOrder"] = sortOrder == "Ime" ? "Ime_desc" : "Ime";
+                    ViewData["PasminaOrder"] = sortOrder == "Pasmina" ? "Pasmina_desc" : "Pasmina";
+                    ViewData["SpolOrder"] = sortOrder == "Spol" ? "Spol_desc" : "Spol";
+                    ViewData["UdomljavanjeOrder"] = sortOrder == "Udomljavanje" ? "Udomljavanje_desc" : "Udomljavanje";
 
-                             })
-                             .OrderBy(z => z.JeLiZaUdomljavanje)
-                             .ToList();
-                        ViewBag.CurrentSort = "Udomljavanje";
-                        break;
-                    case "Udomljavanje_desc":
-                        query = ctx.ZivotinjaUSklonistus
-                             .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                             .Select(z => new ZivotinjeMiniViewModel
-                             {
-                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                 BrojMikrocipa = z.BrojMikrocipa,
-                                 ImeZivotinje = z.ImeZivotinje,
-                                 NazivPasmine = z.Pasmina.NazivPasmine,
-                                 NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                 NazivSpola = z.Spol.NazivSpola,
-                                 JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                 NazivSklonista = z.Skloniste.NazivSklonista,
-                                 NazivGrada = z.Skloniste.Grad.NazivGrada,
+                    switch (sortOrder)
+                    {
+                        case "Udomljavanje":
+                            query = ctx.ZivotinjaUSklonistus
+                                 .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                 .Select(z => new ZivotinjeMiniViewModel
+                                 {
+                                     ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                     BrojMikrocipa = z.BrojMikrocipa,
+                                     ImeZivotinje = z.ImeZivotinje,
+                                     NazivPasmine = z.Pasmina.NazivPasmine,
+                                     NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                     NazivSpola = z.Spol.NazivSpola,
+                                     JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                     NazivSklonista = z.Skloniste.NazivSklonista,
+                                     NazivGrada = z.Skloniste.Grad.NazivGrada,
 
-                             })
-                             .OrderByDescending(z => z.JeLiZaUdomljavanje)
-                             .ToList();
-                        ViewBag.CurrentSort = "Udomljavanje_desc";
-                        break;
+                                 })
+                                 .OrderBy(z => z.JeLiZaUdomljavanje)
+                                 .ToList();
+                            ViewBag.CurrentSort = "Udomljavanje";
+                            break;
+                        case "Udomljavanje_desc":
+                            query = ctx.ZivotinjaUSklonistus
+                                 .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                 .Select(z => new ZivotinjeMiniViewModel
+                                 {
+                                     ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                     BrojMikrocipa = z.BrojMikrocipa,
+                                     ImeZivotinje = z.ImeZivotinje,
+                                     NazivPasmine = z.Pasmina.NazivPasmine,
+                                     NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                     NazivSpola = z.Spol.NazivSpola,
+                                     JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                     NazivSklonista = z.Skloniste.NazivSklonista,
+                                     NazivGrada = z.Skloniste.Grad.NazivGrada,
 
-                    case "Spol":
-                        query = ctx.ZivotinjaUSklonistus
-                             .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                             .Select(z => new ZivotinjeMiniViewModel
-                             {
-                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                 BrojMikrocipa = z.BrojMikrocipa,
-                                 ImeZivotinje = z.ImeZivotinje,
-                                 NazivPasmine = z.Pasmina.NazivPasmine,
-                                 NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                 NazivSpola = z.Spol.NazivSpola,
-                                 JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                 NazivSklonista = z.Skloniste.NazivSklonista,
-                                 NazivGrada = z.Skloniste.Grad.NazivGrada,
+                                 })
+                                 .OrderByDescending(z => z.JeLiZaUdomljavanje)
+                                 .ToList();
+                            ViewBag.CurrentSort = "Udomljavanje_desc";
+                            break;
 
-                             })
-                             .OrderBy(z => z.NazivSpola)
-                             .ToList();
-                        ViewBag.CurrentSort = "Spol";
-                        break;
-                    case "Spol_desc":
-                        query = ctx.ZivotinjaUSklonistus
-                             .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                             .Select(z => new ZivotinjeMiniViewModel
-                             {
-                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                 BrojMikrocipa = z.BrojMikrocipa,
-                                 ImeZivotinje = z.ImeZivotinje,
-                                 NazivPasmine = z.Pasmina.NazivPasmine,
-                                 NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                 NazivSpola = z.Spol.NazivSpola,
-                                 JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                 NazivSklonista = z.Skloniste.NazivSklonista,
-                                 NazivGrada = z.Skloniste.Grad.NazivGrada,
+                        case "Spol":
+                            query = ctx.ZivotinjaUSklonistus
+                                 .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                 .Select(z => new ZivotinjeMiniViewModel
+                                 {
+                                     ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                     BrojMikrocipa = z.BrojMikrocipa,
+                                     ImeZivotinje = z.ImeZivotinje,
+                                     NazivPasmine = z.Pasmina.NazivPasmine,
+                                     NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                     NazivSpola = z.Spol.NazivSpola,
+                                     JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                     NazivSklonista = z.Skloniste.NazivSklonista,
+                                     NazivGrada = z.Skloniste.Grad.NazivGrada,
 
-                             })
-                             .OrderByDescending(z => z.NazivSpola)
-                             .ToList();
-                        ViewBag.CurrentSort = "Spol_desc";
-                        break;
+                                 })
+                                 .OrderBy(z => z.NazivSpola)
+                                 .ToList();
+                            ViewBag.CurrentSort = "Spol";
+                            break;
+                        case "Spol_desc":
+                            query = ctx.ZivotinjaUSklonistus
+                                 .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                 .Select(z => new ZivotinjeMiniViewModel
+                                 {
+                                     ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                     BrojMikrocipa = z.BrojMikrocipa,
+                                     ImeZivotinje = z.ImeZivotinje,
+                                     NazivPasmine = z.Pasmina.NazivPasmine,
+                                     NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                     NazivSpola = z.Spol.NazivSpola,
+                                     JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                     NazivSklonista = z.Skloniste.NazivSklonista,
+                                     NazivGrada = z.Skloniste.Grad.NazivGrada,
 
-                    case "Pasmina":
-                        query = ctx.ZivotinjaUSklonistus
-                             .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                             .Select(z => new ZivotinjeMiniViewModel
-                             {
-                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                 BrojMikrocipa = z.BrojMikrocipa,
-                                 ImeZivotinje = z.ImeZivotinje,
-                                 NazivPasmine = z.Pasmina.NazivPasmine,
-                                 NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                 NazivSpola = z.Spol.NazivSpola,
-                                 JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                 NazivSklonista = z.Skloniste.NazivSklonista,
-                                 NazivGrada = z.Skloniste.Grad.NazivGrada,
+                                 })
+                                 .OrderByDescending(z => z.NazivSpola)
+                                 .ToList();
+                            ViewBag.CurrentSort = "Spol_desc";
+                            break;
 
-                             })
-                             .OrderBy(z => z.NazivPasmine)
-                             .ToList();
-                        ViewBag.CurrentSort = "Pasmina";
-                        break;
-                    case "Pasmina_desc":
-                        query = ctx.ZivotinjaUSklonistus
-                             .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                             .Select(z => new ZivotinjeMiniViewModel
-                             {
-                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                 BrojMikrocipa = z.BrojMikrocipa,
-                                 ImeZivotinje = z.ImeZivotinje,
-                                 NazivPasmine = z.Pasmina.NazivPasmine,
-                                 NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                 NazivSpola = z.Spol.NazivSpola,
-                                 JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                 NazivSklonista = z.Skloniste.NazivSklonista,
-                                 NazivGrada = z.Skloniste.Grad.NazivGrada,
+                        case "Pasmina":
+                            query = ctx.ZivotinjaUSklonistus
+                                 .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                 .Select(z => new ZivotinjeMiniViewModel
+                                 {
+                                     ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                     BrojMikrocipa = z.BrojMikrocipa,
+                                     ImeZivotinje = z.ImeZivotinje,
+                                     NazivPasmine = z.Pasmina.NazivPasmine,
+                                     NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                     NazivSpola = z.Spol.NazivSpola,
+                                     JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                     NazivSklonista = z.Skloniste.NazivSklonista,
+                                     NazivGrada = z.Skloniste.Grad.NazivGrada,
 
-                             })
-                             .OrderByDescending(z => z.NazivPasmine)
-                             .ToList();
-                        ViewBag.CurrentSort = "Pasmina_desc";
-                        break;
+                                 })
+                                 .OrderBy(z => z.NazivPasmine)
+                                 .ToList();
+                            ViewBag.CurrentSort = "Pasmina";
+                            break;
+                        case "Pasmina_desc":
+                            query = ctx.ZivotinjaUSklonistus
+                                 .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                 .Select(z => new ZivotinjeMiniViewModel
+                                 {
+                                     ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                     BrojMikrocipa = z.BrojMikrocipa,
+                                     ImeZivotinje = z.ImeZivotinje,
+                                     NazivPasmine = z.Pasmina.NazivPasmine,
+                                     NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                     NazivSpola = z.Spol.NazivSpola,
+                                     JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                     NazivSklonista = z.Skloniste.NazivSklonista,
+                                     NazivGrada = z.Skloniste.Grad.NazivGrada,
 
-                    case "Ime":
-                        query = ctx.ZivotinjaUSklonistus
-                             .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                             .Select(z => new ZivotinjeMiniViewModel
-                             {
-                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                 BrojMikrocipa = z.BrojMikrocipa,
-                                 ImeZivotinje = z.ImeZivotinje,
-                                 NazivPasmine = z.Pasmina.NazivPasmine,
-                                 NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                 NazivSpola = z.Spol.NazivSpola,
-                                 JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                 NazivSklonista = z.Skloniste.NazivSklonista,
-                                 NazivGrada = z.Skloniste.Grad.NazivGrada,
+                                 })
+                                 .OrderByDescending(z => z.NazivPasmine)
+                                 .ToList();
+                            ViewBag.CurrentSort = "Pasmina_desc";
+                            break;
 
-                             })
-                             .OrderBy(z => z.ImeZivotinje)
-                             .ToList();
-                        ViewBag.CurrentSort = "Ime";
-                        break;
-                    case "Ime_desc":
-                        query = ctx.ZivotinjaUSklonistus
-                             .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                             .Select(z => new ZivotinjeMiniViewModel
-                             {
-                                 ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                 BrojMikrocipa = z.BrojMikrocipa,
-                                 ImeZivotinje = z.ImeZivotinje,
-                                 NazivPasmine = z.Pasmina.NazivPasmine,
-                                 NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                 NazivSpola = z.Spol.NazivSpola,
-                                 JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                 NazivSklonista = z.Skloniste.NazivSklonista,
-                                 NazivGrada = z.Skloniste.Grad.NazivGrada,
+                        case "Ime":
+                            query = ctx.ZivotinjaUSklonistus
+                                 .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                 .Select(z => new ZivotinjeMiniViewModel
+                                 {
+                                     ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                     BrojMikrocipa = z.BrojMikrocipa,
+                                     ImeZivotinje = z.ImeZivotinje,
+                                     NazivPasmine = z.Pasmina.NazivPasmine,
+                                     NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                     NazivSpola = z.Spol.NazivSpola,
+                                     JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                     NazivSklonista = z.Skloniste.NazivSklonista,
+                                     NazivGrada = z.Skloniste.Grad.NazivGrada,
 
-                             })
-                             .OrderByDescending(z => z.ImeZivotinje)
-                             .ToList();
-                        ViewBag.CurrentSort = "Ime_desc";
-                        break;
-                    case "Vrsta_desc":
-                       query = ctx.ZivotinjaUSklonistus
-                            .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                            .Select(z => new ZivotinjeMiniViewModel
-                            {
-                                ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                BrojMikrocipa = z.BrojMikrocipa,
-                                ImeZivotinje = z.ImeZivotinje,
-                                NazivPasmine = z.Pasmina.NazivPasmine,
-                                NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                NazivSpola = z.Spol.NazivSpola,
-                                JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                NazivSklonista = z.Skloniste.NazivSklonista,
-                                NazivGrada = z.Skloniste.Grad.NazivGrada,
+                                 })
+                                 .OrderBy(z => z.ImeZivotinje)
+                                 .ToList();
+                            ViewBag.CurrentSort = "Ime";
+                            break;
+                        case "Ime_desc":
+                            query = ctx.ZivotinjaUSklonistus
+                                 .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                 .Select(z => new ZivotinjeMiniViewModel
+                                 {
+                                     ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                     BrojMikrocipa = z.BrojMikrocipa,
+                                     ImeZivotinje = z.ImeZivotinje,
+                                     NazivPasmine = z.Pasmina.NazivPasmine,
+                                     NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                     NazivSpola = z.Spol.NazivSpola,
+                                     JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                     NazivSklonista = z.Skloniste.NazivSklonista,
+                                     NazivGrada = z.Skloniste.Grad.NazivGrada,
 
-                            })
-                            .OrderByDescending(z => z.NazivVrste)
-                            .ToList();
-                        ViewBag.CurrentSort = "Vrsta_desc";
-                        break;
-                    default:
-                        query = ctx.ZivotinjaUSklonistus
-                            .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                            .Select(z => new ZivotinjeMiniViewModel
-                            {
-                                ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                BrojMikrocipa = z.BrojMikrocipa,
-                                ImeZivotinje = z.ImeZivotinje,
-                                NazivPasmine = z.Pasmina.NazivPasmine,
-                                NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                NazivSpola = z.Spol.NazivSpola,
-                                JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                NazivSklonista = z.Skloniste.NazivSklonista,
-                                NazivGrada = z.Skloniste.Grad.NazivGrada,
+                                 })
+                                 .OrderByDescending(z => z.ImeZivotinje)
+                                 .ToList();
+                            ViewBag.CurrentSort = "Ime_desc";
+                            break;
+                        case "Vrsta_desc":
+                            query = ctx.ZivotinjaUSklonistus
+                                 .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                 .Select(z => new ZivotinjeMiniViewModel
+                                 {
+                                     ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                     BrojMikrocipa = z.BrojMikrocipa,
+                                     ImeZivotinje = z.ImeZivotinje,
+                                     NazivPasmine = z.Pasmina.NazivPasmine,
+                                     NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                     NazivSpola = z.Spol.NazivSpola,
+                                     JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                     NazivSklonista = z.Skloniste.NazivSklonista,
+                                     NazivGrada = z.Skloniste.Grad.NazivGrada,
 
-                            })
-                            .OrderBy(z=>z.NazivVrste)
-                            .ToList();
-                        ViewBag.CurrentSort = "";
-                        break;
+                                 })
+                                 .OrderByDescending(z => z.NazivVrste)
+                                 .ToList();
+                            ViewBag.CurrentSort = "Vrsta_desc";
+                            break;
+                        default:
+                            query = ctx.ZivotinjaUSklonistus
+                                .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                .Select(z => new ZivotinjeMiniViewModel
+                                {
+                                    ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                    BrojMikrocipa = z.BrojMikrocipa,
+                                    ImeZivotinje = z.ImeZivotinje,
+                                    NazivPasmine = z.Pasmina.NazivPasmine,
+                                    NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                    NazivSpola = z.Spol.NazivSpola,
+                                    JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                    NazivSklonista = z.Skloniste.NazivSklonista,
+                                    NazivGrada = z.Skloniste.Grad.NazivGrada,
+
+                                })
+                                .OrderBy(z => z.NazivVrste)
+                                .ToList();
+                            ViewBag.CurrentSort = "";
+                            break;
+                    }
+
+                    const int pageSize = 5;
+                    if (pg < 1)
+                    {
+                        pg = 1;
+                    }
+
+                    int recsCount = query.Count();
+                    var pager = new Pager(recsCount, pg, pageSize);
+                    int recSkip = (pg - 1) * pageSize;
+                    var data = query.Skip(recSkip).Take(pager.PageSize).ToList();
+                    var model = new ZivotinjeMiniVM
+                    {
+                        ZivotinjeMini = data
+                    };
+                    this.ViewBag.Pager = pager;
+                    return View("ZivotinjeUSklonistu", model);
                 }
-
-                const int pageSize = 5;
-                if (pg < 1)
+                else
                 {
-                    pg = 1;
+                    return Ok("problemi, problemi");
                 }
-
-                int recsCount = query.Count();
-                var pager = new Pager(recsCount, pg, pageSize);
-                int recSkip = (pg - 1) * pageSize;
-                var data = query.Skip(recSkip).Take(pager.PageSize).ToList();
-                var model = new ZivotinjeMiniVM
-                {
-                    ZivotinjeMini = data
-                };
-                this.ViewBag.Pager = pager;
-                return View("ZivotinjeUSklonistu", model);
             }
             else
             {
-                return Ok("problemi, problemi");
+                return Ok("Nemate pristup ovoj stranici");
             }
+                
             
 
          }
         public IActionResult UoceneLutalice(string sortOrder,int pg = 1)
         {
-            var zaposlenik = ctx.Korisniks
+            if(HttpContext.Session.GetInt32("idUloge") == 2)
+            {
+                var zaposlenik = ctx.Korisniks
                 .Where(k => k.KorisnikId == HttpContext.Session.GetInt32("idLogiranogKorisnika"))
-                .Where(k=>k.Ime == HttpContext.Session.GetString("imeLogiranogKorisnika"))
+                .Where(k => k.Ime == HttpContext.Session.GetString("imeLogiranogKorisnika"))
                 .FirstOrDefault<Korisnik>();
-            
-            var skloniste = ctx.Sklonistes
-                .Where(s => s.SklonisteId == zaposlenik.SklonisteFk)
-                .FirstOrDefault<Skloniste>();
-            
-            
-            var grad = ctx.Grads
-                .Where(g => g.GradId == skloniste.GradId)
-                .FirstOrDefault<Grad>();
-            
-            var query = ctx.UoceneLutalices
-                .Where(ul => ul.GradId == grad.GradId)
-                .ToList();
 
-            ViewData["DatumPrijaveOrder"] = string.IsNullOrEmpty(sortOrder) ? "DatumPrijave_desc" : "";
+                var skloniste = ctx.Sklonistes
+                    .Where(s => s.SklonisteId == zaposlenik.SklonisteFk)
+                    .FirstOrDefault<Skloniste>();
 
-            switch (sortOrder)
-            {
-                case "DatumPrijave_desc":
-                    query = ctx.UoceneLutalices
-                        .Where(ul => ul.GradId == grad.GradId)
-                        .OrderByDescending(ul => ul.DatumPrijave)
-                        .ToList();
-                    ViewBag.CurrentSort = "DatumPrijave_desc";
-                    break;
-                default:
-                    query = ctx.UoceneLutalices
-                        .Where(ul => ul.GradId == grad.GradId)
-                        .OrderBy(ul=>ul.DatumPrijave)
-                        .ToList();
-                    ViewBag.CurrentSort = "";
-                    break;
-            }
 
-            const int pageSize = 5;
-            if (pg < 1)
-            {
-                pg = 1;
-            }
+                var grad = ctx.Grads
+                    .Where(g => g.GradId == skloniste.GradId)
+                    .FirstOrDefault<Grad>();
 
-            int recsCount = query.Count();
-            var pager = new Pager(recsCount, pg, pageSize);
-            int recSkip = (pg - 1) * pageSize;
-            var data = query.Skip(recSkip).Take(pager.PageSize).ToList();
-            this.ViewBag.Pager = pager;
-            return View("PrijavljeneLutalice", data);
-        }
-        //  ZaUdomljavanjeSkloniste
-        public IActionResult ZaUdomljavanjeSkloniste(string sortOrder,int pg=1)
-        {
-            var logiraniKorisnik = ctx.Korisniks
-                .Where(k => k.KorisnikId == HttpContext.Session.GetInt32("idLogiranogKorisnika"))
-                .FirstOrDefault<Korisnik>();
-            var skloniste = ctx.Sklonistes
-                .Where(s => s.SklonisteId == logiraniKorisnik.SklonisteFk)
-                .FirstOrDefault<Skloniste>();
-            ViewBag.ID = skloniste.SklonisteId;
-            if (skloniste != null)
-            {
-                var query = ctx.ZivotinjaUSklonistus
-                .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                .Where(z=>z.UdomljavanjeId == 1)
-                .Select(z => new ZivotinjeMiniViewModel
-                {
-                    ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                    BrojMikrocipa = z.BrojMikrocipa,
-                    ImeZivotinje = z.ImeZivotinje,
-                    NazivPasmine = z.Pasmina.NazivPasmine,
-                    NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                    NazivSpola = z.Spol.NazivSpola,
-                    JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                    NazivSklonista = z.Skloniste.NazivSklonista,
-                    NazivGrada = z.Skloniste.Grad.NazivGrada
-                })
-                .ToList();
+                var query = ctx.UoceneLutalices
+                    .Where(ul => ul.GradId == grad.GradId)
+                    .ToList();
 
-                ViewData["VrstaOrder"] = string.IsNullOrEmpty(sortOrder) ? "NazivVrste_desc" : "";
-                ViewData["PasminaOrder"] = sortOrder == "Pasmina" ? "Pasmina_desc" : "Pasmina";
-                ViewData["ImeOrder"] = sortOrder == "Ime" ? "Ime_desc" : "Ime";
-                ViewData["SpolOrder"] = sortOrder == "Spol" ? "Spol_desc" : "Spol";
-                ViewData["UdomljavanjeOrder"] = sortOrder == "Udomljavanje" ? "Udomljavanje_desc" : "Udomljavanje";
-                ViewData["GradOrder"] = sortOrder == "Grad" ? "Grad_desc" : "Grad";
+                ViewData["DatumPrijaveOrder"] = string.IsNullOrEmpty(sortOrder) ? "DatumPrijave_desc" : "";
 
                 switch (sortOrder)
                 {
-                    case "Grad":
-                        query = ctx.ZivotinjaUSklonistus
-                            .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                            .Where(z => z.UdomljavanjeId == 1)
-                            .Select(z => new ZivotinjeMiniViewModel
-                            {
-                                ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                BrojMikrocipa = z.BrojMikrocipa,
-                                ImeZivotinje = z.ImeZivotinje,
-                                NazivPasmine = z.Pasmina.NazivPasmine,
-                                NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                NazivSpola = z.Spol.NazivSpola,
-                                JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                NazivSklonista = z.Skloniste.NazivSklonista,
-                                NazivGrada = z.Skloniste.Grad.NazivGrada
-                            })
-                            .OrderBy(z => z.NazivGrada)
+                    case "DatumPrijave_desc":
+                        query = ctx.UoceneLutalices
+                            .Where(ul => ul.GradId == grad.GradId)
+                            .OrderByDescending(ul => ul.DatumPrijave)
                             .ToList();
-                        ViewBag.CurrentSort = "Grad";
+                        ViewBag.CurrentSort = "DatumPrijave_desc";
                         break;
-                    case "Grad_desc":
-                        query = ctx.ZivotinjaUSklonistus
-                            .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                            .Where(z => z.UdomljavanjeId == 1)
-                            .Select(z => new ZivotinjeMiniViewModel
-                            {
-                                ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                BrojMikrocipa = z.BrojMikrocipa,
-                                ImeZivotinje = z.ImeZivotinje,
-                                NazivPasmine = z.Pasmina.NazivPasmine,
-                                NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                NazivSpola = z.Spol.NazivSpola,
-                                JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                NazivSklonista = z.Skloniste.NazivSklonista,
-                                NazivGrada = z.Skloniste.Grad.NazivGrada
-                            })
-                            .OrderByDescending(z => z.NazivGrada)
-                            .ToList();
-                        ViewBag.CurrentSort = "Grad_desc";
-                        break;
-
-                    case "Udomljavanje":
-                        query = ctx.ZivotinjaUSklonistus
-                            .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                            .Where(z => z.UdomljavanjeId == 1)
-                            .Select(z => new ZivotinjeMiniViewModel
-                            {
-                                ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                BrojMikrocipa = z.BrojMikrocipa,
-                                ImeZivotinje = z.ImeZivotinje,
-                                NazivPasmine = z.Pasmina.NazivPasmine,
-                                NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                NazivSpola = z.Spol.NazivSpola,
-                                JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                NazivSklonista = z.Skloniste.NazivSklonista,
-                                NazivGrada = z.Skloniste.Grad.NazivGrada
-                            })
-                            .OrderBy(z => z.JeLiZaUdomljavanje)
-                            .ToList();
-                        ViewBag.CurrentSort = "Udomljavanje";
-                        break;
-                    case "Udomljavanje_desc":
-                        query = ctx.ZivotinjaUSklonistus
-                            .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                            .Where(z => z.UdomljavanjeId == 1)
-                            .Select(z => new ZivotinjeMiniViewModel
-                            {
-                                ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                BrojMikrocipa = z.BrojMikrocipa,
-                                ImeZivotinje = z.ImeZivotinje,
-                                NazivPasmine = z.Pasmina.NazivPasmine,
-                                NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                NazivSpola = z.Spol.NazivSpola,
-                                JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                NazivSklonista = z.Skloniste.NazivSklonista,
-                                NazivGrada = z.Skloniste.Grad.NazivGrada
-                            })
-                            .OrderByDescending(z => z.JeLiZaUdomljavanje)
-                            .ToList();
-                        ViewBag.CurrentSort = "Udomljavanje_desc";
-                        break;
-
-                    case "Spol":
-                        query = ctx.ZivotinjaUSklonistus
-                            .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                            .Where(z => z.UdomljavanjeId == 1)
-                            .Select(z => new ZivotinjeMiniViewModel
-                            {
-                                ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                BrojMikrocipa = z.BrojMikrocipa,
-                                ImeZivotinje = z.ImeZivotinje,
-                                NazivPasmine = z.Pasmina.NazivPasmine,
-                                NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                NazivSpola = z.Spol.NazivSpola,
-                                JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                NazivSklonista = z.Skloniste.NazivSklonista,
-                                NazivGrada = z.Skloniste.Grad.NazivGrada
-                            })
-                            .OrderBy(z => z.NazivSpola)
-                            .ToList();
-                        ViewBag.CurrentSort = "Spol";
-                        break;
-                    case "Spol_desc":
-                        query = ctx.ZivotinjaUSklonistus
-                            .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                            .Where(z => z.UdomljavanjeId == 1)
-                            .Select(z => new ZivotinjeMiniViewModel
-                            {
-                                ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                BrojMikrocipa = z.BrojMikrocipa,
-                                ImeZivotinje = z.ImeZivotinje,
-                                NazivPasmine = z.Pasmina.NazivPasmine,
-                                NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                NazivSpola = z.Spol.NazivSpola,
-                                JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                NazivSklonista = z.Skloniste.NazivSklonista,
-                                NazivGrada = z.Skloniste.Grad.NazivGrada
-                            })
-                            .OrderByDescending(z => z.NazivSpola)
-                            .ToList();
-                        ViewBag.CurrentSort = "Spol_desc";
-                        break;
-
-
-                    case "Ime":
-                        query = ctx.ZivotinjaUSklonistus
-                            .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                            .Where(z => z.UdomljavanjeId == 1)
-                            .Select(z => new ZivotinjeMiniViewModel
-                            {
-                                ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                BrojMikrocipa = z.BrojMikrocipa,
-                                ImeZivotinje = z.ImeZivotinje,
-                                NazivPasmine = z.Pasmina.NazivPasmine,
-                                NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                NazivSpola = z.Spol.NazivSpola,
-                                JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                NazivSklonista = z.Skloniste.NazivSklonista,
-                                NazivGrada = z.Skloniste.Grad.NazivGrada
-                            })
-                            .OrderBy(z => z.ImeZivotinje)
-                            .ToList();
-                        ViewBag.CurrentSort = "Ime";
-                        break;
-                    case "Ime_desc":
-                        query = ctx.ZivotinjaUSklonistus
-                            .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                            .Where(z => z.UdomljavanjeId == 1)
-                            .Select(z => new ZivotinjeMiniViewModel
-                            {
-                                ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                BrojMikrocipa = z.BrojMikrocipa,
-                                ImeZivotinje = z.ImeZivotinje,
-                                NazivPasmine = z.Pasmina.NazivPasmine,
-                                NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                NazivSpola = z.Spol.NazivSpola,
-                                JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                NazivSklonista = z.Skloniste.NazivSklonista,
-                                NazivGrada = z.Skloniste.Grad.NazivGrada
-                            })
-                            .OrderByDescending(z => z.ImeZivotinje)
-                            .ToList();
-                        ViewBag.CurrentSort = "Ime_desc";
-                        break;
-
-                    case "Pasmina":
-                        query = ctx.ZivotinjaUSklonistus
-                            .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                            .Where(z => z.UdomljavanjeId == 1)
-                            .Select(z => new ZivotinjeMiniViewModel
-                            {
-                                ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                BrojMikrocipa = z.BrojMikrocipa,
-                                ImeZivotinje = z.ImeZivotinje,
-                                NazivPasmine = z.Pasmina.NazivPasmine,
-                                NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                NazivSpola = z.Spol.NazivSpola,
-                                JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                NazivSklonista = z.Skloniste.NazivSklonista,
-                                NazivGrada = z.Skloniste.Grad.NazivGrada
-                            })
-                            .OrderBy(z => z.NazivPasmine)
-                            .ToList();
-                        ViewBag.CurrentSort = "Pasmina";
-                        break;
-                    case "Pasmina_desc":
-                        query = ctx.ZivotinjaUSklonistus
-                            .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                            .Where(z => z.UdomljavanjeId == 1)
-                            .Select(z => new ZivotinjeMiniViewModel
-                            {
-                                ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                BrojMikrocipa = z.BrojMikrocipa,
-                                ImeZivotinje = z.ImeZivotinje,
-                                NazivPasmine = z.Pasmina.NazivPasmine,
-                                NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                NazivSpola = z.Spol.NazivSpola,
-                                JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                NazivSklonista = z.Skloniste.NazivSklonista,
-                                NazivGrada = z.Skloniste.Grad.NazivGrada
-                            })
-                            .OrderByDescending(z => z.NazivPasmine)
-                            .ToList();
-                        ViewBag.CurrentSort = "Pasmina_desc";
-                        break;
-
-                    case "NazivVrste_desc":
-                        query = ctx.ZivotinjaUSklonistus
-                            .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                            .Where(z => z.UdomljavanjeId == 1)
-                            .Select(z => new ZivotinjeMiniViewModel
-                            {
-                                ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                BrojMikrocipa = z.BrojMikrocipa,
-                                ImeZivotinje = z.ImeZivotinje,
-                                NazivPasmine = z.Pasmina.NazivPasmine,
-                                NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                NazivSpola = z.Spol.NazivSpola,
-                                JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                NazivSklonista = z.Skloniste.NazivSklonista,
-                                NazivGrada = z.Skloniste.Grad.NazivGrada
-                            })
-                            .OrderByDescending(z => z.NazivVrste)
-                            .ToList();
-                        ViewBag.CurrentSort = "NazivVrste_desc";
-                        break;
-
                     default:
-                        query = ctx.ZivotinjaUSklonistus
-                            .Where(z => z.SklonisteId == skloniste.SklonisteId)
-                            .Where(z => z.UdomljavanjeId == 1)
-                            .Select(z => new ZivotinjeMiniViewModel
-                            {
-                                ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
-                                BrojMikrocipa = z.BrojMikrocipa,
-                                ImeZivotinje = z.ImeZivotinje,
-                                NazivPasmine = z.Pasmina.NazivPasmine,
-                                NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
-                                NazivSpola = z.Spol.NazivSpola,
-                                JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
-                                NazivSklonista = z.Skloniste.NazivSklonista,
-                                NazivGrada = z.Skloniste.Grad.NazivGrada
-                            })
-                            .OrderBy(z=>z.NazivVrste)
+                        query = ctx.UoceneLutalices
+                            .Where(ul => ul.GradId == grad.GradId)
+                            .OrderBy(ul => ul.DatumPrijave)
                             .ToList();
                         ViewBag.CurrentSort = "";
                         break;
@@ -1627,345 +1337,669 @@ namespace PIS_projekt.Controllers
                 var pager = new Pager(recsCount, pg, pageSize);
                 int recSkip = (pg - 1) * pageSize;
                 var data = query.Skip(recSkip).Take(pager.PageSize).ToList();
-                var model = new ZivotinjeMiniVM
-                {
-                    ZivotinjeMini = data
-                };
                 this.ViewBag.Pager = pager;
-                return View("ZaUdomljavanjeSkloniste", model);
+                return View("PrijavljeneLutalice", data);
             }
             else
             {
-                return Ok("problemi, problemi");
+                return Ok("Nemate pristup ovoj stranici");
             }
+            
+        }
+        //  ZaUdomljavanjeSkloniste
+        public IActionResult ZaUdomljavanjeSkloniste(string sortOrder,int pg=1)
+        {
+            if (HttpContext.Session.GetInt32("idUloge") == 2)
+            {
+                var logiraniKorisnik = ctx.Korisniks
+                .Where(k => k.KorisnikId == HttpContext.Session.GetInt32("idLogiranogKorisnika"))
+                .FirstOrDefault<Korisnik>();
+                var skloniste = ctx.Sklonistes
+                    .Where(s => s.SklonisteId == logiraniKorisnik.SklonisteFk)
+                    .FirstOrDefault<Skloniste>();
+                ViewBag.ID = skloniste.SklonisteId;
+                if (skloniste != null)
+                {
+                    var query = ctx.ZivotinjaUSklonistus
+                    .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                    .Where(z => z.UdomljavanjeId == 1)
+                    .Select(z => new ZivotinjeMiniViewModel
+                    {
+                        ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                        BrojMikrocipa = z.BrojMikrocipa,
+                        ImeZivotinje = z.ImeZivotinje,
+                        NazivPasmine = z.Pasmina.NazivPasmine,
+                        NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                        NazivSpola = z.Spol.NazivSpola,
+                        JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                        NazivSklonista = z.Skloniste.NazivSklonista,
+                        NazivGrada = z.Skloniste.Grad.NazivGrada
+                    })
+                    .ToList();
+
+                    ViewData["VrstaOrder"] = string.IsNullOrEmpty(sortOrder) ? "NazivVrste_desc" : "";
+                    ViewData["PasminaOrder"] = sortOrder == "Pasmina" ? "Pasmina_desc" : "Pasmina";
+                    ViewData["ImeOrder"] = sortOrder == "Ime" ? "Ime_desc" : "Ime";
+                    ViewData["SpolOrder"] = sortOrder == "Spol" ? "Spol_desc" : "Spol";
+                    ViewData["UdomljavanjeOrder"] = sortOrder == "Udomljavanje" ? "Udomljavanje_desc" : "Udomljavanje";
+                    ViewData["GradOrder"] = sortOrder == "Grad" ? "Grad_desc" : "Grad";
+
+                    switch (sortOrder)
+                    {
+                        case "Grad":
+                            query = ctx.ZivotinjaUSklonistus
+                                .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                .Where(z => z.UdomljavanjeId == 1)
+                                .Select(z => new ZivotinjeMiniViewModel
+                                {
+                                    ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                    BrojMikrocipa = z.BrojMikrocipa,
+                                    ImeZivotinje = z.ImeZivotinje,
+                                    NazivPasmine = z.Pasmina.NazivPasmine,
+                                    NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                    NazivSpola = z.Spol.NazivSpola,
+                                    JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                    NazivSklonista = z.Skloniste.NazivSklonista,
+                                    NazivGrada = z.Skloniste.Grad.NazivGrada
+                                })
+                                .OrderBy(z => z.NazivGrada)
+                                .ToList();
+                            ViewBag.CurrentSort = "Grad";
+                            break;
+                        case "Grad_desc":
+                            query = ctx.ZivotinjaUSklonistus
+                                .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                .Where(z => z.UdomljavanjeId == 1)
+                                .Select(z => new ZivotinjeMiniViewModel
+                                {
+                                    ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                    BrojMikrocipa = z.BrojMikrocipa,
+                                    ImeZivotinje = z.ImeZivotinje,
+                                    NazivPasmine = z.Pasmina.NazivPasmine,
+                                    NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                    NazivSpola = z.Spol.NazivSpola,
+                                    JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                    NazivSklonista = z.Skloniste.NazivSklonista,
+                                    NazivGrada = z.Skloniste.Grad.NazivGrada
+                                })
+                                .OrderByDescending(z => z.NazivGrada)
+                                .ToList();
+                            ViewBag.CurrentSort = "Grad_desc";
+                            break;
+
+                        case "Udomljavanje":
+                            query = ctx.ZivotinjaUSklonistus
+                                .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                .Where(z => z.UdomljavanjeId == 1)
+                                .Select(z => new ZivotinjeMiniViewModel
+                                {
+                                    ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                    BrojMikrocipa = z.BrojMikrocipa,
+                                    ImeZivotinje = z.ImeZivotinje,
+                                    NazivPasmine = z.Pasmina.NazivPasmine,
+                                    NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                    NazivSpola = z.Spol.NazivSpola,
+                                    JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                    NazivSklonista = z.Skloniste.NazivSklonista,
+                                    NazivGrada = z.Skloniste.Grad.NazivGrada
+                                })
+                                .OrderBy(z => z.JeLiZaUdomljavanje)
+                                .ToList();
+                            ViewBag.CurrentSort = "Udomljavanje";
+                            break;
+                        case "Udomljavanje_desc":
+                            query = ctx.ZivotinjaUSklonistus
+                                .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                .Where(z => z.UdomljavanjeId == 1)
+                                .Select(z => new ZivotinjeMiniViewModel
+                                {
+                                    ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                    BrojMikrocipa = z.BrojMikrocipa,
+                                    ImeZivotinje = z.ImeZivotinje,
+                                    NazivPasmine = z.Pasmina.NazivPasmine,
+                                    NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                    NazivSpola = z.Spol.NazivSpola,
+                                    JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                    NazivSklonista = z.Skloniste.NazivSklonista,
+                                    NazivGrada = z.Skloniste.Grad.NazivGrada
+                                })
+                                .OrderByDescending(z => z.JeLiZaUdomljavanje)
+                                .ToList();
+                            ViewBag.CurrentSort = "Udomljavanje_desc";
+                            break;
+
+                        case "Spol":
+                            query = ctx.ZivotinjaUSklonistus
+                                .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                .Where(z => z.UdomljavanjeId == 1)
+                                .Select(z => new ZivotinjeMiniViewModel
+                                {
+                                    ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                    BrojMikrocipa = z.BrojMikrocipa,
+                                    ImeZivotinje = z.ImeZivotinje,
+                                    NazivPasmine = z.Pasmina.NazivPasmine,
+                                    NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                    NazivSpola = z.Spol.NazivSpola,
+                                    JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                    NazivSklonista = z.Skloniste.NazivSklonista,
+                                    NazivGrada = z.Skloniste.Grad.NazivGrada
+                                })
+                                .OrderBy(z => z.NazivSpola)
+                                .ToList();
+                            ViewBag.CurrentSort = "Spol";
+                            break;
+                        case "Spol_desc":
+                            query = ctx.ZivotinjaUSklonistus
+                                .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                .Where(z => z.UdomljavanjeId == 1)
+                                .Select(z => new ZivotinjeMiniViewModel
+                                {
+                                    ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                    BrojMikrocipa = z.BrojMikrocipa,
+                                    ImeZivotinje = z.ImeZivotinje,
+                                    NazivPasmine = z.Pasmina.NazivPasmine,
+                                    NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                    NazivSpola = z.Spol.NazivSpola,
+                                    JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                    NazivSklonista = z.Skloniste.NazivSklonista,
+                                    NazivGrada = z.Skloniste.Grad.NazivGrada
+                                })
+                                .OrderByDescending(z => z.NazivSpola)
+                                .ToList();
+                            ViewBag.CurrentSort = "Spol_desc";
+                            break;
+
+
+                        case "Ime":
+                            query = ctx.ZivotinjaUSklonistus
+                                .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                .Where(z => z.UdomljavanjeId == 1)
+                                .Select(z => new ZivotinjeMiniViewModel
+                                {
+                                    ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                    BrojMikrocipa = z.BrojMikrocipa,
+                                    ImeZivotinje = z.ImeZivotinje,
+                                    NazivPasmine = z.Pasmina.NazivPasmine,
+                                    NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                    NazivSpola = z.Spol.NazivSpola,
+                                    JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                    NazivSklonista = z.Skloniste.NazivSklonista,
+                                    NazivGrada = z.Skloniste.Grad.NazivGrada
+                                })
+                                .OrderBy(z => z.ImeZivotinje)
+                                .ToList();
+                            ViewBag.CurrentSort = "Ime";
+                            break;
+                        case "Ime_desc":
+                            query = ctx.ZivotinjaUSklonistus
+                                .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                .Where(z => z.UdomljavanjeId == 1)
+                                .Select(z => new ZivotinjeMiniViewModel
+                                {
+                                    ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                    BrojMikrocipa = z.BrojMikrocipa,
+                                    ImeZivotinje = z.ImeZivotinje,
+                                    NazivPasmine = z.Pasmina.NazivPasmine,
+                                    NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                    NazivSpola = z.Spol.NazivSpola,
+                                    JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                    NazivSklonista = z.Skloniste.NazivSklonista,
+                                    NazivGrada = z.Skloniste.Grad.NazivGrada
+                                })
+                                .OrderByDescending(z => z.ImeZivotinje)
+                                .ToList();
+                            ViewBag.CurrentSort = "Ime_desc";
+                            break;
+
+                        case "Pasmina":
+                            query = ctx.ZivotinjaUSklonistus
+                                .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                .Where(z => z.UdomljavanjeId == 1)
+                                .Select(z => new ZivotinjeMiniViewModel
+                                {
+                                    ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                    BrojMikrocipa = z.BrojMikrocipa,
+                                    ImeZivotinje = z.ImeZivotinje,
+                                    NazivPasmine = z.Pasmina.NazivPasmine,
+                                    NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                    NazivSpola = z.Spol.NazivSpola,
+                                    JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                    NazivSklonista = z.Skloniste.NazivSklonista,
+                                    NazivGrada = z.Skloniste.Grad.NazivGrada
+                                })
+                                .OrderBy(z => z.NazivPasmine)
+                                .ToList();
+                            ViewBag.CurrentSort = "Pasmina";
+                            break;
+                        case "Pasmina_desc":
+                            query = ctx.ZivotinjaUSklonistus
+                                .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                .Where(z => z.UdomljavanjeId == 1)
+                                .Select(z => new ZivotinjeMiniViewModel
+                                {
+                                    ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                    BrojMikrocipa = z.BrojMikrocipa,
+                                    ImeZivotinje = z.ImeZivotinje,
+                                    NazivPasmine = z.Pasmina.NazivPasmine,
+                                    NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                    NazivSpola = z.Spol.NazivSpola,
+                                    JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                    NazivSklonista = z.Skloniste.NazivSklonista,
+                                    NazivGrada = z.Skloniste.Grad.NazivGrada
+                                })
+                                .OrderByDescending(z => z.NazivPasmine)
+                                .ToList();
+                            ViewBag.CurrentSort = "Pasmina_desc";
+                            break;
+
+                        case "NazivVrste_desc":
+                            query = ctx.ZivotinjaUSklonistus
+                                .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                .Where(z => z.UdomljavanjeId == 1)
+                                .Select(z => new ZivotinjeMiniViewModel
+                                {
+                                    ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                    BrojMikrocipa = z.BrojMikrocipa,
+                                    ImeZivotinje = z.ImeZivotinje,
+                                    NazivPasmine = z.Pasmina.NazivPasmine,
+                                    NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                    NazivSpola = z.Spol.NazivSpola,
+                                    JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                    NazivSklonista = z.Skloniste.NazivSklonista,
+                                    NazivGrada = z.Skloniste.Grad.NazivGrada
+                                })
+                                .OrderByDescending(z => z.NazivVrste)
+                                .ToList();
+                            ViewBag.CurrentSort = "NazivVrste_desc";
+                            break;
+
+                        default:
+                            query = ctx.ZivotinjaUSklonistus
+                                .Where(z => z.SklonisteId == skloniste.SklonisteId)
+                                .Where(z => z.UdomljavanjeId == 1)
+                                .Select(z => new ZivotinjeMiniViewModel
+                                {
+                                    ZivotinjaUSklonistuId = z.ZivotinjaUSklonistuId,
+                                    BrojMikrocipa = z.BrojMikrocipa,
+                                    ImeZivotinje = z.ImeZivotinje,
+                                    NazivPasmine = z.Pasmina.NazivPasmine,
+                                    NazivVrste = z.Pasmina.VrstaZivotinje.NazivVrste,
+                                    NazivSpola = z.Spol.NazivSpola,
+                                    JeLiZaUdomljavanje = z.Udomljavanje.JeLiZaUdomljavanje,
+                                    NazivSklonista = z.Skloniste.NazivSklonista,
+                                    NazivGrada = z.Skloniste.Grad.NazivGrada
+                                })
+                                .OrderBy(z => z.NazivVrste)
+                                .ToList();
+                            ViewBag.CurrentSort = "";
+                            break;
+                    }
+
+                    const int pageSize = 5;
+                    if (pg < 1)
+                    {
+                        pg = 1;
+                    }
+
+                    int recsCount = query.Count();
+                    var pager = new Pager(recsCount, pg, pageSize);
+                    int recSkip = (pg - 1) * pageSize;
+                    var data = query.Skip(recSkip).Take(pager.PageSize).ToList();
+                    var model = new ZivotinjeMiniVM
+                    {
+                        ZivotinjeMini = data
+                    };
+                    this.ViewBag.Pager = pager;
+                    return View("ZaUdomljavanjeSkloniste", model);
+                }
+                else
+                {
+                    return Ok("problemi, problemi");
+                }
+            }
+            else
+            {
+                return Ok("Nemate pristup ovoj stranici");
+            }
+                
         }
         public IActionResult IzgubljeneSkloniste(string sortOrder, int pg = 1)
         {
-            var logiraniKorisnik = ctx.Korisniks
-                   .Where(k => k.KorisnikId == HttpContext.Session.GetInt32("idLogiranogKorisnika"))
-                   .FirstOrDefault<Korisnik>();
-            var skloniste = ctx.Sklonistes
-                .Where(s => s.SklonisteId == logiraniKorisnik.SklonisteFk)
-                .FirstOrDefault<Skloniste>();
-            ViewBag.ID = skloniste.SklonisteId;
-            var query = ctx.IzgubljeneZivotinjes
-                .Where(iz=>iz.GradId == skloniste.GradId)
-                .Select(iz => new IzgubljeneMiniViewModel
+            if (HttpContext.Session.GetInt32("idUloge") == 2)
+            {
+                var logiraniKorisnik = ctx.Korisniks
+                  .Where(k => k.KorisnikId == HttpContext.Session.GetInt32("idLogiranogKorisnika"))
+                  .FirstOrDefault<Korisnik>();
+                var skloniste = ctx.Sklonistes
+                    .Where(s => s.SklonisteId == logiraniKorisnik.SklonisteFk)
+                    .FirstOrDefault<Skloniste>();
+                ViewBag.ID = skloniste.SklonisteId;
+                var query = ctx.IzgubljeneZivotinjes
+                    .Where(iz => iz.GradId == skloniste.GradId)
+                    .Select(iz => new IzgubljeneMiniViewModel
+                    {
+                        IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
+                        VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
+                        Pasmina = iz.Pasmina.NazivPasmine,
+                        Spol = iz.Spol.NazivSpola,
+                        Kontakt = iz.Kontakt,
+                        LokacijaNestanka = iz.LokacijaNestanka,
+                        Grad = iz.Grad.NazivGrada,
+                        DatumNestanka = iz.DatumNestanka,
+                        DatumPrijave = iz.DatumPrijave
+                    })
+                    .ToList();
+
+                ViewData["DatumNestankaOrder"] = string.IsNullOrEmpty(sortOrder) ? "DatumNestanka_desc" : "";
+                ViewData["GradOrder"] = sortOrder == "Grad" ? "Grad_desc" : "Grad";
+                ViewData["VrstaZivotinjeOrder"] = sortOrder == "VrstaZivotinje" ? "VrstaZivotinje_desc" : "VrstaZivotinje";
+                ViewData["PasminaOrder"] = sortOrder == "Pasmina" ? "Pasmina_desc" : "Pasmina";
+                ViewData["SpolOrder"] = sortOrder == "Spol" ? "Spol_desc" : "Spol";
+                ViewData["LokacijaNestankaOrder"] = sortOrder == "LokacijaNestanka" ? "LokacijaNestanka_desc" : "LokacijaNestanka";
+                ViewData["DatumPrijaveOrder"] = sortOrder == "DatumPrijave" ? "DatumPrijave_desc" : "DatumPrijave";
+                switch (sortOrder)
                 {
-                    IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
-                    VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
-                    Pasmina = iz.Pasmina.NazivPasmine,
-                    Spol = iz.Spol.NazivSpola,
-                    Kontakt = iz.Kontakt,
-                    LokacijaNestanka = iz.LokacijaNestanka,
-                    Grad = iz.Grad.NazivGrada,
-                    DatumNestanka = iz.DatumNestanka,
-                    DatumPrijave = iz.DatumPrijave
-                })
-                .ToList();
+                    case "DatumPrijave_desc":
+                        query = ctx.IzgubljeneZivotinjes
+                            .Where(iz => iz.GradId == skloniste.GradId)
+                            .Select(iz => new IzgubljeneMiniViewModel
+                            {
+                                IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
+                                VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
+                                Pasmina = iz.Pasmina.NazivPasmine,
+                                Spol = iz.Spol.NazivSpola,
+                                Kontakt = iz.Kontakt,
+                                LokacijaNestanka = iz.LokacijaNestanka,
+                                Grad = iz.Grad.NazivGrada,
+                                DatumNestanka = iz.DatumNestanka,
+                                DatumPrijave = iz.DatumPrijave
+                            })
+                            .OrderByDescending(iz => iz.DatumPrijave)
+                            .ToList();
+                        ViewBag.CurrentSort = "DatumPrijave_desc";
+                        break;
+                    case "DatumPrijave":
+                        query = ctx.IzgubljeneZivotinjes
+                            .Where(iz => iz.GradId == skloniste.GradId)
+                            .Select(iz => new IzgubljeneMiniViewModel
+                            {
+                                IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
+                                VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
+                                Pasmina = iz.Pasmina.NazivPasmine,
+                                Spol = iz.Spol.NazivSpola,
+                                Kontakt = iz.Kontakt,
+                                LokacijaNestanka = iz.LokacijaNestanka,
+                                Grad = iz.Grad.NazivGrada,
+                                DatumNestanka = iz.DatumNestanka,
+                                DatumPrijave = iz.DatumPrijave
+                            })
+                            .OrderBy(iz => iz.DatumPrijave)
+                            .ToList();
+                        ViewBag.CurrentSort = "DatumPrijave";
+                        break;
 
-            ViewData["DatumNestankaOrder"] = string.IsNullOrEmpty(sortOrder) ? "DatumNestanka_desc" : "";
-            ViewData["GradOrder"] = sortOrder == "Grad" ? "Grad_desc" : "Grad";
-            ViewData["VrstaZivotinjeOrder"] = sortOrder == "VrstaZivotinje" ? "VrstaZivotinje_desc" : "VrstaZivotinje";
-            ViewData["PasminaOrder"] = sortOrder == "Pasmina" ? "Pasmina_desc" : "Pasmina";
-            ViewData["SpolOrder"] = sortOrder == "Spol" ? "Spol_desc" : "Spol";
-            ViewData["LokacijaNestankaOrder"] = sortOrder == "LokacijaNestanka" ? "LokacijaNestanka_desc" : "LokacijaNestanka";
-            ViewData["DatumPrijaveOrder"] = sortOrder == "DatumPrijave" ? "DatumPrijave_desc" : "DatumPrijave";
-            switch (sortOrder)
-            {
-                case "DatumPrijave_desc":
-                    query = ctx.IzgubljeneZivotinjes
-                        .Where(iz => iz.GradId == skloniste.GradId)
-                        .Select(iz => new IzgubljeneMiniViewModel
-                        {
-                            IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
-                            VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
-                            Pasmina = iz.Pasmina.NazivPasmine,
-                            Spol = iz.Spol.NazivSpola,
-                            Kontakt = iz.Kontakt,
-                            LokacijaNestanka = iz.LokacijaNestanka,
-                            Grad = iz.Grad.NazivGrada,
-                            DatumNestanka = iz.DatumNestanka,
-                            DatumPrijave = iz.DatumPrijave
-                        })
-                        .OrderByDescending(iz => iz.DatumPrijave)
-                        .ToList();
-                    ViewBag.CurrentSort = "DatumPrijave_desc";
-                    break;
-                case "DatumPrijave":
-                    query = ctx.IzgubljeneZivotinjes
-                        .Where(iz => iz.GradId == skloniste.GradId)
-                        .Select(iz => new IzgubljeneMiniViewModel
-                        {
-                            IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
-                            VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
-                            Pasmina = iz.Pasmina.NazivPasmine,
-                            Spol = iz.Spol.NazivSpola,
-                            Kontakt = iz.Kontakt,
-                            LokacijaNestanka = iz.LokacijaNestanka,
-                            Grad = iz.Grad.NazivGrada,
-                            DatumNestanka = iz.DatumNestanka,
-                            DatumPrijave = iz.DatumPrijave
-                        })
-                        .OrderBy(iz => iz.DatumPrijave)
-                        .ToList();
-                    ViewBag.CurrentSort = "DatumPrijave";
-                    break;
+                    case "LokacijaNestanka_desc":
+                        query = ctx.IzgubljeneZivotinjes
+                            .Where(iz => iz.GradId == skloniste.GradId)
+                            .Select(iz => new IzgubljeneMiniViewModel
+                            {
+                                IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
+                                VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
+                                Pasmina = iz.Pasmina.NazivPasmine,
+                                Spol = iz.Spol.NazivSpola,
+                                Kontakt = iz.Kontakt,
+                                LokacijaNestanka = iz.LokacijaNestanka,
+                                Grad = iz.Grad.NazivGrada,
+                                DatumNestanka = iz.DatumNestanka,
+                                DatumPrijave = iz.DatumPrijave
+                            })
+                            .OrderByDescending(iz => iz.LokacijaNestanka)
+                            .ToList();
+                        ViewBag.CurrentSort = "LokacijaNestanka_desc";
+                        break;
+                    case "LokacijaNestanka":
+                        query = ctx.IzgubljeneZivotinjes
+                            .Where(iz => iz.GradId == skloniste.GradId)
+                            .Select(iz => new IzgubljeneMiniViewModel
+                            {
+                                IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
+                                VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
+                                Pasmina = iz.Pasmina.NazivPasmine,
+                                Spol = iz.Spol.NazivSpola,
+                                Kontakt = iz.Kontakt,
+                                LokacijaNestanka = iz.LokacijaNestanka,
+                                Grad = iz.Grad.NazivGrada,
+                                DatumNestanka = iz.DatumNestanka,
+                                DatumPrijave = iz.DatumPrijave
+                            })
+                            .OrderBy(iz => iz.LokacijaNestanka)
+                            .ToList();
+                        ViewBag.CurrentSort = "LokacijaNestanka";
+                        break;
 
-                case "LokacijaNestanka_desc":
-                    query = ctx.IzgubljeneZivotinjes
-                        .Where(iz => iz.GradId == skloniste.GradId)
-                        .Select(iz => new IzgubljeneMiniViewModel
-                        {
-                            IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
-                            VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
-                            Pasmina = iz.Pasmina.NazivPasmine,
-                            Spol = iz.Spol.NazivSpola,
-                            Kontakt = iz.Kontakt,
-                            LokacijaNestanka = iz.LokacijaNestanka,
-                            Grad = iz.Grad.NazivGrada,
-                            DatumNestanka = iz.DatumNestanka,
-                            DatumPrijave = iz.DatumPrijave
-                        })
-                        .OrderByDescending(iz => iz.LokacijaNestanka)
-                        .ToList();
-                    ViewBag.CurrentSort = "LokacijaNestanka_desc";
-                    break;
-                case "LokacijaNestanka":
-                    query = ctx.IzgubljeneZivotinjes
-                        .Where(iz => iz.GradId == skloniste.GradId)
-                        .Select(iz => new IzgubljeneMiniViewModel
-                        {
-                            IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
-                            VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
-                            Pasmina = iz.Pasmina.NazivPasmine,
-                            Spol = iz.Spol.NazivSpola,
-                            Kontakt = iz.Kontakt,
-                            LokacijaNestanka = iz.LokacijaNestanka,
-                            Grad = iz.Grad.NazivGrada,
-                            DatumNestanka = iz.DatumNestanka,
-                            DatumPrijave = iz.DatumPrijave
-                        })
-                        .OrderBy(iz => iz.LokacijaNestanka)
-                        .ToList();
-                    ViewBag.CurrentSort = "LokacijaNestanka";
-                    break;
+                    case "Spol_desc":
+                        query = ctx.IzgubljeneZivotinjes
+                            .Where(iz => iz.GradId == skloniste.GradId)
+                            .Select(iz => new IzgubljeneMiniViewModel
+                            {
+                                IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
+                                VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
+                                Pasmina = iz.Pasmina.NazivPasmine,
+                                Spol = iz.Spol.NazivSpola,
+                                Kontakt = iz.Kontakt,
+                                LokacijaNestanka = iz.LokacijaNestanka,
+                                Grad = iz.Grad.NazivGrada,
+                                DatumNestanka = iz.DatumNestanka,
+                                DatumPrijave = iz.DatumPrijave
+                            })
+                            .OrderByDescending(iz => iz.Spol)
+                            .ToList();
+                        ViewBag.CurrentSort = "Spol_desc";
+                        break;
+                    case "Spol":
+                        query = ctx.IzgubljeneZivotinjes
+                            .Where(iz => iz.GradId == skloniste.GradId)
+                            .Select(iz => new IzgubljeneMiniViewModel
+                            {
+                                IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
+                                VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
+                                Pasmina = iz.Pasmina.NazivPasmine,
+                                Spol = iz.Spol.NazivSpola,
+                                Kontakt = iz.Kontakt,
+                                LokacijaNestanka = iz.LokacijaNestanka,
+                                Grad = iz.Grad.NazivGrada,
+                                DatumNestanka = iz.DatumNestanka,
+                                DatumPrijave = iz.DatumPrijave
+                            })
+                            .OrderBy(iz => iz.Spol)
+                            .ToList();
+                        ViewBag.CurrentSort = "Spol";
+                        break;
 
-                case "Spol_desc":
-                    query = ctx.IzgubljeneZivotinjes
-                        .Where(iz => iz.GradId == skloniste.GradId)
-                        .Select(iz => new IzgubljeneMiniViewModel
-                        {
-                            IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
-                            VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
-                            Pasmina = iz.Pasmina.NazivPasmine,
-                            Spol = iz.Spol.NazivSpola,
-                            Kontakt = iz.Kontakt,
-                            LokacijaNestanka = iz.LokacijaNestanka,
-                            Grad = iz.Grad.NazivGrada,
-                            DatumNestanka = iz.DatumNestanka,
-                            DatumPrijave = iz.DatumPrijave
-                        })
-                        .OrderByDescending(iz => iz.Spol)
-                        .ToList();
-                    ViewBag.CurrentSort = "Spol_desc";
-                    break;
-                case "Spol":
-                    query = ctx.IzgubljeneZivotinjes
-                        .Where(iz => iz.GradId == skloniste.GradId)
-                        .Select(iz => new IzgubljeneMiniViewModel
-                        {
-                            IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
-                            VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
-                            Pasmina = iz.Pasmina.NazivPasmine,
-                            Spol = iz.Spol.NazivSpola,
-                            Kontakt = iz.Kontakt,
-                            LokacijaNestanka = iz.LokacijaNestanka,
-                            Grad = iz.Grad.NazivGrada,
-                            DatumNestanka = iz.DatumNestanka,
-                            DatumPrijave = iz.DatumPrijave
-                        })
-                        .OrderBy(iz => iz.Spol)
-                        .ToList();
-                    ViewBag.CurrentSort = "Spol";
-                    break;
+                    case "Pasmina_desc":
+                        query = ctx.IzgubljeneZivotinjes
+                            .Where(iz => iz.GradId == skloniste.GradId)
+                            .Select(iz => new IzgubljeneMiniViewModel
+                            {
+                                IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
+                                VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
+                                Pasmina = iz.Pasmina.NazivPasmine,
+                                Spol = iz.Spol.NazivSpola,
+                                Kontakt = iz.Kontakt,
+                                LokacijaNestanka = iz.LokacijaNestanka,
+                                Grad = iz.Grad.NazivGrada,
+                                DatumNestanka = iz.DatumNestanka,
+                                DatumPrijave = iz.DatumPrijave
+                            })
+                            .OrderByDescending(iz => iz.Pasmina)
+                            .ToList();
+                        ViewBag.CurrentSort = "Pasmina_desc";
+                        break;
+                    case "Pasmina":
+                        query = ctx.IzgubljeneZivotinjes
+                            .Where(iz => iz.GradId == skloniste.GradId)
+                            .Select(iz => new IzgubljeneMiniViewModel
+                            {
+                                IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
+                                VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
+                                Pasmina = iz.Pasmina.NazivPasmine,
+                                Spol = iz.Spol.NazivSpola,
+                                Kontakt = iz.Kontakt,
+                                LokacijaNestanka = iz.LokacijaNestanka,
+                                Grad = iz.Grad.NazivGrada,
+                                DatumNestanka = iz.DatumNestanka,
+                                DatumPrijave = iz.DatumPrijave
+                            })
+                            .OrderBy(iz => iz.Pasmina)
+                            .ToList();
+                        ViewBag.CurrentSort = "Pasmina";
+                        break;
 
-                case "Pasmina_desc":
-                    query = ctx.IzgubljeneZivotinjes
-                        .Where(iz => iz.GradId == skloniste.GradId)
-                        .Select(iz => new IzgubljeneMiniViewModel
-                        {
-                            IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
-                            VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
-                            Pasmina = iz.Pasmina.NazivPasmine,
-                            Spol = iz.Spol.NazivSpola,
-                            Kontakt = iz.Kontakt,
-                            LokacijaNestanka = iz.LokacijaNestanka,
-                            Grad = iz.Grad.NazivGrada,
-                            DatumNestanka = iz.DatumNestanka,
-                            DatumPrijave = iz.DatumPrijave
-                        })
-                        .OrderByDescending(iz => iz.Pasmina)
-                        .ToList();
-                    ViewBag.CurrentSort = "Pasmina_desc";
-                    break;
-                case "Pasmina":
-                    query = ctx.IzgubljeneZivotinjes
-                        .Where(iz => iz.GradId == skloniste.GradId)
-                        .Select(iz => new IzgubljeneMiniViewModel
-                        {
-                            IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
-                            VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
-                            Pasmina = iz.Pasmina.NazivPasmine,
-                            Spol = iz.Spol.NazivSpola,
-                            Kontakt = iz.Kontakt,
-                            LokacijaNestanka = iz.LokacijaNestanka,
-                            Grad = iz.Grad.NazivGrada,
-                            DatumNestanka = iz.DatumNestanka,
-                            DatumPrijave = iz.DatumPrijave
-                        })
-                        .OrderBy(iz => iz.Pasmina)
-                        .ToList();
-                    ViewBag.CurrentSort = "Pasmina";
-                    break;
+                    case "VrstaZivotinje_desc":
+                        query = ctx.IzgubljeneZivotinjes
+                            .Where(iz => iz.GradId == skloniste.GradId)
+                            .Select(iz => new IzgubljeneMiniViewModel
+                            {
+                                IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
+                                VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
+                                Pasmina = iz.Pasmina.NazivPasmine,
+                                Spol = iz.Spol.NazivSpola,
+                                Kontakt = iz.Kontakt,
+                                LokacijaNestanka = iz.LokacijaNestanka,
+                                Grad = iz.Grad.NazivGrada,
+                                DatumNestanka = iz.DatumNestanka,
+                                DatumPrijave = iz.DatumPrijave
+                            })
+                            .OrderByDescending(iz => iz.VrstaZivotinje)
+                            .ToList();
+                        ViewBag.CurrentSort = "VrstaZivotinje_desc";
+                        break;
+                    case "VrstaZivotinje":
+                        query = ctx.IzgubljeneZivotinjes
+                            .Where(iz => iz.GradId == skloniste.GradId)
+                            .Select(iz => new IzgubljeneMiniViewModel
+                            {
+                                IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
+                                VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
+                                Pasmina = iz.Pasmina.NazivPasmine,
+                                Spol = iz.Spol.NazivSpola,
+                                Kontakt = iz.Kontakt,
+                                LokacijaNestanka = iz.LokacijaNestanka,
+                                Grad = iz.Grad.NazivGrada,
+                                DatumNestanka = iz.DatumNestanka,
+                                DatumPrijave = iz.DatumPrijave
+                            })
+                            .OrderBy(iz => iz.VrstaZivotinje)
+                            .ToList();
+                        ViewBag.CurrentSort = "VrstaZivotinje";
+                        break;
 
-                case "VrstaZivotinje_desc":
-                    query = ctx.IzgubljeneZivotinjes
-                        .Where(iz => iz.GradId == skloniste.GradId)
-                        .Select(iz => new IzgubljeneMiniViewModel
-                        {
-                            IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
-                            VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
-                            Pasmina = iz.Pasmina.NazivPasmine,
-                            Spol = iz.Spol.NazivSpola,
-                            Kontakt = iz.Kontakt,
-                            LokacijaNestanka = iz.LokacijaNestanka,
-                            Grad = iz.Grad.NazivGrada,
-                            DatumNestanka = iz.DatumNestanka,
-                            DatumPrijave = iz.DatumPrijave
-                        })
-                        .OrderByDescending(iz => iz.VrstaZivotinje)
-                        .ToList();
-                    ViewBag.CurrentSort = "VrstaZivotinje_desc";
-                    break;
-                case "VrstaZivotinje":
-                    query = ctx.IzgubljeneZivotinjes
-                        .Where(iz => iz.GradId == skloniste.GradId)
-                        .Select(iz => new IzgubljeneMiniViewModel
-                        {
-                            IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
-                            VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
-                            Pasmina = iz.Pasmina.NazivPasmine,
-                            Spol = iz.Spol.NazivSpola,
-                            Kontakt = iz.Kontakt,
-                            LokacijaNestanka = iz.LokacijaNestanka,
-                            Grad = iz.Grad.NazivGrada,
-                            DatumNestanka = iz.DatumNestanka,
-                            DatumPrijave = iz.DatumPrijave
-                        })
-                        .OrderBy(iz => iz.VrstaZivotinje)
-                        .ToList();
-                    ViewBag.CurrentSort = "VrstaZivotinje";
-                    break;
+                    case "Grad_desc":
+                        query = ctx.IzgubljeneZivotinjes
+                            .Where(iz => iz.GradId == skloniste.GradId)
+                            .Select(iz => new IzgubljeneMiniViewModel
+                            {
+                                IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
+                                VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
+                                Pasmina = iz.Pasmina.NazivPasmine,
+                                Spol = iz.Spol.NazivSpola,
+                                Kontakt = iz.Kontakt,
+                                LokacijaNestanka = iz.LokacijaNestanka,
+                                Grad = iz.Grad.NazivGrada,
+                                DatumNestanka = iz.DatumNestanka,
+                                DatumPrijave = iz.DatumPrijave
+                            })
+                            .OrderByDescending(iz => iz.Grad)
+                            .ToList();
+                        ViewBag.CurrentSort = "Grad_desc";
+                        break;
+                    case "Grad":
+                        query = ctx.IzgubljeneZivotinjes
+                            .Where(iz => iz.GradId == skloniste.GradId)
+                            .Select(iz => new IzgubljeneMiniViewModel
+                            {
+                                IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
+                                VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
+                                Pasmina = iz.Pasmina.NazivPasmine,
+                                Spol = iz.Spol.NazivSpola,
+                                Kontakt = iz.Kontakt,
+                                LokacijaNestanka = iz.LokacijaNestanka,
+                                Grad = iz.Grad.NazivGrada,
+                                DatumNestanka = iz.DatumNestanka,
+                                DatumPrijave = iz.DatumPrijave
+                            })
+                            .OrderBy(iz => iz.Grad)
+                            .ToList();
+                        ViewBag.CurrentSort = "Grad";
+                        break;
+                    case "DatumNestanka_desc":
+                        query = ctx.IzgubljeneZivotinjes
+                            .Where(iz => iz.GradId == skloniste.GradId)
+                            .Select(iz => new IzgubljeneMiniViewModel
+                            {
+                                IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
+                                VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
+                                Pasmina = iz.Pasmina.NazivPasmine,
+                                Spol = iz.Spol.NazivSpola,
+                                Kontakt = iz.Kontakt,
+                                LokacijaNestanka = iz.LokacijaNestanka,
+                                Grad = iz.Grad.NazivGrada,
+                                DatumNestanka = iz.DatumNestanka,
+                                DatumPrijave = iz.DatumPrijave
+                            })
+                            .OrderByDescending(iz => iz.DatumNestanka)
+                            .ToList();
+                        ViewBag.CurrentSort = "DatumNestanka_desc";
+                        break;
+                    default:
+                        query = ctx.IzgubljeneZivotinjes
+                            .Where(iz => iz.GradId == skloniste.GradId)
+                            .Select(iz => new IzgubljeneMiniViewModel
+                            {
+                                IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
+                                VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
+                                Pasmina = iz.Pasmina.NazivPasmine,
+                                Spol = iz.Spol.NazivSpola,
+                                Kontakt = iz.Kontakt,
+                                LokacijaNestanka = iz.LokacijaNestanka,
+                                Grad = iz.Grad.NazivGrada,
+                                DatumNestanka = iz.DatumNestanka,
+                                DatumPrijave = iz.DatumPrijave
+                            })
+                            .OrderBy(iz => iz.DatumNestanka)
+                            .ToList();
+                        ViewBag.CurrentSort = "";
+                        break;
+                }
 
-                case "Grad_desc":
-                    query = ctx.IzgubljeneZivotinjes
-                        .Where(iz => iz.GradId == skloniste.GradId)
-                        .Select(iz => new IzgubljeneMiniViewModel
-                        {
-                            IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
-                            VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
-                            Pasmina = iz.Pasmina.NazivPasmine,
-                            Spol = iz.Spol.NazivSpola,
-                            Kontakt = iz.Kontakt,
-                            LokacijaNestanka = iz.LokacijaNestanka,
-                            Grad = iz.Grad.NazivGrada,
-                            DatumNestanka = iz.DatumNestanka,
-                            DatumPrijave = iz.DatumPrijave
-                        })
-                        .OrderByDescending(iz => iz.Grad)
-                        .ToList();
-                    ViewBag.CurrentSort = "Grad_desc";
-                    break;
-                case "Grad":
-                    query = ctx.IzgubljeneZivotinjes
-                        .Where(iz => iz.GradId == skloniste.GradId)
-                        .Select(iz => new IzgubljeneMiniViewModel
-                        {
-                            IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
-                            VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
-                            Pasmina = iz.Pasmina.NazivPasmine,
-                            Spol = iz.Spol.NazivSpola,
-                            Kontakt = iz.Kontakt,
-                            LokacijaNestanka = iz.LokacijaNestanka,
-                            Grad = iz.Grad.NazivGrada,
-                            DatumNestanka = iz.DatumNestanka,
-                            DatumPrijave = iz.DatumPrijave
-                        })
-                        .OrderBy(iz => iz.Grad)
-                        .ToList();
-                    ViewBag.CurrentSort = "Grad";
-                    break;
-                case "DatumNestanka_desc":
-                    query = ctx.IzgubljeneZivotinjes
-                        .Where(iz => iz.GradId == skloniste.GradId)
-                        .Select(iz => new IzgubljeneMiniViewModel
-                        {
-                            IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
-                            VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
-                            Pasmina = iz.Pasmina.NazivPasmine,
-                            Spol = iz.Spol.NazivSpola,
-                            Kontakt = iz.Kontakt,
-                            LokacijaNestanka = iz.LokacijaNestanka,
-                            Grad = iz.Grad.NazivGrada,
-                            DatumNestanka = iz.DatumNestanka,
-                            DatumPrijave = iz.DatumPrijave
-                        })
-                        .OrderByDescending(iz => iz.DatumNestanka)
-                        .ToList();
-                    ViewBag.CurrentSort = "DatumNestanka_desc";
-                    break;
-                default:
-                    query = ctx.IzgubljeneZivotinjes
-                        .Where(iz => iz.GradId == skloniste.GradId)
-                        .Select(iz => new IzgubljeneMiniViewModel
-                        {
-                            IzgubljeneZivotinjeId = iz.IzgubljeneZivotinjeId,
-                            VrstaZivotinje = iz.Pasmina.VrstaZivotinje.NazivVrste,
-                            Pasmina = iz.Pasmina.NazivPasmine,
-                            Spol = iz.Spol.NazivSpola,
-                            Kontakt = iz.Kontakt,
-                            LokacijaNestanka = iz.LokacijaNestanka,
-                            Grad = iz.Grad.NazivGrada,
-                            DatumNestanka = iz.DatumNestanka,
-                            DatumPrijave = iz.DatumPrijave
-                        })
-                        .OrderBy(iz=>iz.DatumNestanka)
-                        .ToList();
-                    ViewBag.CurrentSort = "";
-                    break;
+                const int pageSize = 5;
+                if (pg < 1)
+                {
+                    pg = 1;
+                }
+
+                int recsCount = query.Count();
+                var pager = new Pager(recsCount, pg, pageSize);
+                int recSkip = (pg - 1) * pageSize;
+                var data = query.Skip(recSkip).Take(pager.PageSize).ToList();
+                var model = new IzgubljeneMiniVM
+                {
+                    IzgubljeneMini = data
+                };
+                this.ViewBag.Pager = pager;
+                return View("IzgubljeneSkloniste", model);
             }
-
-            const int pageSize = 5;
-            if (pg < 1)
+            else
             {
-                pg = 1;
+                return Ok("Nemate pristup ovoj stranici");
             }
-
-            int recsCount = query.Count();
-            var pager = new Pager(recsCount, pg, pageSize);
-            int recSkip = (pg - 1) * pageSize;
-            var data = query.Skip(recSkip).Take(pager.PageSize).ToList();
-            var model = new IzgubljeneMiniVM
-            {
-                IzgubljeneMini = data
-            };
-            this.ViewBag.Pager = pager;
-            return View("IzgubljeneSkloniste", model);
+               
         }
         public IActionResult IzgubljeneDetaljiSkloniste(int id)
         {
-            var query = ctx.IzgubljeneZivotinjes
+            if (HttpContext.Session.GetInt32("idUloge") == 2)
+            {
+                var query = ctx.IzgubljeneZivotinjes
                 .Where(iz => iz.IzgubljeneZivotinjeId == id)
                 .Select(iz => new IzgubljeneViewModel
                 {
@@ -1985,11 +2019,17 @@ namespace PIS_projekt.Controllers
                 })
                 .ToList();
 
-            var model = new IzgubljeneVM
+                var model = new IzgubljeneVM
+                {
+                    izgubljene = query
+                };
+                return View("izgubljeneDetaljiSkloniste", model);
+            }
+            else
             {
-                izgubljene = query
-            };
-            return View("izgubljeneDetaljiSkloniste", model);
+                return Ok("Nemate pristup ovoj stranici");
+            }
+                
         }
 
         public IActionResult SlikaPrijava(int id)

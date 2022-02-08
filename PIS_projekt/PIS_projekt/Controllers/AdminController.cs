@@ -20,16 +20,24 @@ namespace PIS_projekt.Controllers
         }
         public IActionResult CreateSkloniste()
         {
-            var query = ctx.Grads
-                      .OrderBy(g=>g.NazivGrada)
+            if (HttpContext.Session.GetInt32("idUloge") == 1)
+            {
+                var query = ctx.Grads
+                      .OrderBy(g => g.NazivGrada)
                       .Select(g => new
                       {
                           g.GradId,
                           g.NazivGrada
                       })
                       .ToList();
-            ViewBag.Gradovi = new SelectList(query, nameof(Grad.GradId), nameof(Grad.NazivGrada));
-            return View("NovoSkloniste");
+                ViewBag.Gradovi = new SelectList(query, nameof(Grad.GradId), nameof(Grad.NazivGrada));
+                return View("NovoSkloniste");
+            }
+            else
+            {
+                return Ok("Nemate pristup ovoj stranici");
+            }
+                
         }
         public IActionResult SpremiSkloniste(Skloniste s)
         {
@@ -62,7 +70,9 @@ namespace PIS_projekt.Controllers
         }
         public IActionResult Sklonista(string sortOrder,int pg = 1)
         {
-            var query = ctx.Sklonistes
+            if (HttpContext.Session.GetInt32("idUloge") == 1)
+            {
+                var query = ctx.Sklonistes
                 .Select(s => new SklonisteViewModel
                 {
                     skloniste_id = s.SklonisteId,
@@ -77,140 +87,154 @@ namespace PIS_projekt.Controllers
                 })
                 .ToList();
 
-            ViewData["NazivOrder"] = string.IsNullOrEmpty(sortOrder) ? "Naziv_desc" : "";
-            ViewData["GradOrder"] = sortOrder == "Grad" ? "Grad_desc" : "Grad";
-            ViewData["ZupanijaOrder"] = sortOrder == "Zupanija" ? "Zupanija_desc" : "Zupanija";
-            switch (sortOrder)
-            {
-                case "Zupanija_desc":
-                    query = ctx.Sklonistes
-                        .Select(s => new SklonisteViewModel
-                        {
-                            skloniste_id = s.SklonisteId,
-                            NazivSklonista = s.NazivSklonista,
-                            Adresa = s.Adresa,
-                            NazivGrada = s.Grad.NazivGrada,
-                            NazivZupanije = s.Grad.Zupanija.NazivZupanije,
-                            KapacitetSklonista = s.KapacitetSklonista,
-                            Telefon = s.Telefon,
-                            Email = s.Email
+                ViewData["NazivOrder"] = string.IsNullOrEmpty(sortOrder) ? "Naziv_desc" : "";
+                ViewData["GradOrder"] = sortOrder == "Grad" ? "Grad_desc" : "Grad";
+                ViewData["ZupanijaOrder"] = sortOrder == "Zupanija" ? "Zupanija_desc" : "Zupanija";
+                switch (sortOrder)
+                {
+                    case "Zupanija_desc":
+                        query = ctx.Sklonistes
+                            .Select(s => new SklonisteViewModel
+                            {
+                                skloniste_id = s.SklonisteId,
+                                NazivSklonista = s.NazivSklonista,
+                                Adresa = s.Adresa,
+                                NazivGrada = s.Grad.NazivGrada,
+                                NazivZupanije = s.Grad.Zupanija.NazivZupanije,
+                                KapacitetSklonista = s.KapacitetSklonista,
+                                Telefon = s.Telefon,
+                                Email = s.Email
 
-                        })
-                        .OrderByDescending(s => s.NazivZupanije)
-                        .ToList();
-                    ViewBag.CurrentSort = "Zupanija_desc";
-                    break;
-                case "Zupanija":
-                    query = ctx.Sklonistes
-                        .Select(s => new SklonisteViewModel
-                        {
-                            skloniste_id = s.SklonisteId,
-                            NazivSklonista = s.NazivSklonista,
-                            Adresa = s.Adresa,
-                            NazivGrada = s.Grad.NazivGrada,
-                            NazivZupanije = s.Grad.Zupanija.NazivZupanije,
-                            KapacitetSklonista = s.KapacitetSklonista,
-                            Telefon = s.Telefon,
-                            Email = s.Email
+                            })
+                            .OrderByDescending(s => s.NazivZupanije)
+                            .ToList();
+                        ViewBag.CurrentSort = "Zupanija_desc";
+                        break;
+                    case "Zupanija":
+                        query = ctx.Sklonistes
+                            .Select(s => new SklonisteViewModel
+                            {
+                                skloniste_id = s.SklonisteId,
+                                NazivSklonista = s.NazivSklonista,
+                                Adresa = s.Adresa,
+                                NazivGrada = s.Grad.NazivGrada,
+                                NazivZupanije = s.Grad.Zupanija.NazivZupanije,
+                                KapacitetSklonista = s.KapacitetSklonista,
+                                Telefon = s.Telefon,
+                                Email = s.Email
 
-                        })
-                        .OrderBy(s => s.NazivZupanije)
-                        .ToList();
-                    ViewBag.CurrentSort = "Zupanija";
-                    break;
-                case "Grad":
-                    query = ctx.Sklonistes
-                        .Select(s => new SklonisteViewModel
-                        {
-                            skloniste_id = s.SklonisteId,
-                            NazivSklonista = s.NazivSklonista,
-                            Adresa = s.Adresa,
-                            NazivGrada = s.Grad.NazivGrada,
-                            NazivZupanije = s.Grad.Zupanija.NazivZupanije,
-                            KapacitetSklonista = s.KapacitetSklonista,
-                            Telefon = s.Telefon,
-                            Email = s.Email
+                            })
+                            .OrderBy(s => s.NazivZupanije)
+                            .ToList();
+                        ViewBag.CurrentSort = "Zupanija";
+                        break;
+                    case "Grad":
+                        query = ctx.Sklonistes
+                            .Select(s => new SklonisteViewModel
+                            {
+                                skloniste_id = s.SklonisteId,
+                                NazivSklonista = s.NazivSklonista,
+                                Adresa = s.Adresa,
+                                NazivGrada = s.Grad.NazivGrada,
+                                NazivZupanije = s.Grad.Zupanija.NazivZupanije,
+                                KapacitetSklonista = s.KapacitetSklonista,
+                                Telefon = s.Telefon,
+                                Email = s.Email
 
-                        })
-                        .OrderBy(s => s.NazivGrada)
-                        .ToList();
-                    ViewBag.CurrentSort = "Grad";
-                    break;
-                case "Grad_desc":
-                    query = ctx.Sklonistes
-                        .Select(s => new SklonisteViewModel
-                        {
-                            skloniste_id = s.SklonisteId,
-                            NazivSklonista = s.NazivSklonista,
-                            Adresa = s.Adresa,
-                            NazivGrada = s.Grad.NazivGrada,
-                            NazivZupanije = s.Grad.Zupanija.NazivZupanije,
-                            KapacitetSklonista = s.KapacitetSklonista,
-                            Telefon = s.Telefon,
-                            Email = s.Email
+                            })
+                            .OrderBy(s => s.NazivGrada)
+                            .ToList();
+                        ViewBag.CurrentSort = "Grad";
+                        break;
+                    case "Grad_desc":
+                        query = ctx.Sklonistes
+                            .Select(s => new SklonisteViewModel
+                            {
+                                skloniste_id = s.SklonisteId,
+                                NazivSklonista = s.NazivSklonista,
+                                Adresa = s.Adresa,
+                                NazivGrada = s.Grad.NazivGrada,
+                                NazivZupanije = s.Grad.Zupanija.NazivZupanije,
+                                KapacitetSklonista = s.KapacitetSklonista,
+                                Telefon = s.Telefon,
+                                Email = s.Email
 
-                        })
-                        .OrderByDescending(s => s.NazivGrada)
-                        .ToList();
-                    ViewBag.CurrentSort = "Grad_desc";
-                    break;
-                case "Naziv_desc":
-                    query = ctx.Sklonistes
-                        .Select(s => new SklonisteViewModel
-                        {
-                            skloniste_id = s.SklonisteId,
-                            NazivSklonista = s.NazivSklonista,
-                            Adresa = s.Adresa,
-                            NazivGrada = s.Grad.NazivGrada,
-                            NazivZupanije = s.Grad.Zupanija.NazivZupanije,
-                            KapacitetSklonista = s.KapacitetSklonista,
-                            Telefon = s.Telefon,
-                            Email = s.Email
+                            })
+                            .OrderByDescending(s => s.NazivGrada)
+                            .ToList();
+                        ViewBag.CurrentSort = "Grad_desc";
+                        break;
+                    case "Naziv_desc":
+                        query = ctx.Sklonistes
+                            .Select(s => new SklonisteViewModel
+                            {
+                                skloniste_id = s.SklonisteId,
+                                NazivSklonista = s.NazivSklonista,
+                                Adresa = s.Adresa,
+                                NazivGrada = s.Grad.NazivGrada,
+                                NazivZupanije = s.Grad.Zupanija.NazivZupanije,
+                                KapacitetSklonista = s.KapacitetSklonista,
+                                Telefon = s.Telefon,
+                                Email = s.Email
 
-                        })
-                        .OrderByDescending(s => s.NazivSklonista)
-                        .ToList();
-                    ViewBag.CurrentSort = "Naziv_desc";
-                    break;
-                default:
-                    query = ctx.Sklonistes
-                        .Select(s => new SklonisteViewModel
-                        {
-                            skloniste_id = s.SklonisteId,
-                            NazivSklonista = s.NazivSklonista,
-                            Adresa = s.Adresa,
-                            NazivGrada = s.Grad.NazivGrada,
-                            NazivZupanije = s.Grad.Zupanija.NazivZupanije,
-                            KapacitetSklonista = s.KapacitetSklonista,
-                            Telefon = s.Telefon,
-                            Email = s.Email
+                            })
+                            .OrderByDescending(s => s.NazivSklonista)
+                            .ToList();
+                        ViewBag.CurrentSort = "Naziv_desc";
+                        break;
+                    default:
+                        query = ctx.Sklonistes
+                            .Select(s => new SklonisteViewModel
+                            {
+                                skloniste_id = s.SklonisteId,
+                                NazivSklonista = s.NazivSklonista,
+                                Adresa = s.Adresa,
+                                NazivGrada = s.Grad.NazivGrada,
+                                NazivZupanije = s.Grad.Zupanija.NazivZupanije,
+                                KapacitetSklonista = s.KapacitetSklonista,
+                                Telefon = s.Telefon,
+                                Email = s.Email
 
-                        })
-                        .OrderBy(s => s.NazivSklonista)
-                        .ToList();
-                    ViewBag.CurrentSort = "";
-                    break;
+                            })
+                            .OrderBy(s => s.NazivSklonista)
+                            .ToList();
+                        ViewBag.CurrentSort = "";
+                        break;
+                }
+
+                const int pageSize = 5;
+                if (pg < 1)
+                {
+                    pg = 1;
+                }
+                int recsCount = query.Count();
+                var pager = new Pager(recsCount, pg, pageSize);
+                int recSkip = (pg - 1) * pageSize;
+                var data = query.Skip(recSkip).Take(pager.PageSize).ToList();
+                var model = new SklonisteVM
+                {
+                    skloniste = data
+                };
+                this.ViewBag.Pager = pager;
+                return View("Sklonista", model);
             }
-
-            const int pageSize = 5;
-            if (pg < 1)
+            else
             {
-                pg = 1;
+                return Ok("Nemate pristup ovoj stranici");
             }
-            int recsCount = query.Count();
-            var pager = new Pager(recsCount, pg, pageSize);
-            int recSkip = (pg - 1) * pageSize;
-            var data = query.Skip(recSkip).Take(pager.PageSize).ToList();
-            var model = new SklonisteVM
-            {
-                skloniste = data
-            };
-            this.ViewBag.Pager = pager;
-            return View("Sklonista", model);
+            
         }
         public IActionResult DodajAdmina()
         {
-            return View("DodajAdmina");
+            if (HttpContext.Session.GetInt32("idUloge") == 1)
+            {
+                return View("DodajAdmina");
+            }
+            else
+            {
+                return Ok("Nemate pristup ovoj stranici");
+            }
+                
         }
         public IActionResult Add(Korisnik k)
         {
@@ -220,9 +244,9 @@ namespace PIS_projekt.Controllers
                 k.UlogaFk = 1;
                 ctx.Korisniks.Add(k);
                 ctx.SaveChanges();
-                HttpContext.Session.SetString("imeLogiranogKorisnika", k.Ime);
+               /* HttpContext.Session.SetString("imeLogiranogKorisnika", k.Ime);
                 HttpContext.Session.SetString("prezimeLogiranogKorisnika", k.Prezime);
-                HttpContext.Session.SetInt32("idLogiranogKorisnika", k.KorisnikId);
+                HttpContext.Session.SetInt32("idLogiranogKorisnika", k.KorisnikId);*/
                 //return RedirectToAction("PrikazAdmina", "Korisnici");
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "DodajAdmina") });
 
@@ -281,20 +305,28 @@ namespace PIS_projekt.Controllers
         }
         public IActionResult Edit(int id)
         {
-            var query = ctx.Sklonistes
+            if (HttpContext.Session.GetInt32("idUloge") == 1)
+            {
+                var query = ctx.Sklonistes
                 .Where(s => s.SklonisteId == id)
                 .FirstOrDefault<Skloniste>();
 
-            var gradovi = ctx.Grads
-                      .OrderBy(g => g.NazivGrada)
-                      .Select(g => new
-                      {
-                          g.GradId,
-                          g.NazivGrada
-                      })
-                      .ToList();
-            ViewBag.Gradovi = new SelectList(gradovi, nameof(Grad.GradId), nameof(Grad.NazivGrada));
-            return View("SklonisteEdit", query);
+                var gradovi = ctx.Grads
+                          .OrderBy(g => g.NazivGrada)
+                          .Select(g => new
+                          {
+                              g.GradId,
+                              g.NazivGrada
+                          })
+                          .ToList();
+                ViewBag.Gradovi = new SelectList(gradovi, nameof(Grad.GradId), nameof(Grad.NazivGrada));
+                return View("SklonisteEdit", query);
+            }
+            else
+            {
+                return Ok("Nemate pristup ovoj stranici");
+            }
+                
         }
         public IActionResult SpremiPromjene(Skloniste s)
         {
@@ -340,12 +372,20 @@ namespace PIS_projekt.Controllers
         }
         public IActionResult UrediAdmina(int id)
         {
-            var query = ctx.Korisniks
+            if (HttpContext.Session.GetInt32("idUloge") == 1)
+            {
+                var query = ctx.Korisniks
                 .Where(k => k.UlogaFk == 1)
                 .Where(k => k.KorisnikId == id)
                 .FirstOrDefault<Korisnik>();
 
-            return View("AdminsEdit",query);
+                return View("AdminsEdit", query);
+            }
+            else
+            {
+                return Ok("Nemate pristup ovoj stranici");
+            }
+                
         }
         public IActionResult Uredi(Korisnik k)
         {
